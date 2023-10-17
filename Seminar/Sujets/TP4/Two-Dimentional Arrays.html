@@ -1,0 +1,3167 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <meta name="author" content="David Bouchet">
+        <title>Two-Dimentional Arrays</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+body{
+    background-color: #ffffff;
+}  
+
+            code[class*="language-"],
+ pre[class*="language-"] {
+     color: #ffffff;
+     background: none;
+     text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+     font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+     text-align: left;
+     white-space: pre;
+     word-spacing: normal;
+     word-break: normal;
+     word-wrap: normal;
+     line-height: 1.5;
+ 
+     -moz-tab-size: 4;
+     -o-tab-size: 4;
+     tab-size: 4;
+ 
+     -webkit-hyphens: none;
+     -moz-hyphens: none;
+     -ms-hyphens: none;
+     hyphens: none;
+ }
+ 
+ /* Code blocks */
+ pre[class*="language-"] {
+     padding: 0.5em;
+     margin: 0em 0;
+     overflow: auto;
+     border-radius: 0.3em;
+ }
+ 
+ :not(pre) > code[class*="language-"],
+ pre[class*="language-"] {
+     background: #272822;
+ }
+ 
+ /* Inline code */
+ :not(pre) > code[class*="language-"] {
+     padding: .1em;
+     border-radius: .3em;
+     white-space: normal;
+ }
+ 
+ .token.comment,
+ .token.prolog,
+ .token.doctype,
+ .token.cdata {
+     color: slategray;
+ }
+ 
+ .token.punctuation {
+     color: #f8f8f2;
+ }
+ 
+ .namespace {
+     opacity: .7;
+ }
+ 
+ .token.property,
+ .token.tag,
+ .token.constant,
+ .token.symbol,
+ .token.deleted {
+     color: #f92672;
+ }
+ 
+ .token.boolean,
+ .token.number {
+     color: #ae81ff;
+ }
+ 
+ .token.selector,
+ .token.attr-name,
+ .token.string,
+ .token.char,
+ .token.builtin,
+ .token.inserted {
+     color: #a6e22e;
+ }
+ 
+ .token.operator,
+ .token.entity,
+ .token.url,
+ .language-css .token.string,
+ .style .token.string,
+ .token.variable {
+     color: #f8f8f2;
+ }
+ 
+ .token.atrule,
+ .token.attr-value,
+ .token.function {
+     color: #e6db74;
+ }
+ 
+ .token.keyword {
+     color: #66d9ef;
+ }
+ 
+ .token.regex,
+ .token.important {
+     color: #fd971f;
+ }
+ 
+ .token.important,
+ .token.bold {
+     font-weight: bold;
+ }
+ .token.italic {
+     font-style: italic;
+ }
+ 
+ .token.entity {
+     cursor: help;
+ }
+ 
+ pre.line-numbers {
+     position: relative;
+     padding-left: 3.8em;
+     counter-reset: linenumber;
+ }
+ 
+ pre.line-numbers > code {
+     position: relative;
+     white-space: inherit;
+ }
+ 
+ .line-numbers .line-numbers-rows {
+     position: absolute;
+     pointer-events: none;
+     top: 0;
+     font-size: 100%;
+     left: -3.8em;
+     width: 3em; /* works for line-numbers below 1000 lines */
+     letter-spacing: -1px;
+     border-right: 1px solid #999;
+ 
+     -webkit-user-select: none;
+     -moz-user-select: none;
+     -ms-user-select: none;
+     user-select: none;
+ 
+ }
+ 
+     .line-numbers-rows > span {
+         pointer-events: none;
+         display: block;
+         counter-increment: linenumber;
+     }
+ 
+         .line-numbers-rows > span:before {
+             content: counter(linenumber);
+             color: #999;
+             display: block;
+             padding-right: 0.8em;
+             text-align: right;
+         }
+
+/* Matrices */
+
+table.matrix
+{
+    margin: auto;
+    border: solid 2px;
+    border-collapse: collapse;
+}
+
+table.matrix td
+{
+    border: solid 1px;
+    padding: 0.7em;
+}
+
+p.two_indices_to_one
+{
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+p.img img
+{
+	width: auto;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+p.img
+{
+    text-align: center;
+}
+
+@media (max-width: 900px)
+{
+    p.img img
+    {
+	   max-width: 90%;
+       margin-left: auto;
+	   margin-right: auto;
+    }
+}
+
+/* Moving Chessmen */
+
+table.chessboard
+{
+    border-collapse: collapse;
+    text-align: center;
+    margin: auto;
+}
+
+table.chessboard td
+{
+    border: solid black 1px;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+table.chessboard th
+{
+    padding: 0rem 0.5rem;
+}
+
+table.chessboard tr:nth-child(even) td:nth-child(even),
+table.chessboard tr:nth-child(odd) td:nth-child(odd)
+{
+    background-color: #ffcf9f;
+}
+
+table.chessboard tr:nth-child(even) td:nth-child(odd),
+table.chessboard tr:nth-child(odd) td:nth-child(even)
+{
+    background-color: #d28c45;
+}
+
+body
+{
+	font-family: sans-serif;
+
+	display: flex;
+	flex-direction: column;
+
+	margin: 0px;
+	
+
+}
+
+h2.exercise
+{
+	counter-reset: q;
+}
+
+p.question:before
+{
+	counter-increment: q;
+	content: counter(q) ". ";
+	font-weight: bold;
+}
+
+h3.question:before
+{
+	counter-increment: q;
+	content: counter(q) ". ";
+}
+
+span.date
+{
+	color: #006786;
+}
+
+details
+{
+    transition: height 250ms ease;
+    overflow: hidden;
+}
+
+details:not([open])
+{
+    height: 1.5em;
+}
+
+details[open]
+{
+    height: 5em;
+}
+
+summary
+{
+	color: green;
+}
+
+summary:hover
+{
+  text-decoration: underline;
+	cursor: help;
+}
+
+header
+{
+	position: fixed;
+	width: 100%;
+	margin: auto;
+	background: rgba(0, 0, 0, 0.6);
+	color: white;
+	top: Oem;
+	transition: top 250ms;
+}
+
+header div
+{
+	display: flex;
+	justify-content: space-between;
+	padding: 0.2rem 2rem;
+	font-weight: bold;
+}
+
+header a:link,
+header a:visited
+{
+	color: white;
+	text-decoration: none;
+}
+
+nav
+{
+	margin: 0rem auto 0rem auto;
+	width: 900px;
+	box-sizing: border-box;
+	border-right: dashed 1px black;
+	padding-right: 1rem;
+	border-left: dashed 1px black;
+	padding-left: 1rem;
+	padding-top: 1rem;
+}
+
+
+nav h2,
+nav h3,
+nav h4
+{
+	background: none;
+	border: none;
+	margin: 0px;
+	padding: 0px;
+	font-size: 1.1rem;
+	text-shadow: none;
+	font-weight: normal;
+	line-height: 1.6;
+}
+
+nav h2
+{
+	font-weight: bold;
+	font-size: 1.3rem;
+	margin-top: 0.5rem;
+}
+
+nav h3
+{
+	margin-left: 2rem;
+	font-size: 1.1rem;
+}
+
+nav h4
+{
+	margin-left: 4rem;
+}
+
+nav h2 a:link,
+nav h3 a:link,
+nav h4 a:link,
+nav h2 a:visited,
+nav h3 a:visited,
+nav h4 a:visited
+{
+	color: #006786;
+	text-decoration: none;
+}
+
+nav h2 a:hover,
+nav h3 a:hover,
+nav h4 a:hover
+{
+	color: white;
+	background-color: #006786;
+}
+
+
+.title
+{
+	display: flex;
+	flex-direction: column;
+	background-color: white;
+	justify-content: space-between;
+}
+
+.practical_number
+{
+	margin: 0px;
+	text-align: left;
+	padding-left: 2em;
+	background-color: black;
+	color: white;
+	font-size: 3em;
+	width: 30rem;
+	border-top: solid 0.1rem black;
+	position: relative;
+	top: 2rem;
+	border-radius: 0px 8px 0px 0px;
+}
+
+h1
+{
+	background-color: #2F97B6;
+	margin-top: 0px;
+	color: white;
+	text-shadow: 2px 2px 2px black;
+	/*border-bottom: solid 1px black;*/
+	border-top: solid 0.5rem black;
+	text-align: center;
+	font-size: 3rem;
+	margin: 0px;
+	width: 100%;
+	line-height: 1.2;
+	padding-top: 3rem;
+	padding-bottom: 1rem;
+}
+
+.bonus
+{
+	color: #d00000;
+	font-weight: bold;
+}
+
+mark
+{
+	color: #d00000;
+	background: none;
+	/*font-weight: bold;*/
+}
+
+code.s
+{
+	font-family: monospace;
+	color: darkgoldenrod;
+	font-weight: bold;
+}
+
+mark code.s
+{
+	color: inherit;
+}
+
+
+strong
+{
+	font-style: italic;
+}
+
+p + ul
+{
+	margin-top: -1em;
+}
+
+h2
+{
+	color: #0087B6;
+	/*color: #e03043;*/
+	text-shadow: 1px 1px 1px black;
+	font-size: 2.2rem;
+	border-bottom: solid 0.2rem #0087B6;
+	padding-bottom: 1.5rem;
+	margin-top: 4rem;
+	line-height: 1.2;
+	font-weight: normal;
+}
+
+h3
+{
+	background-color: #2F97B6;
+	color: white;
+	padding: 0.3rem 1rem;
+	font-weight: normal;
+	border-left: solid 0.5rem black;
+	font-size: 1.3rem;
+}
+
+h4
+{
+	color: #0087B6;
+	font-size: 1.3rem;
+}
+
+main
+{
+	box-sizing: border-box;
+	width: 900px;
+	margin: auto;
+	font-size: 1.1rem;
+	line-height: 1.6;
+	text-align: justify;
+	border-right: dashed 1px black;
+	padding-right: 1rem;
+	border-left: dashed 1px black;
+	padding-left: 1rem;
+}
+
+a:link, a:visited
+{
+	color: #ff7000;
+	/*color: darkorange;*/
+	text-decoration: underline;
+}
+
+a:hover
+{
+	text-decoration: underline;
+	background-color: #ff7000;
+	color: white;
+}
+
+div.filename
+{
+	border: solid 1px gray;
+	margin-left: 3.3rem;
+	color: white;
+	background-color: #272822;
+	padding: 0.2rem 1.2rem;
+	border-radius: 0.7rem 0.7rem 0px 0px;
+	font-family: monospace;
+	font-size: 1rem;
+	font-weight: bold;
+	text-align: center;
+	width: 12rem;
+}
+
+pre + div.filename
+{
+	margin-top: 2rem;
+}
+
+table.ls_f,
+table.ls_owner_group_other
+{
+	border-collapse: collapse;
+	margin: 2em auto;
+	border: solid 2px #004076;
+}
+
+table.ls_f th,
+table.ls_owner_group_other th
+{
+	padding: 0.2em 1em;
+	background-color: #2F97B6;
+	color: white;
+	border: solid 1px #004076;
+}
+
+table.ls_f td,
+table.ls_owner_group_other td
+{
+	border: solid 1px #004076;
+	padding: 0.2em 1em;
+}
+
+table.ls_f tr th:first-child,
+table.ls_f tr td:first-child,
+table.ls_owner_group_other tr th,
+table.ls_owner_group_other tr td
+{
+	text-align: center;
+}
+
+table tr th.description,
+table tr td.description
+{
+	text-align: left;
+}
+
+
+kbd
+{
+	font-size: 1.1rem;
+	border-style: solid;
+	border-width: 2px;
+	padding: 2px 7px 3px 7px;
+	margin-left: 1px;
+	margin-right: 4px;
+	border-radius: 5px;
+	background-color: #f0f0f0;
+	box-shadow: 1px 1px 3px black;
+}
+
+img
+{
+	width: 60%;
+	margin-left: 20%;
+	margin-right: 20%;
+}
+
+img.screenshot
+{
+	width: 90%;
+	margin-left: 5%;
+	margin-right: 5%;
+    box-shadow: 3px 3px 8px black;
+}
+
+body > footer
+{
+	display: flex;
+	justify-content: center;
+	background: #2F97B6;
+	color: white;
+	border-top: solid black 1px;
+}
+
+body > footer span
+{
+	margin: 0rem 2rem 0rem 2rem;
+}
+
+body > footer a:visited,
+body > footer a:link
+{
+	color: white;
+	text-decoration: none;
+}
+
+body > footer a:hover
+{
+	background: none;
+	text-decoration: underline;
+}
+
+dt
+{
+	font-weight: bold;
+}
+
+dd
+{
+	margin-bottom: 1rem;
+}
+
+
+@media (max-width: 900px)
+{
+    body
+    {
+        width: auto;
+        margin: 0px;
+        padding: 0px;
+        box-sizing: border-box;
+    }
+	header div
+	{
+		padding: 0rem 1rem;
+	  font-weight: normal;
+	}
+	
+	nav
+	{
+		width: 100%;
+	}
+
+
+    main
+    {
+        width: auto;
+        margin-left: 0px;
+        margin-right: 0px;
+		    text-align: left;
+    }
+	
+    .practical_number
+    {
+        margin: 0px;
+        text-align: center;
+        padding-left: 0em;
+        background-color: black;
+        color: white;
+        font-size: 2.5em;
+        width: 100%;
+        border-top: solid 0.1rem black;
+        position: relative;
+        top: 2rem;
+        border-radius: 0px;
+    }
+	
+	h1
+	{
+		font-size: 2.5em;
+	}
+
+	img
+	{
+		width: 90%;
+		margin-left: 5%;
+		margin-right: 5%;
+	}
+
+}
+
+blockquote
+{
+	border: 1px dotted black;
+	padding: 0.7rem 1.2rem;
+	background-color: #eee;
+	box-shadow: 1px 1px 1px black;
+	font-style: italic;
+}
+    </style>
+    <script>
+/* PrismJS 1.14.0
+http://prismjs.com/download.html#themes=prism-okaidia&languages=clike+c+bash+makefile&plugins=line-numbers+normalize-whitespace */
+var _self = (typeof window !== 'undefined')
+	? window   // if in browser
+	: (
+		(typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope)
+		? self // if in worker
+		: {}   // if in node js
+	);
+
+/**
+ * Prism: Lightweight, robust, elegant syntax highlighting
+ * MIT license http://www.opensource.org/licenses/mit-license.php/
+ * @author Lea Verou http://lea.verou.me
+ */
+
+var Prism = (function(){
+
+// Private helper vars
+var lang = /\blang(?:uage)?-([\w-]+)\b/i;
+var uniqueId = 0;
+
+var _ = _self.Prism = {
+	manual: _self.Prism && _self.Prism.manual,
+	disableWorkerMessageHandler: _self.Prism && _self.Prism.disableWorkerMessageHandler,
+	util: {
+		encode: function (tokens) {
+			if (tokens instanceof Token) {
+				return new Token(tokens.type, _.util.encode(tokens.content), tokens.alias);
+			} else if (_.util.type(tokens) === 'Array') {
+				return tokens.map(_.util.encode);
+			} else {
+				return tokens.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/\u00a0/g, ' ');
+			}
+		},
+
+		type: function (o) {
+			return Object.prototype.toString.call(o).match(/\[object (\w+)\]/)[1];
+		},
+
+		objId: function (obj) {
+			if (!obj['__id']) {
+				Object.defineProperty(obj, '__id', { value: ++uniqueId });
+			}
+			return obj['__id'];
+		},
+
+		// Deep clone a language definition (e.g. to extend it)
+		clone: function (o, visited) {
+			var type = _.util.type(o);
+			visited = visited || {};
+
+			switch (type) {
+				case 'Object':
+					if (visited[_.util.objId(o)]) {
+						return visited[_.util.objId(o)];
+					}
+					var clone = {};
+					visited[_.util.objId(o)] = clone;
+
+					for (var key in o) {
+						if (o.hasOwnProperty(key)) {
+							clone[key] = _.util.clone(o[key], visited);
+						}
+					}
+
+					return clone;
+
+				case 'Array':
+					if (visited[_.util.objId(o)]) {
+						return visited[_.util.objId(o)];
+					}
+					var clone = [];
+					visited[_.util.objId(o)] = clone;
+
+					o.forEach(function (v, i) {
+						clone[i] = _.util.clone(v, visited);
+					});
+
+					return clone;
+			}
+
+			return o;
+		}
+	},
+
+	languages: {
+		extend: function (id, redef) {
+			var lang = _.util.clone(_.languages[id]);
+
+			for (var key in redef) {
+				lang[key] = redef[key];
+			}
+
+			return lang;
+		},
+
+		/**
+		 * Insert a token before another token in a language literal
+		 * As this needs to recreate the object (we cannot actually insert before keys in object literals),
+		 * we cannot just provide an object, we need anobject and a key.
+		 * @param inside The key (or language id) of the parent
+		 * @param before The key to insert before. If not provided, the function appends instead.
+		 * @param insert Object with the key/value pairs to insert
+		 * @param root The object that contains `inside`. If equal to Prism.languages, it can be omitted.
+		 */
+		insertBefore: function (inside, before, insert, root) {
+			root = root || _.languages;
+			var grammar = root[inside];
+
+			if (arguments.length == 2) {
+				insert = arguments[1];
+
+				for (var newToken in insert) {
+					if (insert.hasOwnProperty(newToken)) {
+						grammar[newToken] = insert[newToken];
+					}
+				}
+
+				return grammar;
+			}
+
+			var ret = {};
+
+			for (var token in grammar) {
+
+				if (grammar.hasOwnProperty(token)) {
+
+					if (token == before) {
+
+						for (var newToken in insert) {
+
+							if (insert.hasOwnProperty(newToken)) {
+								ret[newToken] = insert[newToken];
+							}
+						}
+					}
+
+					ret[token] = grammar[token];
+				}
+			}
+
+			// Update references in other language definitions
+			_.languages.DFS(_.languages, function(key, value) {
+				if (value === root[inside] && key != inside) {
+					this[key] = ret;
+				}
+			});
+
+			return root[inside] = ret;
+		},
+
+		// Traverse a language definition with Depth First Search
+		DFS: function(o, callback, type, visited) {
+			visited = visited || {};
+			for (var i in o) {
+				if (o.hasOwnProperty(i)) {
+					callback.call(o, i, o[i], type || i);
+
+					if (_.util.type(o[i]) === 'Object' && !visited[_.util.objId(o[i])]) {
+						visited[_.util.objId(o[i])] = true;
+						_.languages.DFS(o[i], callback, null, visited);
+					}
+					else if (_.util.type(o[i]) === 'Array' && !visited[_.util.objId(o[i])]) {
+						visited[_.util.objId(o[i])] = true;
+						_.languages.DFS(o[i], callback, i, visited);
+					}
+				}
+			}
+		}
+	},
+	plugins: {},
+
+	highlightAll: function(async, callback) {
+		_.highlightAllUnder(document, async, callback);
+	},
+
+	highlightAllUnder: function(container, async, callback) {
+		var env = {
+			callback: callback,
+			selector: 'code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code'
+		};
+
+		_.hooks.run("before-highlightall", env);
+
+		var elements = env.elements || container.querySelectorAll(env.selector);
+
+		for (var i=0, element; element = elements[i++];) {
+			_.highlightElement(element, async === true, env.callback);
+		}
+	},
+
+	highlightElement: function(element, async, callback) {
+		// Find language
+		var language, grammar, parent = element;
+
+		while (parent && !lang.test(parent.className)) {
+			parent = parent.parentNode;
+		}
+
+		if (parent) {
+			language = (parent.className.match(lang) || [,''])[1].toLowerCase();
+			grammar = _.languages[language];
+		}
+
+		// Set language on the element, if not present
+		element.className = element.className.replace(lang, '').replace(/\s+/g, ' ') + ' language-' + language;
+
+		if (element.parentNode) {
+			// Set language on the parent, for styling
+			parent = element.parentNode;
+
+			if (/pre/i.test(parent.nodeName)) {
+				parent.className = parent.className.replace(lang, '').replace(/\s+/g, ' ') + ' language-' + language;
+			}
+		}
+
+		var code = element.textContent;
+
+		var env = {
+			element: element,
+			language: language,
+			grammar: grammar,
+			code: code
+		};
+
+		_.hooks.run('before-sanity-check', env);
+
+		if (!env.code || !env.grammar) {
+			if (env.code) {
+				_.hooks.run('before-highlight', env);
+				env.element.textContent = env.code;
+				_.hooks.run('after-highlight', env);
+			}
+			_.hooks.run('complete', env);
+			return;
+		}
+
+		_.hooks.run('before-highlight', env);
+
+		if (async && _self.Worker) {
+			var worker = new Worker(_.filename);
+
+			worker.onmessage = function(evt) {
+				env.highlightedCode = evt.data;
+
+				_.hooks.run('before-insert', env);
+
+				env.element.innerHTML = env.highlightedCode;
+
+				callback && callback.call(env.element);
+				_.hooks.run('after-highlight', env);
+				_.hooks.run('complete', env);
+			};
+
+			worker.postMessage(JSON.stringify({
+				language: env.language,
+				code: env.code,
+				immediateClose: true
+			}));
+		}
+		else {
+			env.highlightedCode = _.highlight(env.code, env.grammar, env.language);
+
+			_.hooks.run('before-insert', env);
+
+			env.element.innerHTML = env.highlightedCode;
+
+			callback && callback.call(element);
+
+			_.hooks.run('after-highlight', env);
+			_.hooks.run('complete', env);
+		}
+	},
+
+	highlight: function (text, grammar, language) {
+		var env = {
+			code: text,
+			grammar: grammar,
+			language: language
+		};
+		_.hooks.run('before-tokenize', env);
+		env.tokens = _.tokenize(env.code, env.grammar);
+		_.hooks.run('after-tokenize', env);
+		return Token.stringify(_.util.encode(env.tokens), env.language);
+	},
+
+	matchGrammar: function (text, strarr, grammar, index, startPos, oneshot, target) {
+		var Token = _.Token;
+
+		for (var token in grammar) {
+			if(!grammar.hasOwnProperty(token) || !grammar[token]) {
+				continue;
+			}
+
+			if (token == target) {
+				return;
+			}
+
+			var patterns = grammar[token];
+			patterns = (_.util.type(patterns) === "Array") ? patterns : [patterns];
+
+			for (var j = 0; j < patterns.length; ++j) {
+				var pattern = patterns[j],
+					inside = pattern.inside,
+					lookbehind = !!pattern.lookbehind,
+					greedy = !!pattern.greedy,
+					lookbehindLength = 0,
+					alias = pattern.alias;
+
+				if (greedy && !pattern.pattern.global) {
+					// Without the global flag, lastIndex won't work
+					var flags = pattern.pattern.toString().match(/[imuy]*$/)[0];
+					pattern.pattern = RegExp(pattern.pattern.source, flags + "g");
+				}
+
+				pattern = pattern.pattern || pattern;
+
+				// Donâ€™t cache length as it changes during the loop
+				for (var i = index, pos = startPos; i < strarr.length; pos += strarr[i].length, ++i) {
+
+					var str = strarr[i];
+
+					if (strarr.length > text.length) {
+						// Something went terribly wrong, ABORT, ABORT!
+						return;
+					}
+
+					if (str instanceof Token) {
+						continue;
+					}
+
+					if (greedy && i != strarr.length - 1) {
+						pattern.lastIndex = pos;
+						var match = pattern.exec(text);
+						if (!match) {
+							break;
+						}
+
+						var from = match.index + (lookbehind ? match[1].length : 0),
+						    to = match.index + match[0].length,
+						    k = i,
+						    p = pos;
+
+						for (var len = strarr.length; k < len && (p < to || (!strarr[k].type && !strarr[k - 1].greedy)); ++k) {
+							p += strarr[k].length;
+							// Move the index i to the element in strarr that is closest to from
+							if (from >= p) {
+								++i;
+								pos = p;
+							}
+						}
+
+						// If strarr[i] is a Token, then the match starts inside another Token, which is invalid
+						if (strarr[i] instanceof Token) {
+							continue;
+						}
+
+						// Number of tokens to delete and replace with the new match
+						delNum = k - i;
+						str = text.slice(pos, p);
+						match.index -= pos;
+					} else {
+						pattern.lastIndex = 0;
+
+						var match = pattern.exec(str),
+							delNum = 1;
+					}
+
+					if (!match) {
+						if (oneshot) {
+							break;
+						}
+
+						continue;
+					}
+
+					if(lookbehind) {
+						lookbehindLength = match[1] ? match[1].length : 0;
+					}
+
+					var from = match.index + lookbehindLength,
+					    match = match[0].slice(lookbehindLength),
+					    to = from + match.length,
+					    before = str.slice(0, from),
+					    after = str.slice(to);
+
+					var args = [i, delNum];
+
+					if (before) {
+						++i;
+						pos += before.length;
+						args.push(before);
+					}
+
+					var wrapped = new Token(token, inside? _.tokenize(match, inside) : match, alias, match, greedy);
+
+					args.push(wrapped);
+
+					if (after) {
+						args.push(after);
+					}
+
+					Array.prototype.splice.apply(strarr, args);
+
+					if (delNum != 1)
+						_.matchGrammar(text, strarr, grammar, i, pos, true, token);
+
+					if (oneshot)
+						break;
+				}
+			}
+		}
+	},
+
+	tokenize: function(text, grammar, language) {
+		var strarr = [text];
+
+		var rest = grammar.rest;
+
+		if (rest) {
+			for (var token in rest) {
+				grammar[token] = rest[token];
+			}
+
+			delete grammar.rest;
+		}
+
+		_.matchGrammar(text, strarr, grammar, 0, 0, false);
+
+		return strarr;
+	},
+
+	hooks: {
+		all: {},
+
+		add: function (name, callback) {
+			var hooks = _.hooks.all;
+
+			hooks[name] = hooks[name] || [];
+
+			hooks[name].push(callback);
+		},
+
+		run: function (name, env) {
+			var callbacks = _.hooks.all[name];
+
+			if (!callbacks || !callbacks.length) {
+				return;
+			}
+
+			for (var i=0, callback; callback = callbacks[i++];) {
+				callback(env);
+			}
+		}
+	}
+};
+
+var Token = _.Token = function(type, content, alias, matchedStr, greedy) {
+	this.type = type;
+	this.content = content;
+	this.alias = alias;
+	// Copy of the full string this token was created from
+	this.length = (matchedStr || "").length|0;
+	this.greedy = !!greedy;
+};
+
+Token.stringify = function(o, language, parent) {
+	if (typeof o == 'string') {
+		return o;
+	}
+
+	if (_.util.type(o) === 'Array') {
+		return o.map(function(element) {
+			return Token.stringify(element, language, o);
+		}).join('');
+	}
+
+	var env = {
+		type: o.type,
+		content: Token.stringify(o.content, language, parent),
+		tag: 'span',
+		classes: ['token', o.type],
+		attributes: {},
+		language: language,
+		parent: parent
+	};
+
+	if (o.alias) {
+		var aliases = _.util.type(o.alias) === 'Array' ? o.alias : [o.alias];
+		Array.prototype.push.apply(env.classes, aliases);
+	}
+
+	_.hooks.run('wrap', env);
+
+	var attributes = Object.keys(env.attributes).map(function(name) {
+		return name + '="' + (env.attributes[name] || '').replace(/"/g, '&quot;') + '"';
+	}).join(' ');
+
+	return '<' + env.tag + ' class="' + env.classes.join(' ') + '"' + (attributes ? ' ' + attributes : '') + '>' + env.content + '</' + env.tag + '>';
+
+};
+
+if (!_self.document) {
+	if (!_self.addEventListener) {
+		// in Node.js
+		return _self.Prism;
+	}
+
+	if (!_.disableWorkerMessageHandler) {
+		// In worker
+		_self.addEventListener('message', function (evt) {
+			var message = JSON.parse(evt.data),
+				lang = message.language,
+				code = message.code,
+				immediateClose = message.immediateClose;
+
+			_self.postMessage(_.highlight(code, _.languages[lang], lang));
+			if (immediateClose) {
+				_self.close();
+			}
+		}, false);
+	}
+
+	return _self.Prism;
+}
+
+//Get current script and highlight
+var script = document.currentScript || [].slice.call(document.getElementsByTagName("script")).pop();
+
+if (script) {
+	_.filename = script.src;
+
+	if (!_.manual && !script.hasAttribute('data-manual')) {
+		if(document.readyState !== "loading") {
+			if (window.requestAnimationFrame) {
+				window.requestAnimationFrame(_.highlightAll);
+			} else {
+				window.setTimeout(_.highlightAll, 16);
+			}
+		}
+		else {
+			document.addEventListener('DOMContentLoaded', _.highlightAll);
+		}
+	}
+}
+
+return _self.Prism;
+
+})();
+
+if (typeof module !== 'undefined' && module.exports) {
+	module.exports = Prism;
+}
+
+// hack for components to work correctly in node.js
+if (typeof global !== 'undefined') {
+	global.Prism = Prism;
+}
+;
+Prism.languages.clike = {
+	'comment': [
+		{
+			pattern: /(^|[^\\])\/\*[\s\S]*?(?:\*\/|$)/,
+			lookbehind: true
+		},
+		{
+			pattern: /(^|[^\\:])\/\/.*/,
+			lookbehind: true,
+			greedy: true
+		}
+	],
+	'string': {
+		pattern: /(["'])(?:\\(?:\r\n|[\s\S])|(?!\1)[^\\\r\n])*\1/,
+		greedy: true
+	},
+	'class-name': {
+		pattern: /((?:\b(?:class|interface|extends|implements|trait|instanceof|new)\s+)|(?:catch\s+\())[\w.\\]+/i,
+		lookbehind: true,
+		inside: {
+			punctuation: /[.\\]/
+		}
+	},
+	'keyword': /\b(?:if|else|while|do|for|return|in|instanceof|function|new|try|throw|catch|finally|null|break|continue)\b/,
+	'boolean': /\b(?:true|false)\b/,
+	'function': /[a-z0-9_]+(?=\()/i,
+	'number': /\b0x[\da-f]+\b|(?:\b\d+\.?\d*|\B\.\d+)(?:e[+-]?\d+)?/i,
+	'operator': /--?|\+\+?|!=?=?|<=?|>=?|==?=?|&&?|\|\|?|\?|\*|\/|~|\^|%/,
+	'punctuation': /[{}[\];(),.:]/
+};
+
+Prism.languages.c = Prism.languages.extend('clike', {
+	'keyword': /\b(?:_Alignas|_Alignof|_Atomic|_Bool|_Complex|_Generic|_Imaginary|_Noreturn|_Static_assert|_Thread_local|asm|typeof|inline|auto|break|case|char|const|continue|default|do|double|else|enum|extern|float|for|goto|if|int|long|register|return|short|signed|size_t|sizeof|static|struct|switch|typedef|union|unsigned|void|volatile|while)\b/,
+	'operator': /-[>-]?|\+\+?|!=?|<<?=?|>>?=?|==?|&&?|\|\|?|[~^%?*\/]/,
+	'number': /(?:\b0x[\da-f]+|(?:\b\d+\.?\d*|\B\.\d+)(?:e[+-]?\d+)?)[ful]*/i
+});
+
+Prism.languages.insertBefore('c', 'string', {
+	'macro': {
+		// allow for multiline macro definitions
+		// spaces after the # character compile fine with gcc
+		pattern: /(^\s*)#\s*[a-z]+(?:[^\r\n\\]|\\(?:\r\n|[\s\S]))*/im,
+		lookbehind: true,
+		alias: 'property',
+		inside: {
+			// highlight the path of the include statement as a string
+			'string': {
+				pattern: /(#\s*include\s*)(?:<.+?>|("|')(?:\\?.)+?\2)/,
+				lookbehind: true
+			},
+			// highlight macro directives as keywords
+			'directive': {
+				pattern: /(#\s*)\b(?:define|defined|elif|else|endif|error|ifdef|ifndef|if|import|include|line|pragma|undef|using)\b/,
+				lookbehind: true,
+				alias: 'keyword'
+			}
+		}
+	},
+	// highlight predefined macros as constants
+	'constant': /\b(?:__FILE__|__LINE__|__DATE__|__TIME__|__TIMESTAMP__|__func__|EOF|NULL|SEEK_CUR|SEEK_END|SEEK_SET|stdin|stdout|stderr)\b/
+});
+
+delete Prism.languages.c['class-name'];
+delete Prism.languages.c['boolean'];
+
+(function(Prism) {
+	var insideString = {
+		variable: [
+			// Arithmetic Environment
+			{
+				pattern: /\$?\(\([\s\S]+?\)\)/,
+				inside: {
+					// If there is a $ sign at the beginning highlight $(( and )) as variable
+					variable: [{
+							pattern: /(^\$\(\([\s\S]+)\)\)/,
+							lookbehind: true
+						},
+						/^\$\(\(/
+					],
+					number: /\b0x[\dA-Fa-f]+\b|(?:\b\d+\.?\d*|\B\.\d+)(?:[Ee]-?\d+)?/,
+					// Operators according to https://www.gnu.org/software/bash/manual/bashref.html#Shell-Arithmetic
+					operator: /--?|-=|\+\+?|\+=|!=?|~|\*\*?|\*=|\/=?|%=?|<<=?|>>=?|<=?|>=?|==?|&&?|&=|\^=?|\|\|?|\|=|\?|:/,
+					// If there is no $ sign at the beginning highlight (( and )) as punctuation
+					punctuation: /\(\(?|\)\)?|,|;/
+				}
+			},
+			// Command Substitution
+			{
+				pattern: /\$\([^)]+\)|`[^`]+`/,
+				greedy: true,
+				inside: {
+					variable: /^\$\(|^`|\)$|`$/
+				}
+			},
+			/\$(?:[\w#?*!@]+|\{[^}]+\})/i
+		]
+	};
+
+	Prism.languages.bash = {
+		'shebang': {
+			pattern: /^#!\s*\/bin\/bash|^#!\s*\/bin\/sh/,
+			alias: 'important'
+		},
+		'comment': {
+			pattern: /(^|[^"{\\])#.*/,
+			lookbehind: true
+		},
+		'string': [
+			//Support for Here-Documents https://en.wikipedia.org/wiki/Here_document
+			{
+				pattern: /((?:^|[^<])<<\s*)["']?(\w+?)["']?\s*\r?\n(?:[\s\S])*?\r?\n\2/,
+				lookbehind: true,
+				greedy: true,
+				inside: insideString
+			},
+			{
+				pattern: /(["'])(?:\\[\s\S]|\$\([^)]+\)|`[^`]+`|(?!\1)[^\\])*\1/,
+				greedy: true,
+				inside: insideString
+			}
+		],
+		'variable': insideString.variable,
+		// Originally based on http://ss64.com/bash/
+		'function': {
+			pattern: /(^|[\s;|&])(?:!!|!-2|!c|alias|apropos|apt-get|aptitude|aspell|awk|basename|bash|bc|bg|builtin|bzip2|cal|cat|cd|cfdisk|chgrp|chmod|chown|chroot|chkconfig|cksum|clear|cmp|comm|command|cp|cron|crontab|csplit|curl|cut|date|dc|dd|ddrescue|df|diff|diff3|dig|dir|dircolors|dirname|dirs|dmesg|du|egrep|eject|enable|env|ethtool|eval|exec|expand|expect|export|expr|fdformat|fdisk|fg|fgrep|file|find|fmt|fold|format|free|fsck|ftp|fuser|gawk|gcc|getopts|git|grep|groupadd|groupdel|groupmod|groups|gzip|hash|head|help|hg|history|hostname|htop|iconv|id|ifconfig|ifdown|ifup|import|install|info|jobs|join|kill|killall|less|link|ln|locate|logname|logout|look|lpc|lpr|lprint|lprintd|lprintq|lprm|ls|lsof|make|man|mkdir|mkfifo|mkisofs|mknod|more|most|mount|mtools|mtr|mv|mmv|nano|netstat|nice|nl|nohup|notify-send|npm|nslookup|open|op|passwd|paste|pathchk|ping|pkg-config|pkill|popd|pr|printcap|printenv|printf|ps|pushd|pv|pwd|quota|quotacheck|quotactl|ram|rar|rcp|read|readarray|readonly|reboot|rename|renice|remsync|rev|rm|rmdir|rsync|screen|scp|sdiff|sed|seq|service|sftp|shift|shopt|shutdown|sleep|slocate|sort|source|split|ssh|stat|strace|su|sudo|sum|suspend|sync|tail|tar|tee|test|time|timeout|times|touch|top|traceroute|trap|tr|tree|tsort|tty|type|ulimit|umask|umount|unalias|uname|unexpand|uniq|units|unrar|unshar|uptime|useradd|userdel|usermod|users|uuencode|uudecode|v|vdir|vi|vmstat|wait|watch|wc|wget|whereis|which|who|whoami|write|xargs|xdg-open|yes|zip)(?=$|[\s;|&])/,
+			lookbehind: true
+		},
+		'keyword': {
+			pattern: /(^|[\s;|&])(?:let|:|\.|if|then|else|elif|fi|for|break|continue|while|in|case|function|select|do|done|until|echo|exit|return|set|declare)(?=$|[\s;|&])/,
+			lookbehind: true
+		},
+		'boolean': {
+			pattern: /(^|[\s;|&])(?:true|false)(?=$|[\s;|&])/,
+			lookbehind: true
+		},
+		'operator': /&&?|\|\|?|==?|!=?|<<<?|>>|<=?|>=?|=~/,
+		'punctuation': /\$?\(\(?|\)\)?|\.\.|[{}[\];]/
+	};
+
+	var inside = insideString.variable[1].inside;
+	inside.string = Prism.languages.bash.string;
+	inside['function'] = Prism.languages.bash['function'];
+	inside.keyword = Prism.languages.bash.keyword;
+	inside['boolean'] = Prism.languages.bash['boolean'];
+	inside.operator = Prism.languages.bash.operator;
+	inside.punctuation = Prism.languages.bash.punctuation;
+	
+	Prism.languages.shell = Prism.languages.bash;
+})(Prism);
+
+Prism.languages.makefile = {
+	'comment': {
+		pattern: /(^|[^\\])#(?:\\(?:\r\n|[\s\S])|[^\\\r\n])*/,
+		lookbehind: true
+	},
+	'string': {
+		pattern: /(["'])(?:\\(?:\r\n|[\s\S])|(?!\1)[^\\\r\n])*\1/,
+		greedy: true
+	},
+
+	// Built-in target names
+	'builtin': /\.[A-Z][^:#=\s]+(?=\s*:(?!=))/,
+
+	// Targets
+	'symbol': {
+		pattern: /^[^:=\r\n]+(?=\s*:(?!=))/m,
+		inside: {
+			'variable': /\$+(?:[^(){}:#=\s]+|(?=[({]))/
+		}
+	},
+	'variable': /\$+(?:[^(){}:#=\s]+|\([@*%<^+?][DF]\)|(?=[({]))/,
+
+	'keyword': [
+		// Directives
+		/-include\b|\b(?:define|else|endef|endif|export|ifn?def|ifn?eq|include|override|private|sinclude|undefine|unexport|vpath)\b/,
+		// Functions
+		{
+			pattern: /(\()(?:addsuffix|abspath|and|basename|call|dir|error|eval|file|filter(?:-out)?|findstring|firstword|flavor|foreach|guile|if|info|join|lastword|load|notdir|or|origin|patsubst|realpath|shell|sort|strip|subst|suffix|value|warning|wildcard|word(?:s|list)?)(?=[ \t])/,
+			lookbehind: true
+		}
+	],
+	'operator': /(?:::|[?:+!])?=|[|@]/,
+	'punctuation': /[:;(){}]/
+};
+(function () {
+
+	if (typeof self === 'undefined' || !self.Prism || !self.document) {
+		return;
+	}
+
+	/**
+	 * Plugin name which is used as a class name for <pre> which is activating the plugin
+	 * @type {String}
+	 */
+	var PLUGIN_NAME = 'line-numbers';
+	
+	/**
+	 * Regular expression used for determining line breaks
+	 * @type {RegExp}
+	 */
+	var NEW_LINE_EXP = /\n(?!$)/g;
+
+	/**
+	 * Resizes line numbers spans according to height of line of code
+	 * @param {Element} element <pre> element
+	 */
+	var _resizeElement = function (element) {
+		var codeStyles = getStyles(element);
+		var whiteSpace = codeStyles['white-space'];
+
+		if (whiteSpace === 'pre-wrap' || whiteSpace === 'pre-line') {
+			var codeElement = element.querySelector('code');
+			var lineNumbersWrapper = element.querySelector('.line-numbers-rows');
+			var lineNumberSizer = element.querySelector('.line-numbers-sizer');
+			var codeLines = codeElement.textContent.split(NEW_LINE_EXP);
+
+			if (!lineNumberSizer) {
+				lineNumberSizer = document.createElement('span');
+				lineNumberSizer.className = 'line-numbers-sizer';
+
+				codeElement.appendChild(lineNumberSizer);
+			}
+
+			lineNumberSizer.style.display = 'block';
+
+			codeLines.forEach(function (line, lineNumber) {
+				lineNumberSizer.textContent = line || '\n';
+				var lineSize = lineNumberSizer.getBoundingClientRect().height;
+				lineNumbersWrapper.children[lineNumber].style.height = lineSize + 'px';
+			});
+
+			lineNumberSizer.textContent = '';
+			lineNumberSizer.style.display = 'none';
+		}
+	};
+
+	/**
+	 * Returns style declarations for the element
+	 * @param {Element} element
+	 */
+	var getStyles = function (element) {
+		if (!element) {
+			return null;
+		}
+
+		return window.getComputedStyle ? getComputedStyle(element) : (element.currentStyle || null);
+	};
+
+	window.addEventListener('resize', function () {
+		Array.prototype.forEach.call(document.querySelectorAll('pre.' + PLUGIN_NAME), _resizeElement);
+	});
+
+	Prism.hooks.add('complete', function (env) {
+		if (!env.code) {
+			return;
+		}
+
+		// works only for <code> wrapped inside <pre> (not inline)
+		var pre = env.element.parentNode;
+		var clsReg = /\s*\bline-numbers\b\s*/;
+		if (
+			!pre || !/pre/i.test(pre.nodeName) ||
+			// Abort only if nor the <pre> nor the <code> have the class
+			(!clsReg.test(pre.className) && !clsReg.test(env.element.className))
+		) {
+			return;
+		}
+
+		if (env.element.querySelector('.line-numbers-rows')) {
+			// Abort if line numbers already exists
+			return;
+		}
+
+		if (clsReg.test(env.element.className)) {
+			// Remove the class 'line-numbers' from the <code>
+			env.element.className = env.element.className.replace(clsReg, ' ');
+		}
+		if (!clsReg.test(pre.className)) {
+			// Add the class 'line-numbers' to the <pre>
+			pre.className += ' line-numbers';
+		}
+
+		var match = env.code.match(NEW_LINE_EXP);
+		var linesNum = match ? match.length + 1 : 1;
+		var lineNumbersWrapper;
+
+		var lines = new Array(linesNum + 1);
+		lines = lines.join('<span></span>');
+
+		lineNumbersWrapper = document.createElement('span');
+		lineNumbersWrapper.setAttribute('aria-hidden', 'true');
+		lineNumbersWrapper.className = 'line-numbers-rows';
+		lineNumbersWrapper.innerHTML = lines;
+
+		if (pre.hasAttribute('data-start')) {
+			pre.style.counterReset = 'linenumber ' + (parseInt(pre.getAttribute('data-start'), 10) - 1);
+		}
+
+		env.element.appendChild(lineNumbersWrapper);
+
+		_resizeElement(pre);
+
+		Prism.hooks.run('line-numbers', env);
+	});
+
+	Prism.hooks.add('line-numbers', function (env) {
+		env.plugins = env.plugins || {};
+		env.plugins.lineNumbers = true;
+	});
+	
+	/**
+	 * Global exports
+	 */
+	Prism.plugins.lineNumbers = {
+		/**
+		 * Get node for provided line number
+		 * @param {Element} element pre element
+		 * @param {Number} number line number
+		 * @return {Element|undefined}
+		 */
+		getLine: function (element, number) {
+			if (element.tagName !== 'PRE' || !element.classList.contains(PLUGIN_NAME)) {
+				return;
+			}
+
+			var lineNumberRows = element.querySelector('.line-numbers-rows');
+			var lineNumberStart = parseInt(element.getAttribute('data-start'), 10) || 1;
+			var lineNumberEnd = lineNumberStart + (lineNumberRows.children.length - 1);
+
+			if (number < lineNumberStart) {
+				number = lineNumberStart;
+			}
+			if (number > lineNumberEnd) {
+				number = lineNumberEnd;
+			}
+
+			var lineIndex = number - lineNumberStart;
+
+			return lineNumberRows.children[lineIndex];
+		}
+	};
+
+}());
+(function() {
+
+var assign = Object.assign || function (obj1, obj2) {
+	for (var name in obj2) {
+		if (obj2.hasOwnProperty(name))
+			obj1[name] = obj2[name];
+	}
+	return obj1;
+}
+
+function NormalizeWhitespace(defaults) {
+	this.defaults = assign({}, defaults);
+}
+
+function toCamelCase(value) {
+	return value.replace(/-(\w)/g, function(match, firstChar) {
+		return firstChar.toUpperCase();
+	});
+}
+
+function tabLen(str) {
+	var res = 0;
+	for (var i = 0; i < str.length; ++i) {
+		if (str.charCodeAt(i) == '\t'.charCodeAt(0))
+			res += 3;
+	}
+	return str.length + res;
+}
+
+NormalizeWhitespace.prototype = {
+	setDefaults: function (defaults) {
+		this.defaults = assign(this.defaults, defaults);
+	},
+	normalize: function (input, settings) {
+		settings = assign(this.defaults, settings);
+
+		for (var name in settings) {
+			var methodName = toCamelCase(name);
+			if (name !== "normalize" && methodName !== 'setDefaults' &&
+					settings[name] && this[methodName]) {
+				input = this[methodName].call(this, input, settings[name]);
+			}
+		}
+
+		return input;
+	},
+
+	/*
+	 * Normalization methods
+	 */
+	leftTrim: function (input) {
+		return input.replace(/^\s+/, '');
+	},
+	rightTrim: function (input) {
+		return input.replace(/\s+$/, '');
+	},
+	tabsToSpaces: function (input, spaces) {
+		spaces = spaces|0 || 4;
+		return input.replace(/\t/g, new Array(++spaces).join(' '));
+	},
+	spacesToTabs: function (input, spaces) {
+		spaces = spaces|0 || 4;
+		return input.replace(new RegExp(' {' + spaces + '}', 'g'), '\t');
+	},
+	removeTrailing: function (input) {
+		return input.replace(/\s*?$/gm, '');
+	},
+	// Support for deprecated plugin remove-initial-line-feed
+	removeInitialLineFeed: function (input) {
+		return input.replace(/^(?:\r?\n|\r)/, '');
+	},
+	removeIndent: function (input) {
+		var indents = input.match(/^[^\S\n\r]*(?=\S)/gm);
+
+		if (!indents || !indents[0].length)
+			return input;
+
+		indents.sort(function(a, b){return a.length - b.length; });
+
+		if (!indents[0].length)
+			return input;
+
+		return input.replace(new RegExp('^' + indents[0], 'gm'), '');
+	},
+	indent: function (input, tabs) {
+		return input.replace(/^[^\S\n\r]*(?=\S)/gm, new Array(++tabs).join('\t') + '$&');
+	},
+	breakLines: function (input, characters) {
+		characters = (characters === true) ? 80 : characters|0 || 80;
+
+		var lines = input.split('\n');
+		for (var i = 0; i < lines.length; ++i) {
+			if (tabLen(lines[i]) <= characters)
+				continue;
+
+			var line = lines[i].split(/(\s+)/g),
+			    len = 0;
+
+			for (var j = 0; j < line.length; ++j) {
+				var tl = tabLen(line[j]);
+				len += tl;
+				if (len > characters) {
+					line[j] = '\n' + line[j];
+					len = tl;
+				}
+			}
+			lines[i] = line.join('');
+		}
+		return lines.join('\n');
+	}
+};
+
+// Support node modules
+if (typeof module !== 'undefined' && module.exports) {
+	module.exports = NormalizeWhitespace;
+}
+
+// Exit if prism is not loaded
+if (typeof Prism === 'undefined') {
+	return;
+}
+
+Prism.plugins.NormalizeWhitespace = new NormalizeWhitespace({
+	'remove-trailing': true,
+	'remove-indent': true,
+	'left-trim': true,
+	'right-trim': true,
+	/*'break-lines': 80,
+	'indent': 2,
+	'remove-initial-line-feed': false,
+	'tabs-to-spaces': 4,
+	'spaces-to-tabs': 4*/
+});
+
+Prism.hooks.add('before-sanity-check', function (env) {
+	var Normalizer = Prism.plugins.NormalizeWhitespace;
+
+	// Check settings
+	if (env.settings && env.settings['whitespace-normalization'] === false) {
+		return;
+	}
+
+	// Simple mode if there is no env.element
+	if ((!env.element || !env.element.parentNode) && env.code) {
+		env.code = Normalizer.normalize(env.code, env.settings);
+		return;
+	}
+
+	// Normal mode
+	var pre = env.element.parentNode;
+	var clsReg = /\bno-whitespace-normalization\b/;
+	if (!env.code || !pre || pre.nodeName.toLowerCase() !== 'pre' ||
+			clsReg.test(pre.className) || clsReg.test(env.element.className))
+		return;
+
+	var children = pre.childNodes,
+	    before = '',
+	    after = '',
+	    codeFound = false;
+
+	// Move surrounding whitespace from the <pre> tag into the <code> tag
+	for (var i = 0; i < children.length; ++i) {
+		var node = children[i];
+
+		if (node == env.element) {
+			codeFound = true;
+		} else if (node.nodeName === "#text") {
+			if (codeFound) {
+				after += node.nodeValue;
+			} else {
+				before += node.nodeValue;
+			}
+
+			pre.removeChild(node);
+			--i;
+		}
+	}
+
+	if (!env.element.children.length || !Prism.plugins.KeepMarkup) {
+		env.code = before + env.code + after;
+		env.code = Normalizer.normalize(env.code, env.settings);
+	} else {
+		// Preserve markup for keep-markup plugin
+		var html = before + env.element.innerHTML + after;
+		env.element.innerHTML = Normalizer.normalize(html, env.settings);
+		env.code = env.element.textContent;
+	}
+});
+
+}());
+var previous = 0;
+var derniere_position_de_scroll_connue = 0;
+var ticking = false;
+var header = document.querySelector("header");
+
+function faitQuelquechose(old_pos, new_pos) {
+  if (new_pos - old_pos > 0)
+      header.style.top = "-2em";
+  else
+      header.style.top = "0em";
+
+}
+
+window.addEventListener('scroll', function(e) {
+    var old = derniere_position_de_scroll_connue;
+  derniere_position_de_scroll_connue = window.scrollY;
+  if (!ticking) {
+    window.requestAnimationFrame(function() {
+      faitQuelquechose(old, derniere_position_de_scroll_connue);
+      ticking = false;
+    });
+  }
+  ticking = true;
+});
+
+var global_id = 1000
+
+function open_tag(tagName, id)
+{
+    return "<" + tagName.toLowerCase() + "><a href=\"#" + id + "\">";
+}
+
+function close_tag(tagName)
+{
+    return "</a></" + tagName.toLowerCase() + ">";
+}
+
+var nav = document.querySelector("nav");
+
+if (nav !== null)
+{
+    var hs = document.querySelectorAll("h2, h3, h4");
+    var tc = "";
+    var n = 0;
+
+    for (var i = 0; i < hs.length; i++)
+    {
+        var tagName = hs[i].tagName;
+
+        if (hs[i].id == "")
+            hs[i].id = "head_" + global_id++;
+
+        var qn = "";
+        if (hs[i].className == "question")
+            qn = ++n + ". ";
+
+        tc += open_tag(tagName, hs[i].id) + qn + hs[i].innerText + close_tag(tagName);
+    }
+
+    nav.innerHTML = tc;
+}
+    </script>
+    </head>
+    <body>
+        <header>
+            <div>
+                <span><a href="#table_of_contents">≡</a></span>
+                <span>Practical Programming</span>
+                <span><a href="mailto:david.bouchet.epita@gmail.com">David Bouchet</a></span>
+            </div>
+        </header>
+        <div class="title">
+            <div class="practical_number">Practical Work #4</div>
+            <h1>Two-Dimentional Arrays</h1>
+        </div>
+        <nav id="table_of_contents"></nav>
+        <main>
+            <h2>Submission</h2>
+            <h3>Due Date</h3>
+            <p>By Thursday 7 September 2023 23:42</p>
+            <h3>Directory Hierarchy</h3>
+            <p>
+                When you are done, your git repository must contain the following files and directories:
+            </p>
+            <pre class=" language-none"><code class=" language-none">$ tree
+.
+├── AUTHORS
+├── chess
+│   ├── chess.c
+│   ├── chess.h
+│   ├── Makefile
+│   └── test.c
+├── matrices
+│   ├── main.c
+│   ├── Makefile
+│   ├── matrix.c
+│   └── matrix.h
+└── pascal
+    ├── Makefile
+    ├── pascal.c
+    ├── pascal.h
+    └── test.c</code></pre>
+            <p>
+                The <code class="s">AUTHORS</code> file
+                must contain the following information.
+            </p>
+            <div class="filename">AUTHORS</div>
+            <pre class="line-numbers language-bash"><code class=" language-bash">First Name
+Family Name
+Login
+Email Address<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+            <p>
+                The last character of your <code class="s">AUTHORS</code> file must be a newline character.
+            </p>
+            <p>For instance:</p>
+            <div class="filename">AUTHORS</div>
+            <pre class=" language-bash"><code class=" language-bash">$ <span class="token function">cat</span> AUTHORS
+John
+Smith
+john.smith
+john.smith@epita.fr
+$ <span class="token comment"># Command prompt ready for the next command...</span></code></pre>
+            <p>
+                <mark>
+                    Be careful, if you do not follow all the given instructions,
+                    no point will be given to your answers.
+                </mark>
+            </p>
+            <h2>Matrices as One-Dimensional Arrays</h2>
+            <h3>Introduction</h3>
+            <p>
+                The purpose of this part is to introduce good practices on matrix manipulations.
+            </p>
+            <p>
+                There are many ways to represent matrices in the C language.
+                Matrices are two-dimensional arrays,
+                but experience has shown that in most cases,
+                it is preferable to consider matrices as single-dimensional arrays.
+                This way, matrices are stored in contiguous memory space, thus improving performances.
+                Also, the syntax of one-dimensional arrays is more readable.
+            </p>
+            <p>
+                To explain how it works, let us consider a 3x3 matrix:
+            </p>
+            <p class="img">
+                               <img alt="Multi-Dimensional Matrix" src="data:image/png;base64,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">
+
+            </p>
+            <p>
+                This matrix can be stored in a single-dimensional array as follows:
+            </p>
+            <p class="img">
+                                <img alt="Single-Dimensional Matrix" src="data:image/png;base64,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">
+            </p>
+            <p>
+                Accessing a cell can be done by converting the two indices of the two-dimensional array into only one index.
+            </p>
+            <p class="two_indices_to_one">
+                <b><code>array[i][j] = array[i * cols + j]</code></b>
+            </p> 
+            <p>
+                </p><ul>
+                    <li><code class="s"><var>i</var></code> is the row number of the cell we want to access.</li>
+                    <li><code class="s"><var>j</var></code> is the column number of the cell we want to access.</li>
+                    <li><code class="s"><var>cols</var></code> is the total number of columns.</li>
+                </ul>
+            <p></p>
+            <p>
+                This method is known as
+				<a href="https://en.wikipedia.org/wiki/Row-_and_column-major_order">row-major order</a>.
+            </p><h3>Provided Code</h3>
+            <p>
+                Four files are provided:
+            </p>
+            <ul>
+                <li>
+                    <code class="s">Makefile</code>:
+                    it can be used to compile your code.
+                </li>
+                <li>
+                    <code class="s">matrix.c</code>:
+                    it contains the functions you will write.
+                    <mark>You are supposed to complete this file.</mark>
+                </li>
+                <li>
+                    <code class="s">matrix.h</code>:
+                    the header of <code class="s">matrix.c</code>.
+                </li>
+                <li>
+                    <code class="s">main.c</code>:
+                    it contains the main function used to test
+                    your functions.
+                    <mark>You are supposed to complete this file.</mark>
+                </li>
+            </ul>
+            <p>So first, the <i>Makefile</i>:</p>
+            <div class="filename">Makefile</div>
+            <pre class=" language-makefile"><code class=" language-makefile"><span class="token comment"># Makefile</span>
+
+CC <span class="token operator">=</span> gcc -fsanitize<span class="token operator">=</span>address
+CPPFLAGS <span class="token operator">=</span> -MMD
+CFLAGS <span class="token operator">=</span> -Wall -Wextra -std<span class="token operator">=</span>c99 -O0 -g
+LDFLAGS <span class="token operator">=</span>
+LDLIBS <span class="token operator">=</span>
+
+OBJ <span class="token operator">=</span> matrix.o main.o
+DEP <span class="token operator">=</span> <span class="token variable">$</span><span class="token punctuation">{</span>OBJ<span class="token punctuation">:</span>.o<span class="token operator">=</span>.d<span class="token punctuation">}</span>
+
+<span class="token symbol">all</span><span class="token punctuation">:</span> main
+
+<span class="token symbol">main</span><span class="token punctuation">:</span> <span class="token variable">$</span><span class="token punctuation">{</span>OBJ<span class="token punctuation">}</span>
+
+<span class="token symbol">clean</span><span class="token punctuation">:</span>
+	<span class="token variable">$</span><span class="token punctuation">{</span>RM<span class="token punctuation">}</span> <span class="token variable">$</span><span class="token punctuation">{</span>OBJ<span class="token punctuation">}</span> <span class="token variable">$</span><span class="token punctuation">{</span>DEP<span class="token punctuation">}</span> main
+
+<span class="token keyword">-include</span> <span class="token variable">$</span><span class="token punctuation">{</span>DEP<span class="token punctuation">}</span>
+
+<span class="token comment"># END</span></code></pre>
+            <p>
+                Then, the <code class="s">matrix.c</code> file.
+            </p>
+            <div class="filename">matrix.c</div>
+            <pre class=" language-c"><code class=" language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+
+<span class="token keyword">void</span> <span class="token function">print_matrix</span><span class="token punctuation">(</span><span class="token keyword">char</span> s<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">double</span> m<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">size_t</span> rows<span class="token punctuation">,</span> <span class="token keyword">size_t</span> cols<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// TODO</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">transpose</span><span class="token punctuation">(</span><span class="token keyword">double</span> m<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">size_t</span> rows<span class="token punctuation">,</span> <span class="token keyword">size_t</span> cols<span class="token punctuation">,</span> <span class="token keyword">double</span> r<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// TODO</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">double</span> m1<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">double</span> m2<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">size_t</span> rows<span class="token punctuation">,</span> <span class="token keyword">size_t</span> cols<span class="token punctuation">,</span> <span class="token keyword">double</span> r<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// TODO</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">mul</span><span class="token punctuation">(</span><span class="token keyword">double</span> m1<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">double</span> m2<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">size_t</span> r1<span class="token punctuation">,</span> <span class="token keyword">size_t</span> c1<span class="token punctuation">,</span> <span class="token keyword">size_t</span> c2<span class="token punctuation">,</span> <span class="token keyword">double</span> r<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// TODO</span>
+<span class="token punctuation">}</span></code></pre>
+
+            <p>
+                Next, the <code class="s">matrix.h</code> header file.
+            </p>
+            <div class="filename">matrix.h</div>
+            <pre class=" language-c"><code class=" language-c"><span class="token macro property">#<span class="token directive keyword">ifndef</span> MATRIX_H</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> MATRIX_H</span>
+
+<span class="token keyword">void</span> <span class="token function">print_matrix</span><span class="token punctuation">(</span><span class="token keyword">char</span> s<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">double</span> m<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">size_t</span> rows<span class="token punctuation">,</span> <span class="token keyword">size_t</span> cols<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">transpose</span><span class="token punctuation">(</span><span class="token keyword">double</span> m<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">size_t</span> rows<span class="token punctuation">,</span> <span class="token keyword">size_t</span> cols<span class="token punctuation">,</span> <span class="token keyword">double</span> r<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">double</span> m1<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">double</span> m2<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">size_t</span> rows<span class="token punctuation">,</span> <span class="token keyword">size_t</span> cols<span class="token punctuation">,</span> <span class="token keyword">double</span> r<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">mul</span><span class="token punctuation">(</span><span class="token keyword">double</span> m1<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">double</span> m2<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">size_t</span> r1<span class="token punctuation">,</span> <span class="token keyword">size_t</span> c1<span class="token punctuation">,</span> <span class="token keyword">size_t</span> c2<span class="token punctuation">,</span> <span class="token keyword">double</span> r<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token macro property">#<span class="token directive keyword">endif</span></span></code></pre>
+            <p>
+                Finally, the <code class="s">main.c</code> file.
+            </p>
+            <div class="filename">main.c</div>
+            <pre class=" language-c"><code class=" language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"matrix.h"</span></span>
+
+<span class="token macro property">#<span class="token directive keyword">define</span> ROWS1 1</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> COLS1 2</span>
+<span class="token keyword">double</span> m1<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span>
+<span class="token punctuation">{</span>
+    <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token macro property">#<span class="token directive keyword">define</span> ROWS2 2</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> COLS2 2</span>
+<span class="token keyword">double</span> m2<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span>
+<span class="token punctuation">{</span>
+    <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span>
+    <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token macro property">#<span class="token directive keyword">define</span> ROWS3 3</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> COLS3 2</span>
+<span class="token keyword">double</span> m3<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span>
+<span class="token punctuation">{</span>
+    <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span>
+    <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span>
+    <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token macro property">#<span class="token directive keyword">define</span> ROWS4 4</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> COLS4 3</span>
+<span class="token keyword">double</span> m4<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span>
+<span class="token punctuation">{</span>
+    <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span>
+    <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span>
+    <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span>
+    <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token macro property">#<span class="token directive keyword">define</span> ROWS5 3</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> COLS5 4</span>
+<span class="token keyword">double</span> m5<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span>
+<span class="token punctuation">{</span>
+    <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span>
+    <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span>
+    <span class="token number">9</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">11</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Results for the transpositions.</span>
+<span class="token keyword">double</span> m1_tr<span class="token punctuation">[</span>ROWS1 <span class="token operator">*</span> COLS1<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">double</span> m2_tr<span class="token punctuation">[</span>ROWS2 <span class="token operator">*</span> COLS2<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">double</span> m3_tr<span class="token punctuation">[</span>ROWS3 <span class="token operator">*</span> COLS3<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">double</span> m4_tr<span class="token punctuation">[</span>ROWS4 <span class="token operator">*</span> COLS4<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">double</span> m5_tr<span class="token punctuation">[</span>ROWS5 <span class="token operator">*</span> COLS5<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Results for the additions.</span>
+<span class="token keyword">double</span> m3_plus_m3<span class="token punctuation">[</span>ROWS3 <span class="token operator">*</span> COLS3<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">double</span> m4_plus_m5tr<span class="token punctuation">[</span>ROWS4 <span class="token operator">*</span> COLS4<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">double</span> m5_plus_m4tr<span class="token punctuation">[</span>ROWS5 <span class="token operator">*</span> COLS5<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Results for the multiplications.</span>
+<span class="token keyword">double</span> m2_times_m2<span class="token punctuation">[</span>ROWS2 <span class="token operator">*</span> COLS2<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">double</span> m4_times_m5<span class="token punctuation">[</span>ROWS4 <span class="token operator">*</span> COLS5<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">double</span> m5_times_m4<span class="token punctuation">[</span>ROWS5 <span class="token operator">*</span> COLS4<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">print_matrix</span><span class="token punctuation">(</span><span class="token string">"m1"</span><span class="token punctuation">,</span> m1<span class="token punctuation">,</span> ROWS1<span class="token punctuation">,</span> COLS1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">print_matrix</span><span class="token punctuation">(</span><span class="token string">"m2"</span><span class="token punctuation">,</span> m2<span class="token punctuation">,</span> ROWS2<span class="token punctuation">,</span> COLS2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">print_matrix</span><span class="token punctuation">(</span><span class="token string">"m3"</span><span class="token punctuation">,</span> m3<span class="token punctuation">,</span> ROWS3<span class="token punctuation">,</span> COLS3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">print_matrix</span><span class="token punctuation">(</span><span class="token string">"m4"</span><span class="token punctuation">,</span> m4<span class="token punctuation">,</span> ROWS4<span class="token punctuation">,</span> COLS4<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">print_matrix</span><span class="token punctuation">(</span><span class="token string">"m5"</span><span class="token punctuation">,</span> m5<span class="token punctuation">,</span> ROWS5<span class="token punctuation">,</span> COLS5<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// TODO</span>
+    <span class="token comment">//</span>
+    <span class="token comment">// Add some code to test your</span>
+    <span class="token comment">// transpose(), add() and mul() functions.</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+            <h3>Printing Matrices</h3>
+            <p>
+                In this part, you will write the <code class="s">print_matrix()</code> function
+                that prints the contents of a matrix.
+            </p>
+            <pre class=" language-c"><code class=" language-c"><span class="token keyword">void</span> <span class="token function">print_matrix</span><span class="token punctuation">(</span><span class="token keyword">char</span> s<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">double</span> m<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">size_t</span> rows<span class="token punctuation">,</span> <span class="token keyword">size_t</span> cols<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+            <ul>
+                <li>
+                    <code class="s">s</code> = the name of the matrix to be printed.
+                </li>
+                <li>
+                    <code class="s">m</code> = the matrix to be printed.
+                </li>
+                <li>
+                    <code class="s">rows</code> = the number of rows
+                    in the matrix.
+                </li>
+                <li>
+                    <code class="s">cols</code> = the number of columns
+                    in the matrix.
+                </li>
+            </ul>
+            <p>
+                The printing will be done in a straightforward way (i.e. row by row).
+                You should use the <code class="s">printf()</code> function
+                with the <code class="s">%4g</code> format.
+                For instance:
+            </p>
+            <pre class=" language-none"><code class=" language-none">m1 =   # Insert a space between = and the newline !
+   1   2   3   4
+   5   6   7   8
+   9  10  11  12</code></pre>
+            <p>
+                Write the <code class="s">print_matrix()</code> function
+                in the <code class="s">matrix.c</code> file
+                and test it by using the <code class="s">main.c</code> file.
+                Some code is already provided in the
+                <code class="s">main.c</code> file.
+                For this first function you do not have to modify it.
+            </p>
+            <p>
+                The expected results are as follows:
+            </p>
+            <pre class=" language-bash"><code class=" language-bash">$ ./main
+m1 <span class="token operator">=</span>
+   1   2
+m2 <span class="token operator">=</span>
+   1   2
+   3   4
+m3 <span class="token operator">=</span>
+   1   2
+   3   4
+   5   6
+m4 <span class="token operator">=</span>
+   1   0   3
+   1   2   0
+   0   2   3
+   1   0   3
+m5 <span class="token operator">=</span>
+   1   2   3   4
+   5   6   7   8
+   9  10  11  12</code></pre>
+            <h3>Transposing Matrices</h3>
+            <p>
+                In this part, you will write the <code class="s">transpose()</code>
+                function that switches the rows and columns in a matrix
+                (see <a href="https://en.wikipedia.org/wiki/Transpose">Transpose</a>).
+            </p>
+            <pre class=" language-c"><code class=" language-c"><span class="token keyword">void</span> <span class="token function">transpose</span><span class="token punctuation">(</span><span class="token keyword">double</span> m<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">size_t</span> rows<span class="token punctuation">,</span> <span class="token keyword">size_t</span> cols<span class="token punctuation">,</span> <span class="token keyword">double</span> r<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+            <ul>
+                <li>
+                    <code class="s">m</code> = the matrix to be transposed.
+                </li>
+                <li>
+                    <code class="s">rows</code> = the number of rows
+                    in the matrix.
+                </li>
+                <li>
+                    <code class="s">cols</code> = the number of columns
+                    in the matrix.
+                </li>
+                <li>
+                    <code class="s">r</code> = the output matrix that
+                    will store the result.
+                </li>
+            </ul>
+            <p>
+                Write the <code class="s">transpose()</code> function
+                in the <code class="s">matrix.c</code> file
+                and add some code in the 
+                <code class="s">main.c</code> file in order to test it.
+                The matrices used for testing
+                are already defined as global variables.
+                So, just write some instructions to transpose the matrices
+                and print the results.
+            </p>
+            <p>
+                The expected results are as follows (the first part has been snipped):
+            </p>
+            <pre class=" language-bash"><code class=" language-bash">$ ./main
+m1 <span class="token operator">=</span>
+   1   2
+<span class="token comment"># ... snip ...</span>
+m1_tr <span class="token operator">=</span>
+   1
+   2
+m2_tr <span class="token operator">=</span>
+   1   3
+   2   4
+m3_tr <span class="token operator">=</span>
+   1   3   5
+   2   4   6
+m4_tr <span class="token operator">=</span>
+   1   1   0   1
+   0   2   2   0
+   3   0   3   3
+m5_tr <span class="token operator">=</span>
+   1   5   9
+   2   6  10
+   3   7  11
+   4   8  12</code></pre>
+            <h3>Adding Matrices</h3>
+            <p>
+                In this part, you will write the <code class="s">add()</code>
+                function that adds two matrices that have the same dimensions
+                (see <a href="https://en.wikipedia.org/wiki/Matrix_addition">Matrix addition</a>).
+            </p>
+            <pre class=" language-c"><code class=" language-c"><span class="token keyword">void</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">double</span> m1<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">double</span> m2<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">size_t</span> rows<span class="token punctuation">,</span> <span class="token keyword">size_t</span> cols<span class="token punctuation">,</span> <span class="token keyword">double</span> r<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+            <ul>
+                <li>
+                    <code class="s">m1</code> = the first matrix to be added.
+                </li>
+                <li>
+                    <code class="s">m2</code> = the second matrix to be added.
+                </li>
+                <li>
+                    <code class="s">rows</code> = the number of rows
+                    of the two matrices.
+                </li>
+                <li>
+                    <code class="s">cols</code> = the number of columns
+                    of the two matrices.
+                </li>
+                <li>
+                    <code class="s">r</code> = the output matrix that
+                    will store the result.
+                </li>
+            </ul>
+            <p>
+                Write the <code class="s">add()</code> function
+                in the <code class="s">matrix.c</code> file
+                and add some code in the 
+                <code class="s">main.c</code> file in order to test it.
+                The matrices used for testing
+                are already defined as global variables.
+                So, just write some instructions to add the matrices
+                and print the results.
+            </p>
+            <p>
+                The expected results are as follows (the first part has been snipped):
+            </p>
+            <pre class=" language-bash"><code class=" language-bash">$ ./main
+m1 <span class="token operator">=</span>
+   1   2
+<span class="token comment"># ... snip ...</span>
+m3_plus_m3 <span class="token operator">=</span>
+   2   4
+   6   8
+  10  12
+m4_plus_m5tr <span class="token operator">=</span>
+   2   5  12
+   3   8  10
+   3   9  14
+   5   8  15
+m5_plus_m4tr <span class="token operator">=</span>
+   2   3   3   5
+   5   8   9   8
+  12  10  14  15</code></pre>
+            <h3>Multiplying Matrices</h3>
+            <p>
+                In this part, you will write the <code class="s">mul()</code>
+                function that multiplies two matrices.
+                The number of columns in the first matrix
+                must be equal to the number of rows in the second matrix
+                (see <a href="https://en.wikipedia.org/wiki/Matrix_multiplication">Matrix multiplication</a>).
+            </p>
+            <pre class=" language-c"><code class=" language-c"><span class="token keyword">void</span> <span class="token function">mul</span><span class="token punctuation">(</span><span class="token keyword">double</span> m1<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">double</span> m2<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">size_t</span> r1<span class="token punctuation">,</span> <span class="token keyword">size_t</span> c1<span class="token punctuation">,</span> <span class="token keyword">size_t</span> c2<span class="token punctuation">,</span> <span class="token keyword">double</span> r<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+            <ul>
+                <li>
+                    <code class="s">m1</code> = the first matrix to be multiplied.
+                </li>
+                <li>
+                    <code class="s">m2</code> = the second matrix to be multiplied.
+                </li>
+                <li>
+                    <code class="s">r1</code> = the number of rows in the first matrix.
+                </li>
+                <li>
+                    <code class="s">c1</code> = the number of columns in the first matrix
+                    that is also the number of rows of the second matrix.
+                </li>
+                <li>
+                    <code class="s">c2</code> = the number of columns in the second matrix.
+                </li>
+                <li>
+                    <code class="s">r</code> = the output matrix that
+                    will store the result.
+                </li>
+            </ul>
+            <p>
+                Write the <code class="s">mul()</code> function
+                in the <code class="s">matrix.c</code> file
+                and add some code in the 
+                <code class="s">main.c</code> file in order to test it.
+                The matrices used for testing
+                are already defined as global variables.
+                So, just write some instructions to multiply the matrices
+                and print the results.
+            </p>
+            <p>
+                The full expected results are as follows:
+            </p>
+            <pre class=" language-bash"><code class=" language-bash">$ ./main
+m1 <span class="token operator">=</span>
+   1   2
+m2 <span class="token operator">=</span>
+   1   2
+   3   4
+m3 <span class="token operator">=</span>
+   1   2
+   3   4
+   5   6
+m4 <span class="token operator">=</span>
+   1   0   3
+   1   2   0
+   0   2   3
+   1   0   3
+m5 <span class="token operator">=</span>
+   1   2   3   4
+   5   6   7   8
+   9  10  11  12
+m1_tr <span class="token operator">=</span>
+   1
+   2
+m2_tr <span class="token operator">=</span>
+   1   3
+   2   4
+m3_tr <span class="token operator">=</span>
+   1   3   5
+   2   4   6
+m4_tr <span class="token operator">=</span>
+   1   1   0   1
+   0   2   2   0
+   3   0   3   3
+m5_tr <span class="token operator">=</span>
+   1   5   9
+   2   6  10
+   3   7  11
+   4   8  12
+m3_plus_m3 <span class="token operator">=</span>
+   2   4
+   6   8
+  10  12
+m4_plus_m5tr <span class="token operator">=</span>
+   2   5  12
+   3   8  10
+   3   9  14
+   5   8  15
+m5_plus_m4tr <span class="token operator">=</span>
+   2   3   3   5
+   5   8   9   8
+  12  10  14  15
+m2_times_m2 <span class="token operator">=</span>
+   7  10
+  15  22
+m4_times_m5 <span class="token operator">=</span>
+  28  32  36  40
+  11  14  17  20
+  37  42  47  52
+  28  32  36  40
+m5_times_m4 <span class="token operator">=</span>
+   7  10  24
+  19  26  60
+  31  42  96</code></pre>
+            <h2>Moving Chessmen</h2>
+            <h3>Introduction</h3>
+            In this section, you are going to write some functions
+            that determine the legal moves of some <a href="https://en.wikipedia.org/wiki/Chess_piece">chessmen</a>.
+            A <b>chessman</b> is a chess piece.
+            <p>
+                We will consider three pieces only:
+                the <a href="https://en.wikipedia.org/wiki/Rook_(chess)">rook</a>,
+                the <a href="https://en.wikipedia.org/wiki/Bishop_(chess)">bishop</a>
+                and the <a href="https://en.wikipedia.org/wiki/Queen_(chess)">queen</a>.
+            </p>
+            <p>
+                If you do not know how a chessman can move,
+                you can easily find out some documentation about it on the Internet
+                (e.g. look at this <a href="https://en.wikipedia.org/wiki/Chess#Movement">page</a>).
+            </p>
+            <h3>Provided Code</h3>
+            <p>
+                Four files are provided:
+            </p>
+            <ul>
+                <li>
+                    <code class="s">Makefile</code>:
+                    it can be used to compile your code.
+                </li>
+                <li>
+                    <code class="s">chess.c</code>:
+                    it contains the functions you will write.
+                    <mark>You are supposed to complete this file.</mark>
+                </li>
+                <li>
+                    <code class="s">chess.h</code>:
+                    the header of <code class="s">chess.c</code>.
+                </li>
+                <li>
+                    <code class="s">test.c</code>:
+                    it contains the main function used to test your functions.
+                </li>
+            </ul>
+            <p>So first, the <i>Makefile</i>:</p>
+            <div class="filename">Makefile</div>
+            <pre class=" language-makefile"><code class=" language-makefile"><span class="token comment"># Makefile</span>
+
+CC <span class="token operator">=</span> gcc
+CPPFLAGS <span class="token operator">=</span> -MMD
+CFLAGS <span class="token operator">=</span> -Wall -Wextra
+LDFLAGS <span class="token operator">=</span>
+LDLIBS <span class="token operator">=</span>
+
+SRC <span class="token operator">=</span> test.c chess.c
+OBJ <span class="token operator">=</span> <span class="token variable">$</span><span class="token punctuation">{</span>SRC<span class="token punctuation">:</span>.c<span class="token operator">=</span>.o<span class="token punctuation">}</span>
+DEP <span class="token operator">=</span> <span class="token variable">$</span><span class="token punctuation">{</span>SRC<span class="token punctuation">:</span>.c<span class="token operator">=</span>.d<span class="token punctuation">}</span>
+
+<span class="token symbol">test</span><span class="token punctuation">:</span> <span class="token variable">$</span><span class="token punctuation">{</span>OBJ<span class="token punctuation">}</span>
+
+<span class="token keyword">-include</span> <span class="token variable">$</span><span class="token punctuation">{</span>DEP<span class="token punctuation">}</span>
+
+<span class="token builtin">.PHONY</span><span class="token punctuation">:</span> clean
+
+<span class="token symbol">clean</span><span class="token punctuation">:</span>
+	<span class="token variable">$</span><span class="token punctuation">{</span>RM<span class="token punctuation">}</span> <span class="token variable">$</span><span class="token punctuation">{</span>OBJ<span class="token punctuation">}</span>
+	<span class="token variable">$</span><span class="token punctuation">{</span>RM<span class="token punctuation">}</span> <span class="token variable">$</span><span class="token punctuation">{</span>DEP<span class="token punctuation">}</span>
+	<span class="token variable">$</span><span class="token punctuation">{</span>RM<span class="token punctuation">}</span> test
+
+<span class="token comment"># END</span></code></pre>
+            <p>
+                Then, the <code class="s">chess.c</code> file.
+            </p>
+            <div class="filename">chess.c</div>
+            <pre class=" language-c"><code class=" language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"chess.h"</span></span>
+
+<span class="token comment">// Empties the chessboard.</span>
+<span class="token comment">// All elements are set to EMPTY.</span>
+<span class="token keyword">void</span> <span class="token function">init_board</span><span class="token punctuation">(</span><span class="token keyword">char</span> board<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">size_t</span> row <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> row <span class="token operator">&lt;</span> <span class="token number">8</span><span class="token punctuation">;</span> row<span class="token operator">++</span><span class="token punctuation">)</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">size_t</span> col <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> col <span class="token operator">&lt;</span> <span class="token number">8</span><span class="token punctuation">;</span> col<span class="token operator">++</span><span class="token punctuation">)</span>
+            board<span class="token punctuation">[</span>row<span class="token punctuation">]</span><span class="token punctuation">[</span>col<span class="token punctuation">]</span> <span class="token operator">=</span> EMPTY<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Prints the chessboard (8x8 grid).</span>
+<span class="token keyword">void</span> <span class="token function">print_board</span><span class="token punctuation">(</span><span class="token keyword">char</span> board<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">size_t</span> row <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> row <span class="token operator">&lt;</span> <span class="token number">8</span><span class="token punctuation">;</span> row<span class="token operator">++</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">size_t</span> col <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> col <span class="token operator">&lt;</span> <span class="token number">8</span><span class="token punctuation">;</span> col<span class="token operator">++</span><span class="token punctuation">)</span>
+            <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%c "</span><span class="token punctuation">,</span> board<span class="token punctuation">[</span>row<span class="token punctuation">]</span><span class="token punctuation">[</span>col<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Sets the board with the rook moves.</span>
+<span class="token comment">// (row, col) = rook position.</span>
+<span class="token keyword">void</span> <span class="token function">rook_moves</span><span class="token punctuation">(</span><span class="token keyword">char</span> board<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">size_t</span> row<span class="token punctuation">,</span> <span class="token keyword">size_t</span> col<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// TODO</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Sets the board with the bishop moves.</span>
+<span class="token comment">// (row, col) = bishop position.</span>
+<span class="token keyword">void</span> <span class="token function">bishop_moves</span><span class="token punctuation">(</span><span class="token keyword">char</span> board<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">size_t</span> row<span class="token punctuation">,</span> <span class="token keyword">size_t</span> col<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// TODO</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Sets the board with the queen moves.</span>
+<span class="token comment">// (row, col) = queen position.</span>
+<span class="token keyword">void</span> <span class="token function">queen_moves</span><span class="token punctuation">(</span><span class="token keyword">char</span> board<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">size_t</span> row<span class="token punctuation">,</span> <span class="token keyword">size_t</span> col<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// TODO</span>
+<span class="token punctuation">}</span></code></pre>
+            <p>
+                Next, the <code class="s">chess.h</code> header file.
+            </p>
+            <div class="filename">chess.h</div>
+            <pre class=" language-c"><code class=" language-c"><span class="token macro property">#<span class="token directive keyword">pragma</span> once</span>
+
+<span class="token keyword">void</span> <span class="token function">init_board</span><span class="token punctuation">(</span><span class="token keyword">char</span> board<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">print_board</span><span class="token punctuation">(</span><span class="token keyword">char</span> board<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">rook_moves</span><span class="token punctuation">(</span><span class="token keyword">char</span> board<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">size_t</span> row<span class="token punctuation">,</span> <span class="token keyword">size_t</span> col<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">bishop_moves</span><span class="token punctuation">(</span><span class="token keyword">char</span> board<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">size_t</span> row<span class="token punctuation">,</span> <span class="token keyword">size_t</span> col<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">queen_moves</span><span class="token punctuation">(</span><span class="token keyword">char</span> board<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">size_t</span> row<span class="token punctuation">,</span> <span class="token keyword">size_t</span> col<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">enum</span> Square
+<span class="token punctuation">{</span>
+    EMPTY <span class="token operator">=</span> <span class="token string">'.'</span><span class="token punctuation">,</span>
+    CHESSMAN <span class="token operator">=</span> <span class="token string">'O'</span><span class="token punctuation">,</span>
+    LEGAL_MOVE <span class="token operator">=</span> <span class="token string">'X'</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+            <p>
+                Finally, the <code class="s">test.c</code> file.
+            </p>
+            <div class="filename">test.c</div>
+            <pre class=" language-c"><code class=" language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;string.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;err.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"chess.h"</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">char</span> board<span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>argc <span class="token operator">!=</span> <span class="token number">2</span><span class="token punctuation">)</span>
+        <span class="token function">errx</span><span class="token punctuation">(</span>EXIT_FAILURE<span class="token punctuation">,</span> <span class="token string">"Only one parameter is required."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">strlen</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">3</span><span class="token punctuation">)</span>
+        <span class="token function">errx</span><span class="token punctuation">(</span>EXIT_FAILURE<span class="token punctuation">,</span> <span class="token string">"The argument must contain 3 characters."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">char</span> chessman <span class="token operator">=</span> argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">size_t</span> row <span class="token operator">=</span> argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">-</span> <span class="token string">'0'</span><span class="token punctuation">;</span>
+    <span class="token keyword">size_t</span> col <span class="token operator">=</span> argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">-</span> <span class="token string">'0'</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>chessman <span class="token operator">&gt;=</span> <span class="token string">'a'</span> <span class="token operator">&amp;&amp;</span> chessman <span class="token operator">&lt;=</span> <span class="token string">'z'</span><span class="token punctuation">)</span>
+        chessman <span class="token operator">-</span><span class="token operator">=</span> <span class="token string">'a'</span> <span class="token operator">-</span> <span class="token string">'A'</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>row <span class="token operator">&gt;=</span> <span class="token number">8</span><span class="token punctuation">)</span>
+        <span class="token function">errx</span><span class="token punctuation">(</span>EXIT_FAILURE<span class="token punctuation">,</span> <span class="token string">"The row is not valid."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>col <span class="token operator">&gt;=</span> <span class="token number">8</span><span class="token punctuation">)</span>
+        <span class="token function">errx</span><span class="token punctuation">(</span>EXIT_FAILURE<span class="token punctuation">,</span> <span class="token string">"The column is not valid."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">switch</span> <span class="token punctuation">(</span>chessman<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">case</span> <span class="token string">'R'</span><span class="token punctuation">:</span>
+            <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Rook (%zu, %zu)\n"</span><span class="token punctuation">,</span> row<span class="token punctuation">,</span> col<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">rook_moves</span><span class="token punctuation">(</span>board<span class="token punctuation">,</span> row<span class="token punctuation">,</span> col<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">case</span> <span class="token string">'B'</span><span class="token punctuation">:</span>
+            <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Bishop (%zu, %zu)\n"</span><span class="token punctuation">,</span> row<span class="token punctuation">,</span> col<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">bishop_moves</span><span class="token punctuation">(</span>board<span class="token punctuation">,</span> row<span class="token punctuation">,</span> col<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">case</span> <span class="token string">'Q'</span><span class="token punctuation">:</span>
+            <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Queen (%zu, %zu)\n"</span><span class="token punctuation">,</span> row<span class="token punctuation">,</span> col<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">queen_moves</span><span class="token punctuation">(</span>board<span class="token punctuation">,</span> row<span class="token punctuation">,</span> col<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">default</span><span class="token punctuation">:</span>
+            <span class="token function">errx</span><span class="token punctuation">(</span>EXIT_FAILURE<span class="token punctuation">,</span> <span class="token string">"The chessman is not valid."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token function">print_board</span><span class="token punctuation">(</span>board<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> EXIT_SUCCESS<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+            <h3>Implementation</h3>
+            <h4>The Chessboard</h4>
+            <p>
+                A chessboard consists of eight rows by eight columns.
+                It is stored in the <var>board</var> variable declared in the main function.
+                It is a two-dimensional array.
+            </p>
+            <p>
+                Usually, the squares of a chessboard are numbered this way.
+            </p>
+            <table class="chessboard">
+                <tbody><tr>
+                    <th></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th><th>H</th>
+                </tr>
+                <tr>
+                    <th>8</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <th>7</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <th>6</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <th>5</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <th>4</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <th>3</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <th>2</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <th>1</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+            </tbody></table>
+            <p>
+                But for the sake of convenience, we are going to number them that way.
+            </p>
+            <table class="chessboard">
+                <tbody><tr>
+                    <th></th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th>
+                </tr>
+                <tr>
+                    <th>0</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <th>1</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <th>2</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <th>3</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <th>4</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <th>5</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <th>6</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <th>7</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+            </tbody></table>
+            <p>
+                The position of a square will be identified by the row and column pair of values (row, col)
+                with the following syntax: <var>board[row][col]</var>.
+                For instance, the <var>board[4][2]</var> variable will access the following square:
+            </p>
+            <table class="chessboard">
+                <tbody><tr>
+                    <th></th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th>
+                </tr>
+                <tr>
+                    <th>0</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <th>1</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <th>2</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <th>3</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <th>4</th><td></td><td></td><td>X</td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <th>5</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <th>6</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <th>7</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+            </tbody></table>
+            <h4>The Square Enumeration</h4>
+            <p>
+                The following enumeration is defined in the <code class="s">test.h</code> file.
+            </p>
+            <pre class=" language-c"><code class=" language-c"><span class="token keyword">enum</span> Square
+<span class="token punctuation">{</span>
+    EMPTY <span class="token operator">=</span> <span class="token string">'.'</span><span class="token punctuation">,</span>
+    CHESSMAN <span class="token operator">=</span> <span class="token string">'O'</span><span class="token punctuation">,</span>
+    LEGAL_MOVE <span class="token operator">=</span> <span class="token string">'X'</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+            <p>
+                <b>That enumeration must be used to set the value of a square.</b>
+                The elements in the <var>board</var> variable are of <code class="s">char</code> type,
+                which is an integer.
+                So, you can assign the enumeration values to any element of the board.
+                For example:
+            </p>
+            <pre class=" language-c"><code class=" language-c">board<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> EMPTY<span class="token punctuation">;</span>        <span class="token comment">// Empties the square (0, 0).</span>
+board<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> CHESSMAN<span class="token punctuation">;</span>     <span class="token comment">// Assigns a chessman to the square (0, 1).</span>
+board<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> LEGAL_MOVE<span class="token punctuation">;</span>   <span class="token comment">// Assigns a legal move to the square (0, 2).</span></code></pre>
+            <p>
+                <mark><b>Do not assign any other values to a square.</b></mark>
+            </p>
+            <h4>The Main Function</h4>
+            <p>
+                The main function is given.
+                It creates the <var>board</var> variable (note that it is not initialized).
+                Then, it parses an argument passed to the executable file.
+                Such argument is made up of three characters only:
+            </p>
+            <ul>
+                <li>
+                    The first character represents the chessman.
+                    <ul>
+                        <li>
+                            <code class="s">'r'</code> or <code class="s">'R'</code> for the rook.
+                        </li>
+                        <li>
+                            <code class="s">'b'</code> or <code class="s">'B'</code> for the bishop.
+                        </li>
+                        <li>
+                            <code class="s">'q'</code> or <code class="s">'Q'</code> for the queen.
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    The second character is the row number of the chessman position (from 0 to 7).
+                </li>
+                <li>
+                    The third character is the column number of the chessman position (from 0 to 7).
+                </li>
+            </ul>
+            <p>
+                Finally, the main function calls either
+                <code class="s">rook_moves()</code>,
+                <code class="s">bishop_moves()</code>
+                or <code class="s">queen_moves()</code>
+                according to the parameter
+                and prints the result.
+            </p>
+            <h4>The Three Functions to Write</h4>
+            <p>
+                Complete the <code class="s">chess.c</code> file
+                in order to write the
+                <code class="s">rook_moves()</code>,
+                <code class="s">bishop_moves()</code>
+                and <code class="s">queen_moves()</code> functions.
+            </p>
+            <p>
+                These three functions must fill the <var>board</var> array
+                with the chessman at the right position and its legal moves in an empty board.
+                Be careful, the <var>board</var> variable is not initialized and contain random values.
+                So, at some point, you will have to call the <code class="s">init_board()</code> function
+                (this function is given in the <code class="s">chess.c</code> file).
+            </p>
+            <p>
+                You are allowed to write as many functions as you want in the <code class="s">chess.c</code> file.
+            </p>
+            <h4>Examples</h4>
+            <p>
+                Here are some examples of the expected result:
+            </p>
+            <pre class=" language-none"><code class=" language-none">$ ./test r42
+Rook (4, 2)
+. . X . . . . .
+. . X . . . . .
+. . X . . . . .
+. . X . . . . .
+X X O X X X X X
+. . X . . . . .
+. . X . . . . .
+. . X . . . . .
+$ ./test r00
+Rook (0, 0)
+O X X X X X X X
+X . . . . . . .
+X . . . . . . .
+X . . . . . . .
+X . . . . . . .
+X . . . . . . .
+X . . . . . . .
+X . . . . . . .
+$ ./test b24
+Bishop (2, 4)
+. . X . . . X .
+. . . X . X . .
+. . . . O . . .
+. . . X . X . .
+. . X . . . X .
+. X . . . . . X
+X . . . . . . .
+. . . . . . . .
+$ ./test b77
+Bishop (7, 7)
+X . . . . . . .
+. X . . . . . .
+. . X . . . . .
+. . . X . . . .
+. . . . X . . .
+. . . . . X . .
+. . . . . . X .
+. . . . . . . O
+$ ./test q44
+Queen (4, 4)
+X . . . X . . .
+. X . . X . . X
+. . X . X . X .
+. . . X X X . .
+X X X X O X X X
+. . . X X X . .
+. . X . X . X .
+. X . . X . . X
+$ ./test q70
+Queen (7, 0)
+X . . . . . . X
+X . . . . . X .
+X . . . . X . .
+X . . . X . . .
+X . . X . . . .
+X . X . . . . .
+X X . . . . . .
+O X X X X X X X</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <h2>Pascal's Triangle</h2>
+            <h3>Introduction</h3>
+            In this section, you are going to write a program that prints
+            <a href="https://en.wikipedia.org/wiki/Pascal%27s_triangle">Pascal's Triangle</a>.
+            <h3>Provided Code</h3>
+            <p>
+                Four files are provided:
+            </p>
+            <ul>
+                <li>
+                    <code class="s">Makefile</code>:
+                    it can be used to compile your code.
+                </li>
+                <li>
+                    <code class="s">pascal.c</code>:
+                    it contains the functions you will write.
+                    <mark>You are supposed to complete this file.</mark>
+                </li>
+                <li>
+                    <code class="s">pascal.h</code>:
+                    the header of <code class="s">pascal.c</code>.
+                </li>
+                <li>
+                    <code class="s">test.c</code>:
+                    it contains the main function used to test your functions.
+                </li>
+            </ul>
+            <p>So first, the <i>Makefile</i>:</p>
+            <div class="filename">Makefile</div>
+            <pre class=" language-makefile"><code class=" language-makefile"><span class="token comment"># Makefile</span>
+
+CC <span class="token operator">=</span> gcc
+CPPFLAGS <span class="token operator">=</span> -MMD
+CFLAGS <span class="token operator">=</span> -Wall -Wextra
+LDFLAGS <span class="token operator">=</span>
+LDLIBS <span class="token operator">=</span>
+
+SRC <span class="token operator">=</span> test.c pascal.c
+OBJ <span class="token operator">=</span> <span class="token variable">$</span><span class="token punctuation">{</span>SRC<span class="token punctuation">:</span>.c<span class="token operator">=</span>.o<span class="token punctuation">}</span>
+DEP <span class="token operator">=</span> <span class="token variable">$</span><span class="token punctuation">{</span>SRC<span class="token punctuation">:</span>.c<span class="token operator">=</span>.d<span class="token punctuation">}</span>
+
+<span class="token symbol">test</span><span class="token punctuation">:</span> <span class="token variable">$</span><span class="token punctuation">{</span>OBJ<span class="token punctuation">}</span>
+
+<span class="token keyword">-include</span> <span class="token variable">$</span><span class="token punctuation">{</span>DEP<span class="token punctuation">}</span>
+
+<span class="token builtin">.PHONY</span><span class="token punctuation">:</span> clean
+
+<span class="token symbol">clean</span><span class="token punctuation">:</span>
+	<span class="token variable">$</span><span class="token punctuation">{</span>RM<span class="token punctuation">}</span> <span class="token variable">$</span><span class="token punctuation">{</span>OBJ<span class="token punctuation">}</span>
+	<span class="token variable">$</span><span class="token punctuation">{</span>RM<span class="token punctuation">}</span> <span class="token variable">$</span><span class="token punctuation">{</span>DEP<span class="token punctuation">}</span>
+	<span class="token variable">$</span><span class="token punctuation">{</span>RM<span class="token punctuation">}</span> test
+
+<span class="token comment"># END</span></code></pre>
+            <p>
+                Then, the <code class="s">pascal.c</code> file.
+            </p>
+            <div class="filename">pascal.c</div>
+            <pre class=" language-c"><code class=" language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"pascal.h"</span></span>
+
+<span class="token comment">// Prints Pascal's Triangle.</span>
+<span class="token comment">// tr: triangle to print</span>
+<span class="token comment">// len: length of the triangle.</span>
+<span class="token keyword">void</span> <span class="token function">print_triangle</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> tr<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span>MAX_LEN<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">size_t</span> len<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// TODO</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Generates Pascal's Triangle.</span>
+<span class="token comment">// tr: triangle to generate.</span>
+<span class="token comment">// len: length of the triangle.</span>
+<span class="token keyword">void</span> <span class="token function">pascal_triangle</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> tr<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span>MAX_LEN<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">size_t</span> len<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// TODO</span>
+<span class="token punctuation">}</span></code></pre>
+            <p>
+                Next, the <code class="s">pascal.h</code> header file.
+            </p>
+            <div class="filename">pascal.h</div>
+            <pre class=" language-c"><code class=" language-c"><span class="token macro property">#<span class="token directive keyword">pragma</span> once</span>
+
+<span class="token macro property">#<span class="token directive keyword">define</span> MAX_LEN 20</span>
+
+<span class="token keyword">void</span> <span class="token function">print_triangle</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> tr<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span>MAX_LEN<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">size_t</span> len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">pascal_triangle</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> tr<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span>MAX_LEN<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">size_t</span> len<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+            <p>
+                Finally, the <code class="s">test.c</code> file.
+            </p>
+            <div class="filename">test.c</div>
+            <pre class=" language-c"><code class=" language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"pascal.h"</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// If the number of parameters is wrong,</span>
+    <span class="token comment">// prints an error message and exits.</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>argc <span class="token operator">!=</span> <span class="token number">2</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Only one parameter is required: the length of Pascal's triangle.\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> EXIT_FAILURE<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// Gets the length of the triangle.</span>
+    <span class="token keyword">size_t</span> len <span class="token operator">=</span> <span class="token function">strtoul</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// If the length is not valid,</span>
+    <span class="token comment">// prints an error message and exits.</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>len <span class="token operator">&lt;</span> <span class="token number">1</span> <span class="token operator">||</span> len <span class="token operator">&gt;</span> MAX_LEN<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The following length is not valid: %s\n"</span><span class="token punctuation">,</span> argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"It must be an integer between 1 and %u\n"</span><span class="token punctuation">,</span> MAX_LEN<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> EXIT_FAILURE<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// Generates Pascal's Triangle.</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span> triangle<span class="token punctuation">[</span>MAX_LEN<span class="token punctuation">]</span><span class="token punctuation">[</span>MAX_LEN<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token function">pascal_triangle</span><span class="token punctuation">(</span>triangle<span class="token punctuation">,</span> len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// Displays the triangle.</span>
+    <span class="token function">print_triangle</span><span class="token punctuation">(</span>triangle<span class="token punctuation">,</span> len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// Exits.</span>
+    <span class="token keyword">return</span> EXIT_SUCCESS<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+            <h3>Implementation</h3>
+            <p>
+                The main function in <code class="s">test.c</code>
+                allocates a two-dimensional array that can be used to store Pascal's Triangle.
+                The size of this array is fixed and known at compile time.
+                That size is defined in the <code class="s">MAX_LEN</code> constant in <code class="s">pascal.h</code>.
+                Therefore, the size of the Pascal's Triangle we want to print
+                cannot be larger than <code class="s">MAX_LEN</code>.
+            </p>
+            <p>
+                All the elements in the array are initialized to zero (so, you do not have to do it).
+                We consider that the value 0 represents an empty element
+                (it does not belong to Pascal's Triangle).
+            </p>
+            <p>
+                The main function gets the first parameter passed to the executable file
+                and converts it into an integer.
+                That value is the size of the triangle we want to print
+                (so it must be between 1 and <code class="s">MAX_VALUE)</code>.
+            </p>
+            <p>
+               Then it calls the <code class="s">pascal_triangle()</code>
+               and <code class="s">print_triangle()</code> functions.
+            </p>
+            <p>
+                Write the <code class="s">pascal_triangle()</code> function.
+                Note that when the length of the triangle is lower than <code class="s">MAX_LEN</code>,
+                some elements in the array are unused.
+                Such elements must remain empty (equal to zero).
+            </p>
+            <p>
+                For example, if the length of the triangle is 5 and <code class="s">MAX_LEN</code> is 20,
+                the two-dimensional generated array must be as follows:
+            </p>
+            <pre class=" language-none"><code class=" language-none">1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+1 2 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+1 3 3 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+1 4 6 4 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</code></pre>
+            <p>
+                Write the <code class="s">print_triangle()</code> function.
+                The triangle must be left aligned.
+                Do not print any empty element (value 0).
+                Use the following syntax in order to line numbers up.
+            </p>
+            <pre class=" language-c"><code class=" language-c"><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%5u "</span><span class="token punctuation">,</span> tr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+            <p>
+                Finally, compile and execute the code.
+                Here are some examples of the expected result.
+            </p>
+            <pre class=" language-none"><code class=" language-none">$ ./test 1
+    1
+$ ./test 5
+    1
+    1     1
+    1     2     1
+    1     3     3     1
+    1     4     6     4     1
+$ ./test 10
+    1
+    1     1
+    1     2     1
+    1     3     3     1
+    1     4     6     4     1
+    1     5    10    10     5     1
+    1     6    15    20    15     6     1
+    1     7    21    35    35    21     7     1
+    1     8    28    56    70    56    28     8     1
+    1     9    36    84   126   126    84    36     9     1
+$ ./test 20
+    1
+    1     1
+    1     2     1
+    1     3     3     1
+    1     4     6     4     1
+    1     5    10    10     5     1
+    1     6    15    20    15     6     1
+    1     7    21    35    35    21     7     1
+    1     8    28    56    70    56    28     8     1
+    1     9    36    84   126   126    84    36     9     1
+    1    10    45   120   210   252   210   120    45    10     1
+    1    11    55   165   330   462   462   330   165    55    11     1
+    1    12    66   220   495   792   924   792   495   220    66    12     1
+    1    13    78   286   715  1287  1716  1716  1287   715   286    78    13     1
+    1    14    91   364  1001  2002  3003  3432  3003  2002  1001   364    91    14     1
+    1    15   105   455  1365  3003  5005  6435  6435  5005  3003  1365   455   105    15     1
+    1    16   120   560  1820  4368  8008 11440 12870 11440  8008  4368  1820   560   120    16     1
+    1    17   136   680  2380  6188 12376 19448 24310 24310 19448 12376  6188  2380   680   136    17     1
+    1    18   153   816  3060  8568 18564 31824 43758 48620 43758 31824 18564  8568  3060   816   153    18     1
+    1    19   171   969  3876 11628 27132 50388 75582 92378 92378 75582 50388 27132 11628  3876   969   171    19     1</code></pre>
+        </main>
+        <footer>
+            <span>
+                <a href="mailto:david.bouchet.epita@gmail.com">David Bouchet</a>
+            </span>
+        </footer>
+    
+
+</body></html>

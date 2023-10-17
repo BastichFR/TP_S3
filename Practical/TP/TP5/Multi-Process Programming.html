@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en" style=""><!--
+ Page saved with SingleFile 
+ url: http://www.debug-pro.com/epita/asm/s3/b5/pw/05_multi-process_programming/index.html 
+ saved date: Thu Oct 12 2023 17:47:58 GMT+0200 (GMT+02:00)
+--><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><meta charset="utf-8">
+<meta name="author" content="David Bouchet">
+<title>Multi-Process Programming</title>
+<style>body{background-color: #FFFFFF;font-family:sans-serif;display:flex;flex-direction:column;margin:0px}header{position:fixed;width:100%;margin:auto;background:rgba(0,0,0,0.6);color:white;transition:top 250ms}header div{display:flex;justify-content:space-between;padding:0.2rem 2rem;font-weight:bold}header a:link,header a:visited{color:white;text-decoration:none}nav{margin:0rem auto 0rem auto;width:900px;box-sizing:border-box;border-right:dashed 1px black;padding-right:1rem;border-left:dashed 1px black;padding-left:1rem;padding-top:1rem}nav h2,nav h3,nav h4{background:none;border:none;margin:0px;padding:0px;font-size:1.1rem;text-shadow:none;font-weight:normal;line-height:1.6}nav h2{font-weight:bold;font-size:1.3rem;margin-top:0.5rem}nav h3{margin-left:2rem;font-size:1.1rem}nav h4{margin-left:4rem}nav h2 a:link,nav h3 a:link,nav h4 a:link,nav h2 a:visited,nav h3 a:visited,nav h4 a:visited{color:#006786;text-decoration:none}nav h2 a:hover,nav h3 a:hover,nav h4 a:hover{color:white;background-color:#006786}.title{display:flex;flex-direction:column;background-color:white;justify-content:space-between}.practical_number{margin:0px;text-align:left;padding-left:2em;background-color:black;color:white;font-size:3em;width:30rem;border-top:solid 0.1rem black;position:relative;top:2rem;border-radius:0px 8px 0px 0px}h1{background-color:#2F97B6;margin-top:0px;color:white;text-shadow:2px 2px 2px black;border-top:solid 0.5rem black;text-align:center;font-size:3rem;margin:0px;width:100%;line-height:1.2;padding-top:3rem;padding-bottom:1rem}mark{color:#d00000;background:none}code.s{font-family:monospace;color:darkgoldenrod;font-weight:bold}p+ul{margin-top:-1em}h2{color:#0087B6;text-shadow:1px 1px 1px black;font-size:2.2rem;border-bottom:solid 0.2rem #0087B6;padding-bottom:1.5rem;margin-top:4rem;line-height:1.2;font-weight:normal}h3{background-color:#2F97B6;color:white;padding:0.3rem 1rem;font-weight:normal;border-left:solid 0.5rem black;font-size:1.3rem}h4{color:#0087B6;font-size:1.3rem}main{box-sizing:border-box;width:900px;margin:auto;font-size:1.1rem;line-height:1.6;text-align:justify;border-right:dashed 1px black;padding-right:1rem;border-left:dashed 1px black;padding-left:1rem}a:link,a:visited{color:#ff7000;text-decoration:underline}a:hover{text-decoration:underline;background-color:#ff7000;color:white}div.filename{border:solid 1px gray;margin-left:3.3rem;color:white;background-color:#272822;padding:0.2rem 1.2rem;border-radius:0.7rem 0.7rem 0px 0px;font-family:monospace;font-size:1rem;font-weight:bold;text-align:center;width:12rem}kbd{font-size:1.1rem;border-style:solid;border-width:2px;padding:2px 7px 3px 7px;margin-left:1px;margin-right:4px;border-radius:5px;background-color:#f0f0f0;box-shadow:1px 1px 3px black}img{width:60%;margin-left:20%;margin-right:20%}body>footer{display:flex;justify-content:center;background:#2F97B6;color:white;border-top:solid black 1px}body>footer span{margin:0rem 2rem 0rem 2rem}body>footer a:visited,body>footer a:link{color:white;text-decoration:none}body>footer a:hover{background:none;text-decoration:underline}@media (max-width:900px){body{width:auto;margin:0px;padding:0px;box-sizing:border-box}header div{padding:0rem 1rem;font-weight:normal}nav{width:100%}main{width:auto;margin-left:0px;margin-right:0px;text-align:left}.practical_number{margin:0px;text-align:center;padding-left:0em;background-color:black;color:white;font-size:2.5em;width:100%;border-top:solid 0.1rem black;position:relative;top:2rem;border-radius:0px}h1{font-size:2.5em}img{width:90%;margin-left:5%;margin-right:5%}}code[class*="language-"],pre[class*="language-"]{color:#ffffff;background:none;text-shadow:0 1px rgba(0,0,0,0.3);font-family:Consolas,Monaco,"Andale Mono","Ubuntu Mono",monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*="language-"]{padding:0.5em;margin:0em 0;overflow:auto;border-radius:0.3em}:not(pre)>code[class*="language-"],pre[class*="language-"]{background:#272822}:not(pre)>code[class*="language-"]{padding:.1em;border-radius:.3em;white-space:normal}.token.comment{color:slategray}.token.punctuation{color:#f8f8f2}.token.property,.token.constant,.token.symbol{color:#f92672}.token.number{color:#ae81ff}.token.string,.token.builtin{color:#a6e22e}.token.operator,.token.variable{color:#f8f8f2}.token.function{color:#e6db74}.token.keyword{color:#66d9ef}pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}pre.line-numbers>code{position:relative;white-space:inherit}.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:0;font-size:100%;left:-3.8em;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:0.8em;text-align:right}</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="http://www.debug-pro.com/epita/asm/s3/b5/pw/05_multi-process_programming/index.html"><meta http-equiv="content-security-policy" content="default-src 'none'; font-src 'self' data:; img-src 'self' data:; style-src 'unsafe-inline'; media-src 'self' data:; script-src 'unsafe-inline' data:; object-src 'self' data:; frame-src 'self' data:;"><style>img[src="data:,"],source[src="data:,"]{display:none!important}</style></head>
+ <body>
+ <div class="title">
+ <div class="practical_number">Practical Work #5</div>
+ <h1>Multi-Process Programming</h1>
+ </div>
+ <nav id="table_of_contents"><h2><a href="#head_1000">Submission</a></h2><h3><a href="#head_1001">Due Date</a></h3><h3><a href="#dh">Directory Hierarchy</a></h3><h2><a href="#head_1002">Introduction</a></h2><h2><a href="#head_1003">Forking Processes</a></h2><h3><a href="#head_1004">Provided Code</a></h3><h4><a href="#head_1005">The Makefile</a></h4><h4><a href="#head_1006">The fork.c file</a></h4><h4><a href="#head_1007">The sort.c file</a></h4><h4><a href="#head_1008">The exec.c file</a></h4><h4><a href="#head_1009">The clock.c file</a></h4><h3><a href="#head_1010">Simple Call to fork()</a></h3><h3><a href="#head_1011">Sorting Arrays</a></h3><h3><a href="#head_1012">Executing a Command</a></h3><h3><a href="#head_1013">Timing Commands</a></h3><h2><a href="#head_1014">Interprocess Communication</a></h2><h3><a href="#head_1015">Provided Code</a></h3><h4><a href="#head_1016">The Makefile</a></h4><h4><a href="#head_1017">The chg_case.c File</a></h4><h4><a href="#head_1018">The manager.c File</a></h4><h3><a href="#head_1019">Introduction</a></h3><h3><a href="#head_1020">Implementation</a></h3><h4><a href="#head_1021">The Worker</a></h4><h4><a href="#head_1022">The Manager</a></h4></nav>
+ <main>
+ <h2 id="head_1000">Submission</h2>
+ <h3 id="head_1001">Due Date</h3>
+ <p>By Monday 23 October 2023 11:42 am</p>
+ <h3 id="dh">Directory Hierarchy</h3>
+ <p>
+ When you are done, your git repository must contain the following files and directories:
+ </p>
+ <pre class="language-none"><code class="language-none">$ tree
+.
+├── AUTHORS
+├── fork
+│&nbsp;&nbsp; ├── clock.c
+│&nbsp;&nbsp; ├── exec.c
+│&nbsp;&nbsp; ├── fork.c
+│&nbsp;&nbsp; ├── Makefile
+│&nbsp;&nbsp; └── sort.c
+└── pipe
+    ├── chg_case.c
+    ├── Makefile
+    └── manager.c</code></pre>
+ <p>
+ The <code class="s">AUTHORS</code> file
+ must contain the following information.
+ </p>
+ <div class="filename">AUTHORS</div>
+ <pre class="line-numbers language-bash"><code class="language-bash">First Name
+Family Name
+Login
+Email Address<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+ <p>
+ The last character of your
+ <code class="s">AUTHORS</code>
+ file must be a newline character.
+ </p>
+ <p>For instance:</p>
+ <div class="filename">AUTHORS</div>
+ <pre class="language-bash"><code class="language-bash">$ <span class="token function">cat</span> AUTHORS
+John
+Smith
+john.smith
+john.smith@epita.fr
+$ <span class="token comment"># Command prompt ready for the next command...</span></code></pre>
+ <p>
+ <mark>
+ Be careful, if you do not follow all the given instructions,
+ no point will be given to your answers.
+ </mark>
+ </p>
+ <h2 id="head_1002">Introduction</h2>
+ <p>
+ The purpose of this practical is to give you some basic knowledge about multi-process programming.
+ You are going to learn how to create new processes from a running process
+ and how these processes can communicate with each other.
+ </p>
+ <p>
+ <b>For the whole practical, you are not allowed to include any other files than those already included.</b>
+ </p>
+ <h2 id="head_1003">Forking Processes</h2>
+ <h3 id="head_1004">Provided Code</h3>
+ <h4 id="head_1005">The Makefile</h4>
+ <div class="filename">Makefile</div>
+ <pre class="language-makefile"><code class="language-makefile"><span class="token comment"># Makefile</span>
+
+CC <span class="token operator">=</span> gcc
+CFLAGS <span class="token operator">=</span> -Wall -Wextra
+LDFLAGS <span class="token operator">=</span>
+LDLIBS <span class="token operator">=</span>
+
+EXE <span class="token operator">=</span> fork sort exec clock
+
+<span class="token symbol">all</span><span class="token punctuation">:</span> <span class="token variable">$</span><span class="token punctuation">(</span>EXE<span class="token punctuation">)</span>
+
+<span class="token symbol"><span class="token variable">$</span>(foreach f, <span class="token variable">$</span>(EXE), <span class="token variable">$</span>(eval <span class="token variable">$</span>(f)</span><span class="token punctuation">:</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token builtin">.PHONY</span><span class="token punctuation">:</span> clean
+
+<span class="token symbol">clean</span><span class="token punctuation">:</span>
+	<span class="token variable">$</span><span class="token punctuation">{</span>RM<span class="token punctuation">}</span> <span class="token variable">$</span><span class="token punctuation">(</span>EXE<span class="token punctuation">)</span>
+
+<span class="token comment"># END</span></code></pre>
+ <h4 id="head_1006">The fork.c file</h4>
+ <div class="filename">fork.c</div>
+ <pre class="language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;err.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h&gt;</span></span>
+
+<span class="token macro property">#<span class="token directive keyword">define</span> PRINT(fmt_, ...) printf("%i: " fmt_ "\n", getpid() __VA_OPT__(,) __VA_ARGS__);</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// Initializes x.</span>
+    <span class="token keyword">int</span>  x <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// Forks the process.</span>
+    <span class="token comment">// (Creates a new process.)</span>
+    <span class="token keyword">int</span> id <span class="token operator">=</span> <span class="token function">fork</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// Exits if error.</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>id <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token function">err</span><span class="token punctuation">(</span>EXIT_FAILURE<span class="token punctuation">,</span> <span class="token string">"fork()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// Parent process.</span>
+    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>id<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">PRINT</span><span class="token punctuation">(</span><span class="token string">"Inside parent"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">PRINT</span><span class="token punctuation">(</span><span class="token string">"Child id : %i"</span><span class="token punctuation">,</span> id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">PRINT</span><span class="token punctuation">(</span><span class="token string">"Initial x: %i"</span><span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        x <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">42</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// Child process.</span>
+    <span class="token keyword">else</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">PRINT</span><span class="token punctuation">(</span><span class="token string">"Inside child"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">PRINT</span><span class="token punctuation">(</span><span class="token string">"Initial x: %i"</span><span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        x <span class="token operator">=</span> <span class="token number">42</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// Parent and child processes.</span>
+    <span class="token function">PRINT</span><span class="token punctuation">(</span><span class="token string">"Parent id: %i"</span><span class="token punctuation">,</span> <span class="token function">getppid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">PRINT</span><span class="token punctuation">(</span><span class="token string">"New x: %i"</span><span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> EXIT_SUCCESS<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+ <h4 id="head_1007">The sort.c file</h4>
+ <div class="filename">sort.c</div>
+ <pre class="language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;err.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;sys/wait.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;time.h&gt;</span></span>
+
+<span class="token macro property">#<span class="token directive keyword">define</span> PRINT(fmt_, ...) printf("%u: " fmt_ "\n", getpid() __VA_OPT__(,) __VA_ARGS__);</span>
+
+<span class="token keyword">void</span> <span class="token function">random_fill</span><span class="token punctuation">(</span><span class="token keyword">int</span> tab<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">size_t</span> len<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> <span class="token operator">*</span>cur <span class="token operator">=</span> tab<span class="token punctuation">;</span> cur <span class="token operator">!=</span> tab <span class="token operator">+</span> len<span class="token punctuation">;</span> <span class="token operator">++</span>cur<span class="token punctuation">)</span>
+        <span class="token operator">*</span>cur <span class="token operator">=</span> <span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">1024</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">swap</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token operator">*</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token operator">*</span> b<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> c <span class="token operator">=</span> <span class="token operator">*</span>a<span class="token punctuation">;</span>
+    <span class="token operator">*</span>a <span class="token operator">=</span> <span class="token operator">*</span>b<span class="token punctuation">;</span>
+    <span class="token operator">*</span>b <span class="token operator">=</span> c<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> <span class="token function">is_sorted</span><span class="token punctuation">(</span><span class="token keyword">int</span> tab<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">size_t</span> len<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">size_t</span> j <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>j <span class="token operator">&lt;</span> len <span class="token operator">&amp;&amp;</span> tab<span class="token punctuation">[</span>j <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">&lt;=</span> tab<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span>
+        j<span class="token operator">++</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> j <span class="token operator">==</span> len <span class="token operator">?</span> <span class="token string">"Yes"</span> <span class="token punctuation">:</span> <span class="token string">"No"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">sort1</span><span class="token punctuation">(</span><span class="token keyword">int</span> tab<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">size_t</span> len<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">size_t</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> len<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">size_t</span> min <span class="token operator">=</span> i<span class="token punctuation">;</span>
+
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">size_t</span> j <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> len<span class="token punctuation">;</span> <span class="token operator">++</span>j<span class="token punctuation">)</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>tab<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">&lt;</span> tab<span class="token punctuation">[</span>min<span class="token punctuation">]</span><span class="token punctuation">)</span>
+                min <span class="token operator">=</span> j<span class="token punctuation">;</span>
+
+        <span class="token function">swap</span><span class="token punctuation">(</span>tab <span class="token operator">+</span> i<span class="token punctuation">,</span> tab <span class="token operator">+</span> min<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">sort2</span><span class="token punctuation">(</span><span class="token keyword">int</span> tab<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">size_t</span> len<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> move <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">size_t</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> len <span class="token operator">&amp;&amp;</span> move<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        move <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">size_t</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> len <span class="token operator">-</span> i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token operator">++</span>j<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>tab<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">&gt;</span> tab<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                move <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+                <span class="token function">swap</span><span class="token punctuation">(</span>tab <span class="token operator">+</span> j<span class="token punctuation">,</span> tab <span class="token operator">+</span> j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">double</span> <span class="token function">diff_timespec</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">struct</span> timespec<span class="token operator">*</span> t1<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">struct</span> timespec<span class="token operator">*</span> t0<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">double</span> second <span class="token operator">=</span> <span class="token function">difftime</span><span class="token punctuation">(</span>t1<span class="token operator">-&gt;</span>tv_sec<span class="token punctuation">,</span> t0<span class="token operator">-&gt;</span>tv_sec<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> second <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">double</span><span class="token punctuation">)</span>t1<span class="token operator">-&gt;</span>tv_nsec <span class="token operator">-</span> <span class="token punctuation">(</span><span class="token keyword">double</span><span class="token punctuation">)</span>t0<span class="token operator">-&gt;</span>tv_nsec<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">1e9</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// If the number of arguments is not valid,</span>
+    <span class="token comment">// exits with an error message.</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>argc <span class="token operator">!=</span> <span class="token number">2</span><span class="token punctuation">)</span>
+        <span class="token function">errx</span><span class="token punctuation">(</span>EXIT_FAILURE<span class="token punctuation">,</span> <span class="token string">"Usage: %s ARRAY_SIZE (from 1 to 100000)"</span><span class="token punctuation">,</span> argv<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// Gets the size of the array.</span>
+    <span class="token keyword">size_t</span> size <span class="token operator">=</span> <span class="token function">strtoul</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>size <span class="token operator">==</span> <span class="token number">0</span> <span class="token operator">||</span> size <span class="token operator">&gt;</span> <span class="token number">100000</span><span class="token punctuation">)</span>
+        <span class="token function">errx</span><span class="token punctuation">(</span>EXIT_FAILURE<span class="token punctuation">,</span> <span class="token string">"The argument is not valid."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// Declares an array.</span>
+    <span class="token keyword">int</span> a<span class="token punctuation">[</span>size<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// Fills the array with random values.</span>
+    <span class="token function">random_fill</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> size<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">PRINT</span><span class="token punctuation">(</span><span class="token string">"Sorted: %s"</span><span class="token punctuation">,</span> <span class="token function">is_sorted</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> size<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// TODO</span>
+
+    <span class="token keyword">return</span> EXIT_SUCCESS<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+ <h4 id="head_1008">The exec.c file</h4>
+ <div class="filename">exec.c</div>
+ <pre class="language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;err.h&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>argc <span class="token operator">&lt;</span> <span class="token number">2</span><span class="token punctuation">)</span>
+        <span class="token function">errx</span><span class="token punctuation">(</span>EXIT_FAILURE<span class="token punctuation">,</span> <span class="token string">"Usage: %s COMMAND [ARGUMENTS]..."</span><span class="token punctuation">,</span> argv<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// TODO</span>
+
+    <span class="token keyword">return</span> EXIT_SUCCESS<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+ <h4 id="head_1009">The clock.c file</h4>
+ <div class="filename">clock.c</div>
+ <pre class="language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;time.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;err.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;sys/wait.h&gt;</span></span>
+
+<span class="token keyword">double</span> <span class="token function">diff_timespec</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">struct</span> timespec<span class="token operator">*</span> t1<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">struct</span> timespec<span class="token operator">*</span> t0<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">double</span> second <span class="token operator">=</span> <span class="token function">difftime</span><span class="token punctuation">(</span>t1<span class="token operator">-&gt;</span>tv_sec<span class="token punctuation">,</span> t0<span class="token operator">-&gt;</span>tv_sec<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> second <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">double</span><span class="token punctuation">)</span>t1<span class="token operator">-&gt;</span>tv_nsec <span class="token operator">-</span> <span class="token punctuation">(</span><span class="token keyword">double</span><span class="token punctuation">)</span>t0<span class="token operator">-&gt;</span>tv_nsec<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">1e9</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// If the number of arguments is not valid,</span>
+    <span class="token comment">// exits with an error message.</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>argc <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token function">errx</span><span class="token punctuation">(</span>EXIT_FAILURE<span class="token punctuation">,</span> <span class="token string">"Usage: %s COMMAND [ARGUMENTS]..."</span><span class="token punctuation">,</span> argv<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// TODO</span>
+
+    <span class="token keyword">return</span> EXIT_SUCCESS<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+ <h3 id="head_1010">Simple Call to fork()</h3>
+ <p>
+ The first step is to understand the <code class="s">fork.c</code> file
+ that contains a simple call to <code class="s">fork()</code>.
+ So, compile it and run it several times.
+ </p>
+ <p>
+ Note that the <code class="s">PRINT()</code> macro is used to print a string
+ of characters with the same syntax as <code class="s">printf()</code>,
+ but with the following two differences:
+ </p>
+ <ul>
+ <li>It prefixes the string with the process identifier.</li>
+ <li>It appends a newline character to the string.</li>
+ </ul>
+ <h3 id="head_1011">Sorting Arrays</h3>
+ <p>
+ You have to complete the <code class="s">sort.c</code> file
+ in order to time two different sorting algorithms.
+ </p>
+ <p>
+ Two functions are given: <code class="s">sort1()</code> and <code class="s">sort2()</code>.
+ You will call these two functions separately in two child processes
+ and time the two children from the parent.
+ </p>
+ <p>
+ When you execute the program, you have to specify the size of an array as a parameter.
+ The array must be large enough so that it takes some time to be sorted.
+ At the beginning of the program, the array is filled with random values.
+ </p>
+ <p>
+ You should follow the following steps:
+ </p>
+ <ul>
+ <li>
+ Get the current time (<var>t0</var>) with the
+ <a href="https://manpages.debian.org/bookworm/manpages-dev/clock_gettime.2.en.html">clock_gettime(2)</a>
+ function.
+ You will have to use the
+ <a href="https://manpages.debian.org/bookworm/manpages-dev/timespec.3type.en.html">timespec</a> structure.
+ </li>
+ <li>
+ Create a new first child process that:
+ <ul>
+ <li>
+ Sorts the array with <code class="s">sort1()</code>.
+ </li>
+ <li>
+ Displays the return value of <code class="s">is_sorted()</code>
+ in order to be sure that the array is sorted
+ (use the <code class="s">PRINT()</code> macro).
+ </li>
+ <li>Returns <code class="s">EXIT_SUCCESS</code>.</li>
+ </ul>
+ </li>
+ <li>
+ Wait for the end of the child process by using 
+ <a href="https://manpages.debian.org/bookworm/manpages-dev/wait.2.en.html">wait(2)</a>.
+ </li>
+ <li>Get the current time (<var>t1</var>).</li>
+ <li>
+ Print the difference between <var>t1</var> and <var>t0</var>.
+ You can use the given <code class="s">diff_timespec()</code> function.
+ </li>
+ <li>
+ Repeat the previous step to create a second child process that calls <code class="s">sort2()</code>.
+ </li>
+ </ul>
+ <p>
+ Your program is supposed to print the following outputs on the terminal.
+ Obviously, the process identifiers and the times are likely to be different.
+ </p>
+ <pre class="language-none"><code class="language-none">$ ./sort 20000
+17518: Sorted: No
+17519: Sorted 1: Yes
+17518: time 1: 0.392971s
+17520: Sorted 2: Yes
+17518: time 2: 0.950856s
+$ ./sort 50000
+17521: Sorted: No
+17522: Sorted 1: Yes
+17521: time 1: 2.408774s
+17523: Sorted 2: Yes
+17521: time 2: 6.588034s
+$ ./sort 100000
+17531: Sorted: No
+17532: Sorted 1: Yes
+17531: time 1: 10.182862s
+17534: Sorted 2: Yes
+17531: time 2: 26.939711s</code></pre>
+ <h3 id="head_1012">Executing a Command</h3>
+ <p>
+ You have to complete the <code class="s">exec.c</code> file
+ in order to execute a command that is passed as a parameter.
+ The command must be an executable file (that file can be in the <var>PATH</var> directory).
+ </p>
+ <p>
+ The expected output is as follows:
+ </p>
+ <pre class="language-none"><code class="language-none">$ ./exec ls
+clock.c  exec  exec.c  fork.c  Makefile  sort.c
+$ ./exec ls -l
+total 40
+-rw-rw-r-- 1 david david  1214 juil.  6 14:41 clock.c
+-rwxrwxr-x 1 david david 16784 juil.  6 17:47 exec
+-rw-rw-r-- 1 david david   278 juil.  6 14:39 exec.c
+-rw-rw-r-- 1 david david   803 juil.  5 22:07 fork.c
+-rw-rw-r-- 1 david david   186 juil.  5 22:01 Makefile
+-rw-rw-r-- 1 david david  3289 juil.  6 16:02 sort.c
+$ ./exec ls -l -h
+total 40K
+-rw-rw-r-- 1 david david 1,2K juil.  6 14:41 clock.c
+-rwxrwxr-x 1 david david  17K juil.  6 17:47 exec
+-rw-rw-r-- 1 david david  278 juil.  6 14:39 exec.c
+-rw-rw-r-- 1 david david  803 juil.  5 22:07 fork.c
+-rw-rw-r-- 1 david david  186 juil.  5 22:01 Makefile
+-rw-rw-r-- 1 david david 3,3K juil.  6 16:02 sort.c
+$ ./exec find . -name "*.c"
+./exec.c
+./fork.c
+./clock.c
+./sort.c
+$ ./exec echo Hello World
+Hello World
+$ ./exec abcdefg
+exec: execvp(): No such file or directory</code></pre>
+ <p>
+ Use the <a href="https://manpages.debian.org/bookworm/manpages-dev/execvp.3.en.html">execvp(3)</a> function.
+ Tips: the <var>argv</var> variable in <code class="s">main()</code> is an array
+ of pointers that ends with the <code class="s">NULL</code> pointer.
+ </p>
+ <p>
+ Note that when a command does not exist,
+ your program must print an error message.
+ You have to use the <a href="https://manpages.debian.org/bookworm/manpages-dev/err.3.en.html">err(3)</a>
+ function in order to display the same error message as the one in the above example (the last command).
+ </p>
+ <h3 id="head_1013">Timing Commands</h3>
+ <p>
+ By using 
+ <a href="https://manpages.debian.org/bookworm/manpages-dev/fork.2.en.html">fork(2)</a>,
+ <a href="https://manpages.debian.org/bookworm/manpages-dev/execvp.3.en.html">execvp()</a>,
+ <a href="https://manpages.debian.org/bookworm/manpages-dev/wait.2.en.html">wait(2)</a>,
+ <a href="https://manpages.debian.org/bookworm/manpages-dev/clock_gettime.2.en.html">clock_gettime(2)</a>,
+ <a href="https://manpages.debian.org/bookworm/manpages-dev/err.3.en.html">err(3)</a> and
+ <code class="s">diff_timespec()</code>,
+ complete <code class="s">clock.c</code> so that your program times a command passed as a parameter.
+ The command must be an executable file (that file can be in the <var>PATH</var> directory).
+ </p>
+ <p>
+ The expected output is as follows:
+ </p>
+ <pre class="language-none"><code class="language-none">$ ./clock ls
+clock  clock.c	exec  exec.c  fork  fork.c  Makefile  sort  sort.c
+time = 0.000866s
+$ ./clock echo Hello World
+Hello World
+time = 0.000536s
+$ ./clock ./sort 50000
+30467: Sorted: No
+30468: Sorted 1: Yes
+30467: time 1: 2.407764s
+30476: Sorted 2: Yes
+30467: time 2: 6.226853s
+time = 8.636238s
+$ ./clock sleep 2
+time = 2.000590s
+$ ./clock sleep 5
+time = 5.000703s
+$ ./clock abcdefg
+clock: execvp(): No such file or directory
+time = 0.000335s</code></pre>
+ <p>
+ Moreover, the return value of your program must be the return value of the command.
+ </p>
+ <pre class="language-none"><code class="language-none">$ ./clock ls
+clock  clock.c	exec  exec.c  fork  fork.c  Makefile  sort  sort.c
+time = 0.000925s
+$ echo $?
+0
+$ ./clock cp nofile
+cp: missing destination file operand after 'nofile'
+Try 'cp --help' for more information.
+time = 0.003633s
+$ echo $?
+1
+$ ./clock ls -z
+ls: invalid option -- 'z'
+Try 'ls --help' for more information.
+time = 0.000931s
+$ echo $?
+2</code></pre>
+ <p>
+ Note that for <code class="s">ls</code>, <code class="s">-z</code> is not a valid option.
+ In such a case, <code class="s">ls</code> returns 2.
+ </p>
+ <h2 id="head_1014">Interprocess Communication</h2>
+ <h3 id="head_1015">Provided Code</h3>
+ <h4 id="head_1016">The Makefile</h4>
+ <div class="filename">Makefile</div>
+ <pre class="language-makefile"><code class="language-makefile"><span class="token comment"># Makefile</span>
+
+CC <span class="token operator">=</span> gcc
+CFLAGS <span class="token operator">=</span> -Wall -Wextra
+LDFLAGS <span class="token operator">=</span>
+LDLIBS <span class="token operator">=</span>
+
+EXE <span class="token operator">=</span> chg_case manager
+
+<span class="token symbol">all</span><span class="token punctuation">:</span> <span class="token variable">$</span><span class="token punctuation">(</span>EXE<span class="token punctuation">)</span>
+
+<span class="token symbol"><span class="token variable">$</span>(foreach f, <span class="token variable">$</span>(EXE), <span class="token variable">$</span>(eval <span class="token variable">$</span>(f)</span><span class="token punctuation">:</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token builtin">.PHONY</span><span class="token punctuation">:</span> clean
+
+<span class="token symbol">clean</span><span class="token punctuation">:</span>
+	<span class="token variable">$</span><span class="token punctuation">{</span>RM<span class="token punctuation">}</span> <span class="token variable">$</span><span class="token punctuation">(</span>EXE<span class="token punctuation">)</span>
+
+<span class="token comment"># END</span></code></pre>
+ <h4 id="head_1017">The chg_case.c File</h4>
+ <div class="filename">chg_case.c</div>
+ <pre class="language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;string.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;err.h&gt;</span></span>
+
+<span class="token keyword">const</span> <span class="token keyword">size_t</span> BUFFER_SIZE <span class="token operator">=</span> <span class="token number">32</span><span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">to_lower</span><span class="token punctuation">(</span><span class="token keyword">int</span> in_fd<span class="token punctuation">,</span> <span class="token keyword">int</span> out_fd<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">char</span> buffer<span class="token punctuation">[</span>BUFFER_SIZE<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    ssize_t r<span class="token punctuation">;</span>
+
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>r <span class="token operator">=</span> <span class="token function">read</span><span class="token punctuation">(</span>in_fd<span class="token punctuation">,</span> buffer<span class="token punctuation">,</span> BUFFER_SIZE<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>r <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+            <span class="token function">err</span><span class="token punctuation">(</span>EXIT_FAILURE<span class="token punctuation">,</span> <span class="token string">"Could not read data"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">size_t</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token punctuation">(</span><span class="token keyword">size_t</span><span class="token punctuation">)</span>r<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>buffer<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&gt;=</span> <span class="token string">'A'</span> <span class="token operator">&amp;&amp;</span> buffer<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;=</span> <span class="token string">'Z'</span><span class="token punctuation">)</span>
+                buffer<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">+</span><span class="token operator">=</span> <span class="token string">'a'</span> <span class="token operator">-</span> <span class="token string">'A'</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">write</span><span class="token punctuation">(</span>out_fd<span class="token punctuation">,</span> buffer<span class="token punctuation">,</span> r<span class="token punctuation">)</span> <span class="token operator">!=</span> r<span class="token punctuation">)</span>
+            <span class="token function">errx</span><span class="token punctuation">(</span>EXIT_FAILURE<span class="token punctuation">,</span> <span class="token string">"Could not write data"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">to_upper</span><span class="token punctuation">(</span><span class="token keyword">int</span> in_fd<span class="token punctuation">,</span> <span class="token keyword">int</span> out_fd<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">char</span> buffer<span class="token punctuation">[</span>BUFFER_SIZE<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    ssize_t r<span class="token punctuation">;</span>
+
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>r <span class="token operator">=</span> <span class="token function">read</span><span class="token punctuation">(</span>in_fd<span class="token punctuation">,</span> buffer<span class="token punctuation">,</span> BUFFER_SIZE<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>r <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+            <span class="token function">err</span><span class="token punctuation">(</span>EXIT_FAILURE<span class="token punctuation">,</span> <span class="token string">"Could not read data"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">size_t</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token punctuation">(</span><span class="token keyword">size_t</span><span class="token punctuation">)</span>r<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>buffer<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&gt;=</span> <span class="token string">'a'</span> <span class="token operator">&amp;&amp;</span> buffer<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;=</span> <span class="token string">'z'</span><span class="token punctuation">)</span>
+                buffer<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">+</span><span class="token operator">=</span> <span class="token string">'A'</span> <span class="token operator">-</span> <span class="token string">'a'</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">write</span><span class="token punctuation">(</span>out_fd<span class="token punctuation">,</span> buffer<span class="token punctuation">,</span> r<span class="token punctuation">)</span> <span class="token operator">!=</span> r<span class="token punctuation">)</span>
+            <span class="token function">errx</span><span class="token punctuation">(</span>EXIT_FAILURE<span class="token punctuation">,</span> <span class="token string">"Could not write data"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>argc <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token function">to_lower</span><span class="token punctuation">(</span>STDIN_FILENO<span class="token punctuation">,</span> STDOUT_FILENO<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>argc <span class="token operator">==</span> <span class="token number">2</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">strcmp</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">"-l"</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+            <span class="token function">to_lower</span><span class="token punctuation">(</span>STDIN_FILENO<span class="token punctuation">,</span> STDOUT_FILENO<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">strcmp</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">"-U"</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+            <span class="token function">to_upper</span><span class="token punctuation">(</span>STDIN_FILENO<span class="token punctuation">,</span> STDOUT_FILENO<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span>
+            <span class="token function">errx</span><span class="token punctuation">(</span>EXIT_FAILURE<span class="token punctuation">,</span> <span class="token string">"Usage: %s [-l|-U]"</span><span class="token punctuation">,</span> argv<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">else</span>
+        <span class="token function">errx</span><span class="token punctuation">(</span>EXIT_FAILURE<span class="token punctuation">,</span> <span class="token string">"Usage: %s [-l|-U]"</span><span class="token punctuation">,</span> argv<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> EXIT_SUCCESS<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+ <h4 id="head_1018">The manager.c File</h4>
+ <div class="filename">manager.c</div>
+ <pre class="language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;fcntl.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;err.h&gt;</span></span>
+
+<span class="token keyword">const</span> <span class="token keyword">size_t</span> BUFFER_SIZE <span class="token operator">=</span> <span class="token number">32</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>argc <span class="token operator">&lt;</span> <span class="token number">3</span><span class="token punctuation">)</span>
+        <span class="token function">errx</span><span class="token punctuation">(</span>EXIT_FAILURE<span class="token punctuation">,</span> <span class="token string">"Usage: %s FILE COMMAND [ARGUMENTS]..."</span><span class="token punctuation">,</span> argv<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// TODO</span>
+
+    <span class="token keyword">return</span> EXIT_SUCCESS<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+ <h3 id="head_1019">Introduction</h3>
+ <p>
+ In this section,
+ you will write a program (the manager)
+ that sends the contents of a text file to another program (the worker)
+ and gets a response from the worker.
+ </p>
+ <h3 id="head_1020">Implementation</h3>
+ <h4 id="head_1021">The Worker</h4>
+ <p>
+ The worker can be any program that reads the standard input,
+ processes the data and sends the response to the standard output.
+ In order to simplify the manager code,
+ the worker must not change the number of bytes,
+ that is, the number of bytes sent to the standard output
+ must be the same as the number of bytes read from the standard input.
+ The worker can only change the values of the bytes (not the number of bytes).
+ </p>
+ <p>
+ The code of a worker is given: <code class="s">chg_case.c</code>.
+ <b>You are not allowed to modify this file.</b>
+ Look at it carefully in order to understand it.
+ </p>
+ <p>
+ The <code class="s">chg_case</code> program can convert lowercase letters to uppercase, and vice versa.
+ Two options can be used:
+ </p>
+ <ul>
+ <li>The <code class="s">-l</code> option, which converts letters to lowercase (the default option).</li>
+ <li>The <code class="s">-U</code> option, which converts letters to uppercase.</li>
+ </ul>
+ <p>
+ Compile the file (with the given Makefile)
+ and use the following examples to test it.
+ </p>
+ <pre class="language-none"><code class="language-none">$ make chg_case
+gcc -Wall -Wextra    chg_case.c   -o chg_case
+$ echo Hello World | ./chg_case
+hello world
+$ echo Hello World | ./chg_case -U
+HELLO WORLD
+$ cat Makefile | ./chg_case -U
+# MAKEFILE
+
+CC = GCC
+CFLAGS = -WALL -WEXTRA
+LDFLAGS =
+LDLIBS =
+
+EXE = CHG_CASE MANAGER
+
+ALL: $(EXE)
+
+$(FOREACH F, $(EXE), $(EVAL $(F):))
+
+.PHONY: CLEAN
+
+CLEAN:
+	${RM} $(EXE)
+
+# END
+$ ./chg_case -abcd
+chg_case: Usage: ./chg_case [-l|-U]</code></pre>
+ <p>You can also test it with direct inputs:</p>
+ <pre class="language-none"><code class="language-none">$ ./chg_case -U
+Hello World
+HELLO WORLD
+What do you do?
+WHAT DO YOU DO?</code></pre>
+ <p>Press <kbd>Ctrl+D</kbd> to send the EOF (End Of File) symbol and stop the program.</p>
+ <h4 id="head_1022">The Manager</h4>
+ <p>
+ The manager can take a variable number of arguments:
+ </p>
+ <ul>
+ <li>The first argument is a text file.</li>
+ <li>The second argument is the worker (an executable file).</li>
+ <li>The other arguments are those passed to the worker.</li>
+ </ul>
+ <p>
+ The behavior of the manager can be summarized by the following diagram:
+ </p>
+ <p>
+ <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4KPHN2ZyB2ZXJzaW9uPSIxLjIiIHdpZHRoPSIxNzIuNjNtbSIgaGVpZ2h0PSIxMDIuODhtbSIgdmlld0JveD0iMTc4OSA1ODI2IDE3MjYzIDEwMjg4IiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWlkWU1pZCIgZmlsbC1ydWxlPSJldmVub2RkIiBzdHJva2Utd2lkdGg9IjI4LjIyMiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczpvb289Imh0dHA6Ly94bWwub3Blbm9mZmljZS5vcmcvc3ZnL2V4cG9ydCIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnByZXNlbnRhdGlvbj0iaHR0cDovL3N1bi5jb20veG1sbnMvc3Rhcm9mZmljZS9wcmVzZW50YXRpb24iIHhtbG5zOnNtaWw9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvU01JTDIwLyIgeG1sbnM6YW5pbT0idXJuOm9hc2lzOm5hbWVzOnRjOm9wZW5kb2N1bWVudDp4bWxuczphbmltYXRpb246MS4wIiB4bWw6c3BhY2U9InByZXNlcnZlIj4KIDxkZWZzPgogIDxmb250IGlkPSJFbWJlZGRlZEZvbnRfMSIgaG9yaXotYWR2LXg9IjIwNDgiPgogICA8Zm9udC1mYWNlIGZvbnQtZmFtaWx5PSJMaWJlcmF0aW9uIFNhbnMgZW1iZWRkZWQiIHVuaXRzLXBlci1lbT0iMjA0OCIgZm9udC13ZWlnaHQ9Im5vcm1hbCIgZm9udC1zdHlsZT0ibm9ybWFsIiBhc2NlbnQ9IjE4NTIiIGRlc2NlbnQ9IjQyMyIvPgogICA8bWlzc2luZy1nbHlwaCBob3Jpei1hZHYteD0iMjA0OCIgZD0iTSAwLDAgTCAyMDQ3LDAgMjA0NywyMDQ3IDAsMjA0NyAwLDAgWiIvPgogICA8Z2x5cGggdW5pY29kZT0ieCIgaG9yaXotYWR2LXg9IjEwMDYiIGQ9Ik0gODAxLDAgTCA1MTAsNDQ0IDIxNywwIDIzLDAgNDA4LDU1NiA0MSwxMDgyIDI0MCwxMDgyIDUxMCw2NjEgNzc4LDEwODIgOTc5LDEwODIgNjEyLDU1OCAxMDAyLDAgODAxLDAgWiIvPgogICA8Z2x5cGggdW5pY29kZT0idCIgaG9yaXotYWR2LXg9IjUzMSIgZD0iTSA1NTQsOCBDIDQ5NSwtOCA0MzQsLTE2IDM3MiwtMTYgMjI4LC0xNiAxNTYsNjYgMTU2LDIyOSBMIDE1Niw5NTEgMzEsOTUxIDMxLDEwODIgMTYzLDEwODIgMjE2LDEzMjQgMzM2LDEzMjQgMzM2LDEwODIgNTM2LDEwODIgNTM2LDk1MSAzMzYsOTUxIDMzNiwyNjggQyAzMzYsMjE2IDM0NSwxODAgMzYyLDE1OSAzNzksMTM4IDQwOCwxMjcgNDUwLDEyNyA0NzQsMTI3IDUwOSwxMzIgNTU0LDE0MSBMIDU1NCw4IFoiLz4KICAgPGdseXBoIHVuaWNvZGU9InIiIGhvcml6LWFkdi14PSI1MzAiIGQ9Ik0gMTQyLDAgTCAxNDIsODMwIEMgMTQyLDkwNiAxNDAsOTkwIDEzNiwxMDgyIEwgMzA2LDEwODIgQyAzMTEsOTU5IDMxNCw4ODYgMzE0LDg2MSBMIDMxOCw4NjEgQyAzNDcsOTU0IDM4MCwxMDE3IDQxNywxMDUxIDQ1NCwxMDg1IDUwNywxMTAyIDU3NSwxMTAyIDU5OSwxMTAyIDYyMywxMDk5IDY0OCwxMDkyIEwgNjQ4LDkyNyBDIDYyNCw5MzQgNTkyLDkzNyA1NTIsOTM3IDQ3Nyw5MzcgNDIwLDkwNSAzODEsODQxIDM0Miw3NzYgMzIyLDY4NCAzMjIsNTY0IEwgMzIyLDAgMTQyLDAgWiIvPgogICA8Z2x5cGggdW5pY29kZT0icCIgaG9yaXotYWR2LXg9Ijk1MyIgZD0iTSAxMDUzLDU0NiBDIDEwNTMsMTY5IDkyMCwtMjAgNjU1LC0yMCA0ODgsLTIwIDM3Niw0MyAzMTksMTY4IEwgMzE0LDE2OCBDIDMxNywxNjMgMzE4LDEwNiAzMTgsLTIgTCAzMTgsLTQyNSAxMzgsLTQyNSAxMzgsODYxIEMgMTM4LDk3MiAxMzYsMTA0NiAxMzIsMTA4MiBMIDMwNiwxMDgyIEMgMzA3LDEwNzkgMzA4LDEwNzAgMzA5LDEwNTQgMzEwLDEwMzcgMzEyLDEwMTIgMzE0LDk3OCAzMTUsOTQ0IDMxNiw5MjEgMzE2LDkwOCBMIDMyMCw5MDggQyAzNTIsOTc1IDM5NCwxMDI0IDQ0NywxMDU1IDUwMCwxMDg2IDU2OSwxMTAxIDY1NSwxMTAxIDc4OCwxMTAxIDg4OCwxMDU2IDk1NCw5NjcgMTAyMCw4NzggMTA1Myw3MzcgMTA1Myw1NDYgWiBNIDg2NCw1NDIgQyA4NjQsNjkzIDg0NCw4MDAgODAzLDg2NSA3NjIsOTMwIDY5OCw5NjIgNjA5LDk2MiA1MzgsOTYyIDQ4Miw5NDcgNDQyLDkxNyA0MDEsODg3IDM3MSw4NDAgMzUwLDc3NyAzMjksNzEzIDMxOCw2MzAgMzE4LDUyOCAzMTgsMzg2IDM0MSwyODEgMzg2LDIxNCA0MzEsMTQ3IDUwNSwxMTMgNjA3LDExMyA2OTYsMTEzIDc2MiwxNDYgODAzLDIxMiA4NDQsMjc3IDg2NCwzODcgODY0LDU0MiBaIi8+CiAgIDxnbHlwaCB1bmljb2RlPSJvIiBob3Jpei1hZHYteD0iOTgwIiBkPSJNIDEwNTMsNTQyIEMgMTA1MywzNTMgMTAxMSwyMTIgOTI4LDExOSA4NDUsMjYgNzI0LC0yMCA1NjUsLTIwIDQwNywtMjAgMjg4LDI4IDIwNywxMjUgMTI2LDIyMSA4NiwzNjAgODYsNTQyIDg2LDkxNSAyNDgsMTEwMiA1NzEsMTEwMiA3MzYsMTEwMiA4NTgsMTA1NyA5MzYsOTY2IDEwMTQsODc1IDEwNTMsNzMzIDEwNTMsNTQyIFogTSA4NjQsNTQyIEMgODY0LDY5MSA4NDIsODAwIDc5OCw4NjggNzUzLDkzNSA2NzksOTY5IDU3NCw5NjkgNDY5LDk2OSAzOTMsOTM1IDM0Niw4NjYgMjk5LDc5NyAyNzUsNjg5IDI3NSw1NDIgMjc1LDM5OSAyOTgsMjkyIDM0NSwyMjEgMzkxLDE0OSA0NjQsMTEzIDU2MywxMTMgNjcxLDExMyA3NDgsMTQ4IDc5NSwyMTcgODQxLDI4NiA4NjQsMzk1IDg2NCw1NDIgWiIvPgogICA8Z2x5cGggdW5pY29kZT0ibCIgaG9yaXotYWR2LXg9IjE4NyIgZD0iTSAxMzgsMCBMIDEzOCwxNDg0IDMxOCwxNDg0IDMxOCwwIDEzOCwwIFoiLz4KICAgPGdseXBoIHVuaWNvZGU9ImsiIGhvcml6LWFkdi14PSI5MDEiIGQ9Ik0gODE2LDAgTCA0NTAsNDk0IDMxOCwzODUgMzE4LDAgMTM4LDAgMTM4LDE0ODQgMzE4LDE0ODQgMzE4LDU1NyA3OTMsMTA4MiAxMDA0LDEwODIgNTY1LDYxNyAxMDI3LDAgODE2LDAgWiIvPgogICA8Z2x5cGggdW5pY29kZT0iaSIgaG9yaXotYWR2LXg9IjE4NyIgZD0iTSAxMzcsMTMxMiBMIDEzNywxNDg0IDMxNywxNDg0IDMxNywxMzEyIDEzNywxMzEyIFogTSAxMzcsMCBMIDEzNywxMDgyIDMxNywxMDgyIDMxNywwIDEzNywwIFoiLz4KICAgPGdseXBoIHVuaWNvZGU9ImYiIGhvcml6LWFkdi14PSI1NTciIGQ9Ik0gMzYxLDk1MSBMIDM2MSwwIDE4MSwwIDE4MSw5NTEgMjksOTUxIDI5LDEwODIgMTgxLDEwODIgMTgxLDEyMDQgQyAxODEsMTMwMyAyMDMsMTM3NCAyNDYsMTQxNyAyODksMTQ2MCAzNTYsMTQ4MiA0NDUsMTQ4MiA0OTUsMTQ4MiA1MzcsMTQ3OCA1NzIsMTQ3MCBMIDU3MiwxMzMzIEMgNTQyLDEzMzggNTE1LDEzNDEgNDkyLDEzNDEgNDQ2LDEzNDEgNDEzLDEzMjkgMzkyLDEzMDYgMzcxLDEyODMgMzYxLDEyNDAgMzYxLDExNzkgTCAzNjEsMTA4MiA1NzIsMTA4MiA1NzIsOTUxIDM2MSw5NTEgWiIvPgogICA8Z2x5cGggdW5pY29kZT0iZSIgaG9yaXotYWR2LXg9Ijk4MCIgZD0iTSAyNzYsNTAzIEMgMjc2LDM3OSAzMDIsMjgzIDM1MywyMTYgNDA0LDE0OSA0NzksMTE1IDU3OCwxMTUgNjU2LDExNSA3MTksMTMxIDc2NiwxNjIgODEzLDE5MyA4NDQsMjMzIDg2MSwyODEgTCAxMDE5LDIzNiBDIDk1NCw2NSA4MDcsLTIwIDU3OCwtMjAgNDE4LC0yMCAyOTYsMjggMjEzLDEyMyAxMjksMjE4IDg3LDM2MCA4Nyw1NDggODcsNzI3IDEyOSw4NjQgMjEzLDk1OSAyOTYsMTA1NCA0MTYsMTEwMiA1NzEsMTEwMiA4ODksMTEwMiAxMDQ4LDkxMCAxMDQ4LDUyNyBMIDEwNDgsNTAzIDI3Niw1MDMgWiBNIDg2Miw2NDEgQyA4NTIsNzU1IDgyMyw4MzggNzc1LDg5MSA3MjcsOTQzIDY1OCw5NjkgNTY4LDk2OSA0ODEsOTY5IDQxMiw5NDAgMzYxLDg4MiAzMTAsODIzIDI4Miw3NDMgMjc4LDY0MSBMIDg2Miw2NDEgWiIvPgogICA8Z2x5cGggdW5pY29kZT0iYyIgaG9yaXotYWR2LXg9IjkwMSIgZD0iTSAyNzUsNTQ2IEMgMjc1LDQwMiAyOTgsMjk1IDM0MywyMjYgMzg4LDE1NyA0NTcsMTIyIDU0OCwxMjIgNjEyLDEyMiA2NjYsMTM5IDcwOSwxNzQgNzUyLDIwOSA3NzgsMjYyIDc4OCwzMzQgTCA5NzAsMzIyIEMgOTU2LDIxOCA5MTIsMTM1IDgzNyw3MyA3NjIsMTEgNjY4LC0yMCA1NTMsLTIwIDQwMiwtMjAgMjg2LDI4IDIwNywxMjQgMTI3LDIxOSA4NywzNTkgODcsNTQyIDg3LDcyNCAxMjcsODYzIDIwNyw5NTkgMjg3LDEwNTQgNDAyLDExMDIgNTUxLDExMDIgNjYyLDExMDIgNzU0LDEwNzMgODI3LDEwMTYgOTAwLDk1OSA5NDUsODgwIDk2NCw3NzkgTCA3NzksNzY1IEMgNzcwLDgyNSA3NDYsODczIDcwOCw5MDggNjcwLDk0MyA2MTYsOTYxIDU0Niw5NjEgNDUxLDk2MSAzODIsOTI5IDMzOSw4NjYgMjk2LDgwMyAyNzUsNjk2IDI3NSw1NDYgWiIvPgogICA8Z2x5cGggdW5pY29kZT0iVCIgaG9yaXotYWR2LXg9IjExOTIiIGQ9Ik0gNzIwLDEyNTMgTCA3MjAsMCA1MzAsMCA1MzAsMTI1MyA0NiwxMjUzIDQ2LDE0MDkgMTIwNCwxNDA5IDEyMDQsMTI1MyA3MjAsMTI1MyBaIi8+CiAgIDxnbHlwaCB1bmljb2RlPSJQIiBob3Jpei1hZHYteD0iMTExMiIgZD0iTSAxMjU4LDk4NSBDIDEyNTgsODUyIDEyMTUsNzQ2IDExMjgsNjY3IDEwNDEsNTg4IDkyMiw1NDkgNzczLDU0OSBMIDM1OSw1NDkgMzU5LDAgMTY4LDAgMTY4LDE0MDkgNzYxLDE0MDkgQyA5MTksMTQwOSAxMDQxLDEzNzIgMTEyOCwxMjk4IDEyMTUsMTIyNCAxMjU4LDExMjAgMTI1OCw5ODUgWiBNIDEwNjYsOTgzIEMgMTA2NiwxMTY1IDk1NywxMjU2IDczOCwxMjU2IEwgMzU5LDEyNTYgMzU5LDcwMCA3NDYsNzAwIEMgOTU5LDcwMCAxMDY2LDc5NCAxMDY2LDk4MyBaIi8+CiAgIDxnbHlwaCB1bmljb2RlPSJGIiBob3Jpei1hZHYteD0iMTAwNiIgZD0iTSAzNTksMTI1MyBMIDM1OSw3MjkgMTE0NSw3MjkgMTE0NSw1NzEgMzU5LDU3MSAzNTksMCAxNjgsMCAxNjgsMTQwOSAxMTY5LDE0MDkgMTE2OSwxMjUzIDM1OSwxMjUzIFoiLz4KICAgPGdseXBoIHVuaWNvZGU9IjIiIGhvcml6LWFkdi14PSI5NTQiIGQ9Ik0gMTAzLDAgTCAxMDMsMTI3IEMgMTM3LDIwNSAxNzksMjc0IDIyOCwzMzQgMjc3LDM5MyAzMjgsNDQ3IDM4Miw0OTYgNDM2LDU0NCA0OTAsNTg5IDU0Myw2MzAgNTk2LDY3MSA2NDMsNzEzIDY4Niw3NTQgNzI5LDc5NSA3NjMsODM5IDc5MCw4ODQgODE2LDkyOSA4MjksOTgxIDgyOSwxMDM4IDgyOSwxMTE1IDgwNiwxMTc1IDc2MSwxMjE4IDcxNiwxMjYxIDY1MywxMjgyIDU3MiwxMjgyIDQ5NSwxMjgyIDQzMiwxMjYxIDM4MywxMjIwIDMzMywxMTc4IDMwNCwxMTE5IDI5NSwxMDQ0IEwgMTExLDEwNjEgQyAxMjQsMTE3NCAxNzIsMTI2MyAyNTUsMTMzMCAzMzcsMTM5NyA0NDMsMTQzMCA1NzIsMTQzMCA3MTQsMTQzMCA4MjMsMTM5NyA5MDAsMTMzMCA5NzYsMTI2MyAxMDE0LDExNjcgMTAxNCwxMDQ0IDEwMTQsOTg5IDEwMDIsOTM1IDk3Nyw4ODEgOTUyLDgyNyA5MTQsNzczIDg2NSw3MTkgODE2LDY2NSA3MjEsNTgxIDU4Miw0NjggNTA1LDQwNSA0NDQsMzQ5IDM5OSwyOTkgMzU0LDI0OCAzMjEsMjAwIDMwMSwxNTMgTCAxMDM2LDE1MyAxMDM2LDAgMTAzLDAgWiIvPgogICA8Z2x5cGggdW5pY29kZT0iMSIgaG9yaXotYWR2LXg9IjkyNyIgZD0iTSAxNTYsMCBMIDE1NiwxNTMgNTE1LDE1MyA1MTUsMTIzNyAxOTcsMTAxMCAxOTcsMTE4MCA1MzAsMTQwOSA2OTYsMTQwOSA2OTYsMTUzIDEwMzksMTUzIDEwMzksMCAxNTYsMCBaIi8+CiAgIDxnbHlwaCB1bmljb2RlPSIvIiBob3Jpei1hZHYteD0iNTgzIiBkPSJNIDAsLTIwIEwgNDExLDE0ODQgNTY5LDE0ODQgMTYyLC0yMCAwLC0yMCBaIi8+CiAgIDxnbHlwaCB1bmljb2RlPSIgIiBob3Jpei1hZHYteD0iNTU2Ii8+CiAgPC9mb250PgogPC9kZWZzPgogPGRlZnM+CiAgPGZvbnQgaWQ9IkVtYmVkZGVkRm9udF8yIiBob3Jpei1hZHYteD0iMjA0OCI+CiAgIDxmb250LWZhY2UgZm9udC1mYW1pbHk9IkxpYmVyYXRpb24gU2FucyBlbWJlZGRlZCIgdW5pdHMtcGVyLWVtPSIyMDQ4IiBmb250LXdlaWdodD0ibm9ybWFsIiBmb250LXN0eWxlPSJpdGFsaWMiIGFzY2VudD0iMTg1MiIgZGVzY2VudD0iNDIzIi8+CiAgIDxtaXNzaW5nLWdseXBoIGhvcml6LWFkdi14PSIyMDQ4IiBkPSJNIDAsMCBMIDIwNDcsMCAyMDQ3LDIwNDcgMCwyMDQ3IDAsMCBaIi8+CiAgIDxnbHlwaCB1bmljb2RlPSJ1IiBob3Jpei1hZHYteD0iMTAzMyIgZD0iTSA0MTUsMTA4MiBMIDI4OSw0MzcgQyAyNzcsMzc4IDI3MSwzMjggMjcxLDI4NyAyNzEsMTc2IDMzMSwxMjAgNDUwLDEyMCA1MzQsMTIwIDYwOCwxNTIgNjcyLDIxNiA3MzYsMjgwIDc3OSwzNjcgODAwLDQ3NiBMIDkxOCwxMDgyIDEwOTgsMTA4MiA5MzIsMjMxIEMgOTE5LDE2OCA5MDYsOTEgODkzLDAgTCA3MjMsMCBDIDcyMyw3IDcyNywzMyA3MzQsNzggNzQxLDEyMiA3NDYsMTU4IDc1MSwxODUgTCA3NDgsMTg1IEMgNjkzLDEwOCA2MzcsNTUgNTgyLDI2IDUyNiwtNCA0NjAsLTE5IDM4MywtMTkgMjg0LC0xOSAyMTAsNSAxNjEsNTQgMTExLDEwMyA4NiwxNzMgODYsMjY1IDg2LDMwOCA5MywzNjIgMTA3LDQyOSBMIDIzNCwxMDgyIDQxNSwxMDgyIFoiLz4KICAgPGdseXBoIHVuaWNvZGU9InQiIGhvcml6LWFkdi14PSI1ODMiIGQ9Ik0gMjc1LC0yMCBDIDIxOCwtMjAgMTc0LC0zIDE0MiwzMSAxMDksNjUgOTMsMTEwIDkzLDE2NiA5MywyMDMgOTgsMjQ2IDEwOCwyOTYgTCAyMzQsOTUxIDEwOSw5NTEgMTM1LDEwODIgMjYyLDEwODIgMzY3LDEzMjQgNDg3LDEzMjQgNDQwLDEwODIgNjQwLDEwODIgNjE0LDk1MSA0MTQsOTUxIDI4OSwzMDYgQyAyODEsMjY2IDI3NywyMzQgMjc3LDIxMSAyNzcsMTUyIDMwNywxMjMgMzY3LDEyMyAzOTUsMTIzIDQyOCwxMjggNDY3LDEzNyBMIDQ0OCw0IEMgMzgyLC0xMiAzMjQsLTIwIDI3NSwtMjAgWiIvPgogICA8Z2x5cGggdW5pY29kZT0icyIgaG9yaXotYWR2LXg9Ijk4MCIgZD0iTSA5MDcsMzE3IEMgOTA3LDIwOSA4NjYsMTI2IDc4Myw2OCA3MDAsOSA1ODEsLTIwIDQyNSwtMjAgMzA5LC0yMCAyMTcsMCAxNDksMzkgODAsNzggMzIsMTM5IDUsMjIzIEwgMTUyLDI3OSBDIDE3NCwyMjAgMjA4LDE3OCAyNTUsMTUxIDMwMSwxMjQgMzYzLDExMSA0NDEsMTExIDUzNiwxMTEgNjA5LDEyNyA2NTgsMTYwIDcwNywxOTIgNzMyLDIzOSA3MzIsMzAxIDczMiwzNDIgNzE1LDM3NyA2ODEsNDA1IDY0Nyw0MzIgNTc1LDQ2MyA0NjUsNDk3IDM4MCw1MjUgMzE2LDU1MiAyNzMsNTc5IDIzMCw2MDYgMTk4LDYzNyAxNzUsNjczIDE1Miw3MDggMTQxLDc1MCAxNDEsNzk3IDE0MSw4OTQgMTgwLDk2OCAyNTcsMTAyMSAzMzQsMTA3MyA0NDMsMTA5OSA1ODQsMTA5OSA4MjAsMTA5OSA5NTMsMTAxNCA5ODIsODQ0IEwgODE5LDgxOSBDIDgwNCw4NzIgNzc3LDkxMCA3MzYsOTMzIDY5NSw5NTYgNjQxLDk2OCA1NzIsOTY4IDQ4OSw5NjggNDI2LDk1NSAzODIsOTI5IDMzNyw5MDIgMzE1LDg2NSAzMTUsODE3IDMxNSw3ODkgMzIyLDc2NSAzMzYsNzQ2IDM1MCw3MjcgMzcwLDcxMCAzOTcsNjk1IDQyMyw2ODAgNDg0LDY1NyA1NzksNjI3IDY2NCw2MDAgNzI4LDU3MyA3NzEsNTQ2IDgxNCw1MTkgODQ3LDQ4NiA4NzEsNDQ5IDg5NSw0MTIgOTA3LDM2OCA5MDcsMzE3IFoiLz4KICAgPGdseXBoIHVuaWNvZGU9Im8iIGhvcml6LWFkdi14PSIxMDMzIiBkPSJNIDEwNzQsNjgzIEMgMTA3NCw1OTYgMTA2MSw1MDYgMTAzNCw0MTMgMTAwNywzMTkgOTY5LDI0MCA5MjAsMTc1IDg3MCwxMTAgODA5LDYxIDczNywyOSA2NjUsLTQgNTgzLC0yMCA0OTEsLTIwIDM2MCwtMjAgMjU3LDE5IDE4MSw5OCAxMDUsMTc3IDY3LDI4NCA2Nyw0MTkgNzAsNTU1IDk0LDY3NiAxNDEsNzgxIDE4OCw4ODYgMjUyLDk2NiAzMzUsMTAyMCA0MTgsMTA3NCA1MjAsMTEwMSA2NDIsMTEwMSA3ODIsMTEwMSA4ODksMTA2NSA5NjMsOTkyIDEwMzcsOTE5IDEwNzQsODE2IDEwNzQsNjgzIFogTSA4ODgsNjgzIEMgODg4LDg3NCA4MDUsOTY5IDY0MCw5NjkgNTUwLDk2OSA0NzgsOTQ2IDQyNCw5MDAgMzY5LDg1MyAzMjcsNzgzIDI5Nyw2ODkgMjY3LDU5NSAyNTIsNTA0IDI1Miw0MTYgMjUyLDMxNyAyNzMsMjQyIDMxNiwxOTEgMzU5LDEzOSA0MjEsMTEzIDUwMiwxMTMgNTcxLDExMyA2MjYsMTI1IDY2OCwxNDggNzA5LDE3MSA3NDYsMjA3IDc3NywyNTYgODA4LDMwNSA4MzQsMzY3IDg1NCw0NDMgODczLDUxOSA4ODUsNTk5IDg4OCw2ODMgWiIvPgogICA8Z2x5cGggdW5pY29kZT0ibiIgaG9yaXotYWR2LXg9IjEwMzMiIGQ9Ik0gNzE3LDAgTCA4NDMsNjQ1IEMgODU1LDcwNCA4NjEsNzU0IDg2MSw3OTUgODYxLDkwNiA4MDEsOTYyIDY4Miw5NjIgNTk4LDk2MiA1MjQsOTMwIDQ2MCw4NjYgMzk2LDgwMiAzNTMsNzE1IDMzMiw2MDYgTCAyMTQsMCAzNCwwIDIwMCw4NTEgQyAyMTMsOTE0IDIyNiw5OTEgMjM5LDEwODIgTCA0MDksMTA4MiBDIDQwOSwxMDc1IDQwNiwxMDQ5IDM5OSwxMDA1IDM5Miw5NjAgMzg2LDkyNCAzODEsODk3IEwgMzg0LDg5NyBDIDQzOSw5NzQgNDk1LDEwMjcgNTUxLDEwNTcgNjA2LDEwODYgNjcyLDExMDEgNzQ5LDExMDEgODQ4LDExMDEgOTIyLDEwNzcgOTcyLDEwMjggMTAyMSw5NzkgMTA0Niw5MDkgMTA0Niw4MTcgMTA0Niw3NzQgMTAzOSw3MjAgMTAyNSw2NTMgTCA4OTgsMCA3MTcsMCBaIi8+CiAgIDxnbHlwaCB1bmljb2RlPSJpIiBob3Jpei1hZHYteD0iNDc4IiBkPSJNIDI4NywxMzEyIEwgMzIxLDE0ODQgNTAxLDE0ODQgNDY3LDEzMTIgMjg3LDEzMTIgWiBNIDMzLDAgTCAyNDMsMTA4MiA0MjMsMTA4MiAyMTIsMCAzMywwIFoiLz4KICAgPGdseXBoIHVuaWNvZGU9ImQiIGhvcml6LWFkdi14PSIxMTM5IiBkPSJNIDQwMSwtMjEgQyAyOTYsLTIxIDIxNSwxMSAxNTcsNzQgOTgsMTM3IDY5LDIyMyA2OSwzMzMgNjksNDY4IDkwLDYwMCAxMzEsNzI3IDE3Miw4NTQgMjI5LDk0OCAzMDQsMTAwOSAzNzgsMTA3MCA0NzMsMTEwMSA1ODgsMTEwMSA2NzAsMTEwMSA3MzcsMTA4NCA3ODksMTA0OSA4NDAsMTAxNCA4NzcsOTY2IDg5OCw5MDMgTCA5MDMsOTAzIDkzMSwxMDY1IDEwMTMsMTQ4NCAxMTkzLDE0ODQgOTQ4LDIyMyBDIDkyOSwxMjkgOTE2LDU1IDkxMCwwIEwgNzM4LDAgQyA3MzgsMzQgNzQ1LDg3IDc1OSwxNjAgTCA3NTQsMTYwIEMgNzA1LDk3IDY1NCw1MSA2MDAsMjIgNTQ2LC03IDQ4MCwtMjEgNDAxLC0yMSBaIE0gNDUzLDExOCBDIDUxOSwxMTggNTc2LDEzMiA2MjMsMTU5IDY3MCwxODYgNzA5LDIyNiA3NDIsMjgxIDc3NSwzMzUgODAwLDQwMyA4MTksNDg1IDgzOCw1NjYgODQ3LDYzOSA4NDcsNzA0IDg0Nyw3ODcgODI2LDg1MiA3ODQsODk5IDc0MSw5NDUgNjgyLDk2OCA2MDcsOTY4IDUyNiw5NjggNDYxLDk0NCA0MTQsODk2IDM2Nyw4NDcgMzI5LDc2OCAzMDAsNjU5IDI3MSw1NDkgMjU3LDQ1MSAyNTcsMzY1IDI1NywyODMgMjczLDIyMSAzMDQsMTgwIDMzNSwxMzkgMzg1LDExOCA0NTMsMTE4IFoiLz4KICA8L2ZvbnQ+CiA8L2RlZnM+CiA8ZGVmcz4KICA8Zm9udCBpZD0iRW1iZWRkZWRGb250XzMiIGhvcml6LWFkdi14PSIyMDQ4Ij4KICAgPGZvbnQtZmFjZSBmb250LWZhbWlseT0iTGliZXJhdGlvbiBTYW5zIGVtYmVkZGVkIiB1bml0cy1wZXItZW09IjIwNDgiIGZvbnQtd2VpZ2h0PSJib2xkIiBmb250LXN0eWxlPSJub3JtYWwiIGFzY2VudD0iMTg1MiIgZGVzY2VudD0iNDIzIi8+CiAgIDxtaXNzaW5nLWdseXBoIGhvcml6LWFkdi14PSIyMDQ4IiBkPSJNIDAsMCBMIDIwNDcsMCAyMDQ3LDIwNDcgMCwyMDQ3IDAsMCBaIi8+CiAgIDxnbHlwaCB1bmljb2RlPSJyIiBob3Jpei1hZHYteD0iNjM2IiBkPSJNIDE0MywwIEwgMTQzLDgyOCBDIDE0Myw4ODcgMTQyLDkzNyAxNDEsOTc3IDEzOSwxMDE2IDEzNywxMDUxIDEzNSwxMDgyIEwgNDAzLDEwODIgQyA0MDUsMTA3MCA0MDgsMTAzNCA0MTEsOTczIDQxNCw5MTIgNDE2LDg3MSA0MTYsODUxIEwgNDIwLDg1MSBDIDQ0Nyw5MjcgNDcyLDk4MSA0OTMsMTAxMiA1MTQsMTA0MyA1NDAsMTA2NiA1NjksMTA4MSA1OTgsMTA5NiA2MzUsMTEwMyA2NzksMTEwMyA3MTUsMTEwMyA3NDQsMTA5OCA3NjYsMTA4OCBMIDc2Niw4NTMgQyA3MjEsODYzIDY4MSw4NjggNjQ2LDg2OCA1NzYsODY4IDUyMiw4NDAgNDgzLDc4MyA0NDQsNzI2IDQyNCw2NDIgNDI0LDUzMSBMIDQyNCwwIDE0MywwIFoiLz4KICAgPGdseXBoIHVuaWNvZGU9Im8iIGhvcml6LWFkdi14PSIxMTEzIiBkPSJNIDExNzEsNTQyIEMgMTE3MSwzNjcgMTEyMiwyMjkgMTAyNSwxMzAgOTI4LDMwIDc5MywtMjAgNjIxLC0yMCA0NTIsLTIwIDMyMCwzMCAyMjQsMTMwIDEyOCwyMzAgODAsMzY3IDgwLDU0MiA4MCw3MTYgMTI4LDg1MyAyMjQsOTUzIDMyMCwxMDUyIDQ1NCwxMTAyIDYyNywxMTAyIDgwNCwxMTAyIDkzOSwxMDU0IDEwMzIsOTU4IDExMjUsODYxIDExNzEsNzIzIDExNzEsNTQyIFogTSA4NzcsNTQyIEMgODc3LDY3MSA4NTYsNzY0IDgxNCw4MjIgNzcyLDg4MCA3MTEsOTA5IDYzMSw5MDkgNDYwLDkwOSAzNzUsNzg3IDM3NSw1NDIgMzc1LDQyMSAzOTYsMzMwIDQzOCwyNjcgNDc5LDIwNCA1MzksMTcyIDYxOCwxNzIgNzkxLDE3MiA4NzcsMjk1IDg3Nyw1NDIgWiIvPgogICA8Z2x5cGggdW5pY29kZT0ibiIgaG9yaXotYWR2LXg9IjEwMDciIGQ9Ik0gODQ0LDAgTCA4NDQsNjA3IEMgODQ0LDc5NyA3ODAsODkyIDY1MSw4OTIgNTgzLDg5MiA1MjgsODYzIDQ4Nyw4MDUgNDQ1LDc0NiA0MjQsNjcxIDQyNCw1ODAgTCA0MjQsMCAxNDMsMCAxNDMsODQwIEMgMTQzLDg5OCAxNDIsOTQ2IDE0MSw5ODMgMTM5LDEwMjAgMTM3LDEwNTMgMTM1LDEwODIgTCA0MDMsMTA4MiBDIDQwNSwxMDY5IDQwOCwxMDM2IDQxMSw5ODEgNDE0LDkyNiA0MTYsODg4IDQxNiw4NjcgTCA0MjAsODY3IEMgNDU4LDk1MCA1MDYsMTAxMCA1NjMsMTA0NyA2MjAsMTA4NCA2ODksMTEwMyA3NjgsMTEwMyA4ODMsMTEwMyA5NzEsMTA2OCAxMDMyLDk5NyAxMDkzLDkyNiAxMTI0LDgyMyAxMTI0LDY4NyBMIDExMjQsMCA4NDQsMCBaIi8+CiAgIDxnbHlwaCB1bmljb2RlPSJrIiBob3Jpei1hZHYteD0iMTAwNyIgZD0iTSA4MzQsMCBMIDU0NSw0OTAgNDI0LDQwNiA0MjQsMCAxNDMsMCAxNDMsMTQ4NCA0MjQsMTQ4NCA0MjQsNjM0IDgxMCwxMDgyIDExMTIsMTA4MiA3MzIsNjYwIDExNDEsMCA4MzQsMCBaIi8+CiAgIDxnbHlwaCB1bmljb2RlPSJnIiBob3Jpei1hZHYteD0iMTAzMyIgZD0iTSA1OTYsLTQzNCBDIDQ2NCwtNDM0IDM1OCwtNDA5IDI3OCwtMzU5IDE5NywtMzA4IDE0OCwtMjM2IDEyOSwtMTQzIEwgNDEwLC0xMTAgQyA0MjAsLTE1MyA0NDIsLTE4NyA0NzUsLTIxMiA1MDgsLTIzNyA1NTEsLTI0OSA2MDQsLTI0OSA2ODIsLTI0OSA3MzksLTIyNSA3NzUsLTE3NyA4MTEsLTEyOSA4MjksLTU4IDgyOSwzNyBMIDgyOSw5NCA4MzEsMjAxIDgyOSwyMDEgQyA3NjcsNjggNjUxLDIgNDgxLDIgMzU1LDIgMjU3LDQ5IDE4OCwxNDQgMTE5LDIzOSA4NCwzNzQgODQsNTUwIDg0LDcyNyAxMjAsODYzIDE5MSw5NTkgMjYyLDEwNTUgMzY2LDExMDMgNTAyLDExMDMgNjU5LDExMDMgNzY4LDEwMzggODI5LDkwOCBMIDgzNCw5MDggQyA4MzQsOTMxIDgzNiw5NjMgODM5LDEwMDMgODQyLDEwNDMgODQ1LDEwNjkgODQ4LDEwODIgTCAxMTE0LDEwODIgQyAxMTEwLDEwMTAgMTEwOCw5MjcgMTEwOCw4MzIgTCAxMTA4LDMzIEMgMTEwOCwtMTIxIDEwNjQsLTIzNyA5NzcsLTMxNiA4OTAsLTM5NSA3NjMsLTQzNCA1OTYsLTQzNCBaIE0gODMxLDU1NiBDIDgzMSw2NjcgODExLDc1NCA3NzIsODE3IDczMiw4NzkgNjc1LDkxMCA2MDIsOTEwIDQ1Miw5MTAgMzc3LDc5MCAzNzcsNTUwIDM3NywzMTUgNDUxLDE5NyA2MDAsMTk3IDY3NSwxOTcgNzMyLDIyOCA3NzIsMjkxIDgxMSwzNTMgODMxLDQ0MSA4MzEsNTU2IFoiLz4KICAgPGdseXBoIHVuaWNvZGU9ImUiIGhvcml6LWFkdi14PSIxMDA3IiBkPSJNIDU4NiwtMjAgQyA0MjMsLTIwIDI5OCwyOCAyMTEsMTI1IDEyNCwyMjEgODAsMzYxIDgwLDU0NiA4MCw3MjUgMTI0LDg2MiAyMTMsOTU4IDMwMiwxMDU0IDQyNywxMTAyIDU5MCwxMTAyIDc0NSwxMTAyIDg2NCwxMDUxIDk0Niw5NDggMTAyOCw4NDUgMTA2OSw2OTQgMTA2OSw0OTUgTCAxMDY5LDQ4NyAzNzUsNDg3IEMgMzc1LDM4MiAzOTUsMzAyIDQzNCwyNDkgNDczLDE5NSA1MjgsMTY4IDYwMCwxNjggNjk5LDE2OCA3NjIsMjExIDc4OCwyOTcgTCAxMDUzLDI3NCBDIDk3Niw3OCA4MjEsLTIwIDU4NiwtMjAgWiBNIDU4Niw5MjUgQyA1MjAsOTI1IDQ2OSw5MDIgNDM0LDg1NiAzOTgsODEwIDM3OSw3NDYgMzc3LDY2MyBMIDc5Nyw2NjMgQyA3OTIsNzUwIDc3MSw4MTYgNzM0LDg2MCA2OTcsOTAzIDY0OCw5MjUgNTg2LDkyNSBaIi8+CiAgIDxnbHlwaCB1bmljb2RlPSJhIiBob3Jpei1hZHYteD0iMTExMiIgZD0iTSAzOTMsLTIwIEMgMjg4LC0yMCAyMDcsOSAxNDgsNjYgODksMTIzIDYwLDIwMyA2MCwzMDYgNjAsNDE4IDk3LDUwMyAxNzAsNTYyIDI0Myw2MjEgMzQ4LDY1MSA0ODcsNjUyIEwgNzIwLDY1NiA3MjAsNzExIEMgNzIwLDc4MiA3MDgsODM0IDY4Myw4NjkgNjU4LDkwMyA2MTgsOTIwIDU2Miw5MjAgNTEwLDkyMCA0NzIsOTA4IDQ0OCw4ODUgNDIzLDg2MSA0MDgsODIyIDQwMiw3NjcgTCAxMDksNzgxIEMgMTI3LDg4NiAxNzUsOTY2IDI1NCwxMDIxIDMzMiwxMDc1IDQzOSwxMTAyIDU3NCwxMTAyIDcxMSwxMTAyIDgxNiwxMDY4IDg5MCwxMDAxIDk2NCw5MzQgMTAwMSw4MzggMTAwMSw3MTQgTCAxMDAxLDMyMCBDIDEwMDEsMjU5IDEwMDgsMjE4IDEwMjIsMTk1IDEwMzUsMTcyIDEwNTgsMTYwIDEwOTAsMTYwIDExMTEsMTYwIDExMzIsMTYyIDExNTIsMTY2IEwgMTE1MiwxNCBDIDExMzUsMTAgMTEyMCw2IDExMDcsMyAxMDk0LDAgMTA4MCwtMyAxMDY3LC01IDEwNTQsLTcgMTA0MCwtOSAxMDI1LC0xMCAxMDEwLC0xMSA5OTIsLTEyIDk3MiwtMTIgOTAxLC0xMiA4NDksNSA4MTYsNDAgNzgyLDc1IDc2MiwxMjYgNzU1LDE5MyBMIDc0OSwxOTMgQyA2NzAsNTEgNTUyLC0yMCAzOTMsLTIwIFogTSA3MjAsNTAxIEwgNTc2LDQ5OSBDIDUxMSw0OTYgNDY0LDQ4OSA0MzcsNDc4IDQxMCw0NjYgMzg5LDQ0OCAzNzUsNDI0IDM2MCw0MDAgMzUzLDM2OCAzNTMsMzI4IDM1MywyNzcgMzY1LDIzOSAzODksMjE0IDQxMiwxODkgNDQ0LDE3NiA0ODMsMTc2IDUyNywxNzYgNTY3LDE4OCA2MDQsMjEyIDY0MCwyMzYgNjY4LDI2OSA2ODksMzEyIDcxMCwzNTQgNzIwLDM5OSA3MjAsNDQ2IEwgNzIwLDUwMSBaIi8+CiAgIDxnbHlwaCB1bmljb2RlPSJXIiBob3Jpei1hZHYteD0iMTkzMiIgZD0iTSAxNTY3LDAgTCAxMjE3LDAgMTAyNiw4MTUgQyAxMDAzLDkxMSA5ODMsMTAxMSA5NjcsMTExNiA5NTEsMTAyOSA5MzgsOTYyIDkyOCw5MTcgOTE4LDg3MSA4NDcsNTY1IDcxNSwwIEwgMzY1LDAgMiwxNDA5IDMwMSwxNDA5IDUwNSw0OTkgNTUxLDI3OSBDIDU3MCwzNzIgNTg4LDQ2MCA2MDYsNTQ1IDYyMyw2MjkgNjkwLDkxNyA4MDUsMTQwOSBMIDExMzUsMTQwOSAxMzEzLDY1OSBDIDEzMjcsNjAzIDEzNTEsNDc2IDEzODQsMjc5IEwgMTQwOSwzOTUgMTQ2Miw2MjUgMTYzMiwxNDA5IDE5MzEsMTQwOSAxNTY3LDAgWiIvPgogICA8Z2x5cGggdW5pY29kZT0iTSIgaG9yaXotYWR2LXg9IjE0MzAiIGQ9Ik0gMTMwNywwIEwgMTMwNyw4NTQgQyAxMzA3LDg3MyAxMzA3LDg5MyAxMzA4LDkxMiAxMzA4LDkzMSAxMzExLDEwMTQgMTMxNywxMTYxIDEyNzAsOTgyIDEyMzUsODU3IDEyMTIsNzg2IEwgOTU4LDAgNzQ4LDAgNDk0LDc4NiAzODcsMTE2MSBDIDM5NSwxMDA2IDM5OSw5MDQgMzk5LDg1NCBMIDM5OSwwIDEzNywwIDEzNywxNDA5IDUzMiwxNDA5IDc4NCw2MjEgODA2LDU0NSA4NTQsMzU2IDkxNyw1ODIgMTE3NiwxNDA5IDE1NjksMTQwOSAxNTY5LDAgMTMwNywwIFoiLz4KICA8L2ZvbnQ+CiA8L2RlZnM+CiA8ZGVmcyBjbGFzcz0iRW1iZWRkZWRCdWxsZXRDaGFycyI+CiAgPGcgaWQ9ImJ1bGxldC1jaGFyLXRlbXBsYXRlLTU3MzU2IiB0cmFuc2Zvcm09InNjYWxlKDAuMDAwNDg4MjgxMjUsLTAuMDAwNDg4MjgxMjUpIj4KICAgPHBhdGggZD0iTSA1ODAsMTE0MSBMIDExNjMsNTcxIDU4MCwwIC00LDU3MSA1ODAsMTE0MSBaIi8+CiAgPC9nPgogIDxnIGlkPSJidWxsZXQtY2hhci10ZW1wbGF0ZS01NzM1NCIgdHJhbnNmb3JtPSJzY2FsZSgwLjAwMDQ4ODI4MTI1LC0wLjAwMDQ4ODI4MTI1KSI+CiAgIDxwYXRoIGQ9Ik0gOCwxMTI4IEwgMTEzNywxMTI4IDExMzcsMCA4LDAgOCwxMTI4IFoiLz4KICA8L2c+CiAgPGcgaWQ9ImJ1bGxldC1jaGFyLXRlbXBsYXRlLTEwMTQ2IiB0cmFuc2Zvcm09InNjYWxlKDAuMDAwNDg4MjgxMjUsLTAuMDAwNDg4MjgxMjUpIj4KICAgPHBhdGggZD0iTSAxNzQsMCBMIDYwMiw3MzkgMTc0LDE0ODEgMTQ1Niw3MzkgMTc0LDAgWiBNIDEzNTgsNzM5IEwgMzA5LDEzNDYgNjU5LDczOSAxMzU4LDczOSBaIi8+CiAgPC9nPgogIDxnIGlkPSJidWxsZXQtY2hhci10ZW1wbGF0ZS0xMDEzMiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAwMDQ4ODI4MTI1LC0wLjAwMDQ4ODI4MTI1KSI+CiAgIDxwYXRoIGQ9Ik0gMjAxNSw3MzkgTCAxMjc2LDAgNzE3LDAgMTI2MCw1NDMgMTc0LDU0MyAxNzQsOTM2IDEyNjAsOTM2IDcxNywxNDgxIDEyNzQsMTQ4MSAyMDE1LDczOSBaIi8+CiAgPC9nPgogIDxnIGlkPSJidWxsZXQtY2hhci10ZW1wbGF0ZS0xMDAwNyIgdHJhbnNmb3JtPSJzY2FsZSgwLjAwMDQ4ODI4MTI1LC0wLjAwMDQ4ODI4MTI1KSI+CiAgIDxwYXRoIGQ9Ik0gMCwtMiBDIC03LDE0IC0xNiwyNyAtMjUsMzcgTCAzNTYsNTY3IEMgMjYyLDgyMyAyMTUsOTUyIDIxNSw5NTQgMjE1LDk3OSAyMjgsOTkyIDI1NSw5OTIgMjY0LDk5MiAyNzYsOTkwIDI4OSw5ODcgMzEwLDk5MSAzMzEsOTk5IDM1NCwxMDEyIEwgMzgxLDk5OSA0OTIsNzQ4IDc3MiwxMDQ5IDgzNiwxMDI0IDg2MCwxMDQ5IEMgODgxLDEwMzkgOTAxLDEwMjUgOTIyLDEwMDYgODg2LDkzNyA4MzUsODYzIDc3MCw3ODQgNzY5LDc4MyA3MTAsNzE2IDU5NCw1ODQgTCA3NzQsMjIzIEMgNzc0LDE5NiA3NTMsMTY4IDcxMSwxMzkgTCA3MjcsMTE5IEMgNzE3LDkwIDY5OSw3NiA2NzIsNzYgNjQxLDc2IDU3MCwxNzggNDU3LDM4MSBMIDE2NCwtNzYgQyAxNDIsLTExMCAxMTEsLTEyNyA3MiwtMTI3IDMwLC0xMjcgOSwtMTEwIDgsLTc2IDEsLTY3IC0yLC01MiAtMiwtMzIgLTIsLTIzIC0xLC0xMyAwLC0yIFoiLz4KICA8L2c+CiAgPGcgaWQ9ImJ1bGxldC1jaGFyLXRlbXBsYXRlLTEwMDA0IiB0cmFuc2Zvcm09InNjYWxlKDAuMDAwNDg4MjgxMjUsLTAuMDAwNDg4MjgxMjUpIj4KICAgPHBhdGggZD0iTSAyODUsLTMzIEMgMTgyLC0zMyAxMTEsMzAgNzQsMTU2IDUyLDIyOCA0MSwzMzMgNDEsNDcxIDQxLDU0OSA1NSw2MTYgODIsNjcyIDExNiw3NDMgMTY5LDc3OCAyNDAsNzc4IDI5Myw3NzggMzI4LDc0NyAzNDYsNjg0IEwgMzY5LDUwOCBDIDM3Nyw0NDQgMzk3LDQxMSA0MjgsNDEwIEwgMTE2MywxMTE2IEMgMTE3NCwxMTI3IDExOTYsMTEzMyAxMjI5LDExMzMgMTI3MSwxMTMzIDEyOTIsMTExOCAxMjkyLDEwODcgTCAxMjkyLDk2NSBDIDEyOTIsOTI5IDEyODIsOTAxIDEyNjIsODgxIEwgNDQyLDQ3IEMgMzkwLC02IDMzOCwtMzMgMjg1LC0zMyBaIi8+CiAgPC9nPgogIDxnIGlkPSJidWxsZXQtY2hhci10ZW1wbGF0ZS05Njc5IiB0cmFuc2Zvcm09InNjYWxlKDAuMDAwNDg4MjgxMjUsLTAuMDAwNDg4MjgxMjUpIj4KICAgPHBhdGggZD0iTSA4MTMsMCBDIDYzMiwwIDQ4OSw1NCAzODMsMTYxIDI3NiwyNjggMjIzLDQxMSAyMjMsNTkyIDIyMyw3NzMgMjc2LDkxNiAzODMsMTAyMyA0ODksMTEzMCA2MzIsMTE4NCA4MTMsMTE4NCA5OTIsMTE4NCAxMTM2LDExMzAgMTI0NSwxMDIzIDEzNTMsOTE2IDE0MDcsNzcyIDE0MDcsNTkyIDE0MDcsNDEyIDEzNTMsMjY4IDEyNDUsMTYxIDExMzYsNTQgOTkyLDAgODEzLDAgWiIvPgogIDwvZz4KICA8ZyBpZD0iYnVsbGV0LWNoYXItdGVtcGxhdGUtODIyNiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAwMDQ4ODI4MTI1LC0wLjAwMDQ4ODI4MTI1KSI+CiAgIDxwYXRoIGQ9Ik0gMzQ2LDQ1NyBDIDI3Myw0NTcgMjA5LDQ4MyAxNTUsNTM1IDEwMSw1ODYgNzQsNjQ5IDc0LDcyMyA3NCw3OTYgMTAxLDg1OSAxNTUsOTExIDIwOSw5NjMgMjczLDk4OSAzNDYsOTg5IDQxOSw5ODkgNDgwLDk2MyA1MzEsOTEwIDU4Miw4NTkgNjA4LDc5NiA2MDgsNzIzIDYwOCw2NDggNTgzLDU4NiA1MzIsNTM1IDQ4Miw0ODMgNDIwLDQ1NyAzNDYsNDU3IFoiLz4KICA8L2c+CiAgPGcgaWQ9ImJ1bGxldC1jaGFyLXRlbXBsYXRlLTgyMTEiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMDA0ODgyODEyNSwtMC4wMDA0ODgyODEyNSkiPgogICA8cGF0aCBkPSJNIC00LDQ1OSBMIDExMzUsNDU5IDExMzUsNjA2IC00LDYwNiAtNCw0NTkgWiIvPgogIDwvZz4KICA8ZyBpZD0iYnVsbGV0LWNoYXItdGVtcGxhdGUtNjE1NDgiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMDA0ODgyODEyNSwtMC4wMDA0ODgyODEyNSkiPgogICA8cGF0aCBkPSJNIDE3Myw3NDAgQyAxNzMsOTAzIDIzMSwxMDQzIDM0NiwxMTU5IDQ2MiwxMjc0IDYwMSwxMzMyIDc2NSwxMzMyIDkyOCwxMzMyIDEwNjcsMTI3NCAxMTgzLDExNTkgMTI5OSwxMDQzIDEzNTcsOTAzIDEzNTcsNzQwIDEzNTcsNTc3IDEyOTksNDM3IDExODMsMzIyIDEwNjcsMjA2IDkyOCwxNDggNzY1LDE0OCA2MDEsMTQ4IDQ2MiwyMDYgMzQ2LDMyMiAyMzEsNDM3IDE3Myw1NzcgMTczLDc0MCBaIi8+CiAgPC9nPgogPC9kZWZzPgogPGcgY2xhc3M9IlBhZ2UiPgogIDxnIGNsYXNzPSJHcmFwaGljIj4KICAgPGcgaWQ9ImlkMyI+CiAgICA8cmVjdCBjbGFzcz0iQm91bmRpbmdCb3giIHN0cm9rZT0ibm9uZSIgZmlsbD0ibm9uZSIgeD0iMTg5MyIgeT0iODI5MCIgd2lkdGg9IjIyMzYiIGhlaWdodD0iMjIzNiIvPgogICAgPGRlZnM+CiAgICAgPGNsaXBQYXRoIGlkPSJjbGlwX3BhdGhfMSIgY2xpcFBhdGhVbml0cz0idXNlclNwYWNlT25Vc2UiPgogICAgICA8cGF0aCBkPSJNIDIzMTgsODQwOCBDIDIyMzgsODQwOCAyMTczLDg0NzMgMjE3Myw4NTUzIEwgMjE3MywxMDI0NiBDIDIxNzMsMTAzMjYgMjIzOCwxMDM5MSAyMzE4LDEwMzkxIEwgMzc1NSwxMDM5MSBDIDM4MzUsMTAzOTEgMzkwMCwxMDMyNiAzOTAwLDEwMjQ2IEwgMzkwMCw5MDMxIDMyNzgsODQwOCAyMzE4LDg0MDggWiIvPgogICAgIDwvY2xpcFBhdGg+CiAgICA8L2RlZnM+CiAgICA8ZyBjbGlwLXBhdGg9InVybCgjY2xpcF9wYXRoXzEpIj4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjU1LDI1NSwyNTUpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzE2MCw3ODQ4IEwgMzMyNSw4MTEyIDE1MTksOTI0MyAxMzUzLDg5NzggMzE2MCw3ODQ4IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjU1LDI1NSwyNTUpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzMxOSw4MTAxIEwgMzMzMyw4MTI0IDE1MjYsOTI1NSAxNTEyLDkyMzIgMzMxOSw4MTAxIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjU0LDI1NCwyNTUpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzMyNiw4MTEzIEwgMzM0MCw4MTM2IDE1MzQsOTI2NyAxNTIwLDkyNDQgMzMyNiw4MTEzIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjUzLDI1NCwyNTUpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzMzMyw4MTI1IEwgMzM0OCw4MTQ4IDE1NDEsOTI3OCAxNTI3LDkyNTYgMzMzMyw4MTI1IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjUzLDI1MywyNTQpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzM0MSw4MTM3IEwgMzM1NSw4MTU5IDE1NDksOTI5MCAxNTM1LDkyNjggMzM0MSw4MTM3IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjUyLDI1MywyNTQpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzM0OCw4MTQ5IEwgMzM2Miw4MTcxIDE1NTYsOTMwMiAxNTQyLDkyODAgMzM0OCw4MTQ5IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjUxLDI1MiwyNTQpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzM1Niw4MTYxIEwgMzM3MCw4MTgzIDE1NjQsOTMxNCAxNTQ5LDkyOTEgMzM1Niw4MTYxIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjUwLDI1MiwyNTQpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzM2Myw4MTcyIEwgMzM3Nyw4MTk1IDE1NzEsOTMyNiAxNTU3LDkzMDMgMzM2Myw4MTcyIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjQ5LDI1MSwyNTQpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzM3MSw4MTg0IEwgMzM4NSw4MjA3IDE1NzgsOTMzOCAxNTY0LDkzMTUgMzM3MSw4MTg0IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjQ4LDI1MSwyNTQpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzM3OCw4MTk2IEwgMzM5Miw4MjE5IDE1ODYsOTM1MCAxNTcyLDkzMjcgMzM3OCw4MTk2IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjQ4LDI1MCwyNTMpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzM4NSw4MjA4IEwgMzQwMCw4MjMxIDE1OTMsOTM2MSAxNTc5LDkzMzkgMzM4NSw4MjA4IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjQ3LDI1MCwyNTMpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzM5Myw4MjIwIEwgMzQwNyw4MjQyIDE2MDEsOTM3MyAxNTg3LDkzNTEgMzM5Myw4MjIwIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjQ2LDI0OSwyNTMpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzQwMCw4MjMyIEwgMzQxNCw4MjU0IDE2MDgsOTM4NSAxNTk0LDkzNjMgMzQwMCw4MjMyIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjQ1LDI0OSwyNTMpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzQwOCw4MjQ0IEwgMzQyMiw4MjY2IDE2MTYsOTM5NyAxNjAxLDkzNzQgMzQwOCw4MjQ0IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjQ0LDI0OCwyNTMpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzQxNSw4MjU1IEwgMzQyOSw4Mjc4IDE2MjMsOTQwOSAxNjA5LDkzODYgMzQxNSw4MjU1IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjQ0LDI0NywyNTIpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzQyMyw4MjY3IEwgMzQzNyw4MjkwIDE2MzAsOTQyMSAxNjE2LDkzOTggMzQyMyw4MjY3IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjQzLDI0NywyNTIpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzQzMCw4Mjc5IEwgMzQ0NCw4MzAyIDE2MzgsOTQzMyAxNjI0LDk0MTAgMzQzMCw4Mjc5IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjQyLDI0NiwyNTIpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzQzNyw4MjkxIEwgMzQ1Miw4MzE0IDE2NDUsOTQ0NCAxNjMxLDk0MjIgMzQzNyw4MjkxIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjQxLDI0NiwyNTIpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzQ0NSw4MzAzIEwgMzQ1OSw4MzI1IDE2NTMsOTQ1NiAxNjM5LDk0MzQgMzQ0NSw4MzAzIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjQwLDI0NSwyNTIpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzQ1Miw4MzE1IEwgMzQ2Niw4MzM3IDE2NjAsOTQ2OCAxNjQ2LDk0NDYgMzQ1Miw4MzE1IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjM5LDI0NSwyNTIpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzQ2MCw4MzI3IEwgMzQ3NCw4MzQ5IDE2NjgsOTQ4MCAxNjUzLDk0NTcgMzQ2MCw4MzI3IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjM5LDI0NCwyNTEpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzQ2Nyw4MzM4IEwgMzQ4MSw4MzYxIDE2NzUsOTQ5MiAxNjYxLDk0NjkgMzQ2Nyw4MzM4IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjM4LDI0NCwyNTEpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzQ3NSw4MzUwIEwgMzQ4OSw4MzczIDE2ODIsOTUwNCAxNjY4LDk0ODEgMzQ3NSw4MzUwIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjM3LDI0MywyNTEpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzQ4Miw4MzYyIEwgMzQ5Niw4Mzg1IDE2OTAsOTUxNiAxNjc2LDk0OTMgMzQ4Miw4MzYyIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjM2LDI0MywyNTEpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzQ4OSw4Mzc0IEwgMzUwNCw4Mzk3IDE2OTcsOTUyNyAxNjgzLDk1MDUgMzQ4OSw4Mzc0IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjM1LDI0MiwyNTEpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzQ5Nyw4Mzg2IEwgMzUxMSw4NDA4IDE3MDUsOTUzOSAxNjkwLDk1MTcgMzQ5Nyw4Mzg2IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjM1LDI0MiwyNTApIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzUwNCw4Mzk4IEwgMzUxOCw4NDIwIDE3MTIsOTU1MSAxNjk4LDk1MjkgMzUwNCw4Mzk4IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjM0LDI0MSwyNTApIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzUxMiw4NDEwIEwgMzUyNiw4NDMyIDE3MTksOTU2MyAxNzA1LDk1NDAgMzUxMiw4NDEwIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjMzLDI0MCwyNTApIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzUxOSw4NDIxIEwgMzUzMyw4NDQ0IDE3MjcsOTU3NSAxNzEzLDk1NTIgMzUxOSw4NDIxIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjMyLDI0MCwyNTApIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzUyNyw4NDMzIEwgMzU0MSw4NDU2IDE3MzQsOTU4NyAxNzIwLDk1NjQgMzUyNyw4NDMzIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjMxLDIzOSwyNTApIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzUzNCw4NDQ1IEwgMzU0OCw4NDY4IDE3NDIsOTU5OSAxNzI4LDk1NzYgMzUzNCw4NDQ1IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjMwLDIzOSwyNTApIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzU0MSw4NDU3IEwgMzU1Niw4NDgwIDE3NDksOTYxMCAxNzM1LDk1ODggMzU0MSw4NDU3IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjMwLDIzOCwyNDkpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzU0OSw4NDY5IEwgMzU2Myw4NDkxIDE3NTcsOTYyMiAxNzQyLDk2MDAgMzU0OSw4NDY5IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjI5LDIzOCwyNDkpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzU1Niw4NDgxIEwgMzU3MCw4NTAzIDE3NjQsOTYzNCAxNzUwLDk2MTIgMzU1Niw4NDgxIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjI4LDIzNywyNDkpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzU2NCw4NDkzIEwgMzU3OCw4NTE1IDE3NzEsOTY0NiAxNzU3LDk2MjMgMzU2NCw4NDkzIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjI3LDIzNywyNDkpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzU3MSw4NTA0IEwgMzU4NSw4NTI3IDE3NzksOTY1OCAxNzY1LDk2MzUgMzU3MSw4NTA0IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjI2LDIzNiwyNDkpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzU3OCw4NTE2IEwgMzU5Myw4NTM5IDE3ODYsOTY3MCAxNzcyLDk2NDcgMzU3OCw4NTE2IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjI2LDIzNiwyNDgpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzU4Niw4NTI4IEwgMzYwMCw4NTUxIDE3OTQsOTY4MiAxNzgwLDk2NTkgMzU4Niw4NTI4IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjI1LDIzNSwyNDgpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzU5Myw4NTQwIEwgMzYwNyw4NTYzIDE4MDEsOTY5MyAxNzg3LDk2NzEgMzU5Myw4NTQwIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjI0LDIzNSwyNDgpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzYwMSw4NTUyIEwgMzYxNSw4NTc0IDE4MDksOTcwNSAxNzk0LDk2ODMgMzYwMSw4NTUyIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjIzLDIzNCwyNDgpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzYwOCw4NTY0IEwgMzYyMiw4NTg2IDE4MTYsOTcxNyAxODAyLDk2OTUgMzYwOCw4NTY0IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjIyLDIzMywyNDgpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzYxNiw4NTc2IEwgMzYzMCw4NTk4IDE4MjMsOTcyOSAxODA5LDk3MDYgMzYxNiw4NTc2IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjIxLDIzMywyNDgpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzYyMyw4NTg3IEwgMzYzNyw4NjEwIDE4MzEsOTc0MSAxODE3LDk3MTggMzYyMyw4NTg3IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjIxLDIzMiwyNDcpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzYzMCw4NTk5IEwgMzY0NSw4NjIyIDE4MzgsOTc1MyAxODI0LDk3MzAgMzYzMCw4NTk5IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjIwLDIzMiwyNDcpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzYzOCw4NjExIEwgMzY1Miw4NjM0IDE4NDYsOTc2NSAxODMyLDk3NDIgMzYzOCw4NjExIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjE5LDIzMSwyNDcpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzY0NSw4NjIzIEwgMzY1OSw4NjQ2IDE4NTMsOTc3NiAxODM5LDk3NTQgMzY0NSw4NjIzIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjE4LDIzMSwyNDcpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzY1Myw4NjM1IEwgMzY2Nyw4NjU3IDE4NjEsOTc4OCAxODQ2LDk3NjYgMzY1Myw4NjM1IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjE3LDIzMCwyNDcpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzY2MCw4NjQ3IEwgMzY3NCw4NjY5IDE4NjgsOTgwMCAxODU0LDk3NzggMzY2MCw4NjQ3IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjE3LDIzMCwyNDYpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzY2OCw4NjU5IEwgMzY4Miw4NjgxIDE4NzUsOTgxMiAxODYxLDk3ODkgMzY2OCw4NjU5IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjE2LDIyOSwyNDYpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzY3NSw4NjcwIEwgMzY4OSw4NjkzIDE4ODMsOTgyNCAxODY5LDk4MDEgMzY3NSw4NjcwIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjE1LDIyOSwyNDYpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzY4Miw4NjgyIEwgMzY5Nyw4NzA1IDE4OTAsOTgzNiAxODc2LDk4MTMgMzY4Miw4NjgyIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjE0LDIyOCwyNDYpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzY5MCw4Njk0IEwgMzcwNCw4NzE3IDE4OTgsOTg0OCAxODg0LDk4MjUgMzY5MCw4Njk0IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjEzLDIyOCwyNDYpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzY5Nyw4NzA2IEwgMzcxMSw4NzI5IDE5MDUsOTg2MCAxODkxLDk4MzcgMzY5Nyw4NzA2IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjEyLDIyNywyNDYpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzcwNSw4NzE4IEwgMzcxOSw4NzQwIDE5MTIsOTg3MSAxODk4LDk4NDkgMzcwNSw4NzE4IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjEyLDIyNiwyNDUpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzcxMiw4NzMwIEwgMzcyNiw4NzUyIDE5MjAsOTg4MyAxOTA2LDk4NjEgMzcxMiw4NzMwIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjExLDIyNiwyNDUpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzcyMCw4NzQyIEwgMzczNCw4NzY0IDE5MjcsOTg5NSAxOTEzLDk4NzIgMzcyMCw4NzQyIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjEwLDIyNSwyNDUpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzcyNyw4NzUzIEwgMzc0MSw4Nzc2IDE5MzUsOTkwNyAxOTIxLDk4ODQgMzcyNyw4NzUzIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjA5LDIyNSwyNDUpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzczNCw4NzY1IEwgMzc0OSw4Nzg4IDE5NDIsOTkxOSAxOTI4LDk4OTYgMzczNCw4NzY1IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjA4LDIyNCwyNDUpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzc0Miw4Nzc3IEwgMzc1Niw4ODAwIDE5NTAsOTkzMSAxOTM1LDk5MDggMzc0Miw4Nzc3IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjA4LDIyNCwyNDQpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzc0OSw4Nzg5IEwgMzc2Myw4ODEyIDE5NTcsOTk0MyAxOTQzLDk5MjAgMzc0OSw4Nzg5IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjA3LDIyMywyNDQpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzc1Nyw4ODAxIEwgMzc3MSw4ODIzIDE5NjQsOTk1NCAxOTUwLDk5MzIgMzc1Nyw4ODAxIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjA2LDIyMywyNDQpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzc2NCw4ODEzIEwgMzc3OCw4ODM1IDE5NzIsOTk2NiAxOTU4LDk5NDQgMzc2NCw4ODEzIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjA1LDIyMiwyNDQpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzc3Miw4ODI1IEwgMzc4Niw4ODQ3IDE5NzksOTk3OCAxOTY1LDk5NTUgMzc3Miw4ODI1IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjA0LDIyMiwyNDQpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzc3OSw4ODM2IEwgMzc5Myw4ODU5IDE5ODcsOTk5MCAxOTczLDk5NjcgMzc3OSw4ODM2IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjA0LDIyMSwyNDMpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzc4Niw4ODQ4IEwgMzgwMSw4ODcxIDE5OTQsMTAwMDIgMTk4MCw5OTc5IDM3ODYsODg0OCBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDIwMywyMjAsMjQzKSIgc3Ryb2tlPSJub25lIiBkPSJNIDM3OTQsODg2MCBMIDM4MDgsODg4MyAyMDAyLDEwMDE0IDE5ODcsOTk5MSAzNzk0LDg4NjAgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMDIsMjIwLDI0MykiIHN0cm9rZT0ibm9uZSIgZD0iTSAzODAxLDg4NzIgTCAzODE1LDg4OTUgMjAwOSwxMDAyNiAxOTk1LDEwMDAzIDM4MDEsODg3MiBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDIwMSwyMTksMjQzKSIgc3Ryb2tlPSJub25lIiBkPSJNIDM4MDksODg4NCBMIDM4MjMsODkwNiAyMDE2LDEwMDM3IDIwMDIsMTAwMTUgMzgwOSw4ODg0IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjAwLDIxOSwyNDMpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzgxNiw4ODk2IEwgMzgzMCw4OTE4IDIwMjQsMTAwNDkgMjAxMCwxMDAyNyAzODE2LDg4OTYgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigxOTksMjE4LDI0MykiIHN0cm9rZT0ibm9uZSIgZD0iTSAzODIzLDg5MDggTCAzODM4LDg5MzAgMjAzMSwxMDA2MSAyMDE3LDEwMDM4IDM4MjMsODkwOCBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDE5OSwyMTgsMjQyKSIgc3Ryb2tlPSJub25lIiBkPSJNIDM4MzEsODkxOSBMIDM4NDUsODk0MiAyMDM5LDEwMDczIDIwMjUsMTAwNTAgMzgzMSw4OTE5IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMTk4LDIxNywyNDIpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzgzOCw4OTMxIEwgMzg1Miw4OTU0IDIwNDYsMTAwODUgMjAzMiwxMDA2MiAzODM4LDg5MzEgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigxOTcsMjE3LDI0MikiIHN0cm9rZT0ibm9uZSIgZD0iTSAzODQ2LDg5NDMgTCAzODYwLDg5NjYgMjA1NCwxMDA5NyAyMDM5LDEwMDc0IDM4NDYsODk0MyBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDE5NiwyMTYsMjQyKSIgc3Ryb2tlPSJub25lIiBkPSJNIDM4NTMsODk1NSBMIDM4NjcsODk3OCAyMDYxLDEwMTA5IDIwNDcsMTAwODYgMzg1Myw4OTU1IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMTk1LDIxNiwyNDIpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzg2MSw4OTY3IEwgMzg3NSw4OTg5IDIwNjgsMTAxMjAgMjA1NCwxMDA5OCAzODYxLDg5NjcgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigxOTUsMjE1LDI0MSkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzODY4LDg5NzkgTCAzODgyLDkwMDEgMjA3NiwxMDEzMiAyMDYyLDEwMTEwIDM4NjgsODk3OSBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDE5NCwyMTUsMjQxKSIgc3Ryb2tlPSJub25lIiBkPSJNIDM4NzUsODk5MSBMIDM4OTAsOTAxMyAyMDgzLDEwMTQ0IDIwNjksMTAxMjIgMzg3NSw4OTkxIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMTkzLDIxNCwyNDEpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzg4Myw5MDAyIEwgMzg5Nyw5MDI1IDIwOTEsMTAxNTYgMjA3NywxMDEzMyAzODgzLDkwMDIgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigxOTIsMjEzLDI0MSkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzODkwLDkwMTQgTCAzOTA0LDkwMzcgMjA5OCwxMDE2OCAyMDg0LDEwMTQ1IDM4OTAsOTAxNCBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDE5MSwyMTMsMjQxKSIgc3Ryb2tlPSJub25lIiBkPSJNIDM4OTgsOTAyNiBMIDM5MTIsOTA0OSAyMTA2LDEwMTgwIDIwOTEsMTAxNTcgMzg5OCw5MDI2IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMTkwLDIxMiwyNDEpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzkwNSw5MDM4IEwgMzkxOSw5MDYxIDIxMTMsMTAxOTIgMjA5OSwxMDE2OSAzOTA1LDkwMzggWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigxOTAsMjEyLDI0MCkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzOTEzLDkwNTAgTCAzOTI3LDkwNzIgMjEyMCwxMDIwMyAyMTA2LDEwMTgxIDM5MTMsOTA1MCBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDE4OSwyMTEsMjQwKSIgc3Ryb2tlPSJub25lIiBkPSJNIDM5MjAsOTA2MiBMIDM5MzQsOTA4NCAyMTI4LDEwMjE1IDIxMTQsMTAxOTMgMzkyMCw5MDYyIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMTg4LDIxMSwyNDApIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzkyNyw5MDc0IEwgMzk0Miw5MDk2IDIxMzUsMTAyMjcgMjEyMSwxMDIwNSAzOTI3LDkwNzQgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigxODcsMjEwLDI0MCkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzOTM1LDkwODUgTCAzOTQ5LDkxMDggMjE0MywxMDIzOSAyMTI4LDEwMjE2IDM5MzUsOTA4NSBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDE4NiwyMTAsMjQwKSIgc3Ryb2tlPSJub25lIiBkPSJNIDM5NDIsOTA5NyBMIDM5NTYsOTEyMCAyMTUwLDEwMjUxIDIxMzYsMTAyMjggMzk0Miw5MDk3IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMTg2LDIwOSwyMzkpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzk1MCw5MTA5IEwgMzk2NCw5MTMyIDIxNTcsMTAyNjMgMjE0MywxMDI0MCAzOTUwLDkxMDkgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigxODUsMjA5LDIzOSkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzOTU3LDkxMjEgTCAzOTcxLDkxNDQgMjE2NSwxMDI3NSAyMTUxLDEwMjUyIDM5NTcsOTEyMSBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDE4NCwyMDgsMjM5KSIgc3Ryb2tlPSJub25lIiBkPSJNIDM5NjUsOTEzMyBMIDM5NzksOTE1NSAyMTcyLDEwMjg2IDIxNTgsMTAyNjQgMzk2NSw5MTMzIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMTgzLDIwOCwyMzkpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzk3Miw5MTQ1IEwgMzk4Niw5MTY3IDIxODAsMTAyOTggMjE2NiwxMDI3NiAzOTcyLDkxNDUgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigxODIsMjA3LDIzOSkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzOTc5LDkxNTcgTCAzOTk0LDkxNzkgMjE4NywxMDMxMCAyMTczLDEwMjg4IDM5NzksOTE1NyBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDE4MSwyMDYsMjM5KSIgc3Ryb2tlPSJub25lIiBkPSJNIDM5ODcsOTE2OCBMIDQwMDEsOTE5MSAyMTk1LDEwMzIyIDIxODAsMTAyOTkgMzk4Nyw5MTY4IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMTgxLDIwNiwyMzgpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzk5NCw5MTgwIEwgNDAwOCw5MjAzIDIyMDIsMTAzMzQgMjE4OCwxMDMxMSAzOTk0LDkxODAgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigxODAsMjA1LDIzOCkiIHN0cm9rZT0ibm9uZSIgZD0iTSA0MDAyLDkxOTIgTCA0MDE2LDkyMTUgMjIwOSwxMDM0NiAyMTk1LDEwMzIzIDQwMDIsOTE5MiBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDE3OSwyMDUsMjM4KSIgc3Ryb2tlPSJub25lIiBkPSJNIDQwMDksOTIwNCBMIDQwMjMsOTIyNyAyMjE3LDEwMzU4IDIyMDMsMTAzMzUgNDAwOSw5MjA0IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMTc4LDIwNCwyMzgpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gNDAxNyw5MjE2IEwgNDAzMSw5MjM4IDIyMjQsMTAzNjkgMjIxMCwxMDM0NyA0MDE3LDkyMTYgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigxNzcsMjA0LDIzOCkiIHN0cm9rZT0ibm9uZSIgZD0iTSA0MDI0LDkyMjggTCA0MDM4LDkyNTAgMjIzMiwxMDM4MSAyMjE4LDEwMzU5IDQwMjQsOTIyOCBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDE3NywyMDMsMjM3KSIgc3Ryb2tlPSJub25lIiBkPSJNIDQwMzEsOTI0MCBMIDQwNDUsOTI2MiAyMjM5LDEwMzkzIDIyMjUsMTAzNzEgNDAzMSw5MjQwIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMTc2LDIwMywyMzcpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gNDAzOSw5MjUxIEwgNDA1Myw5Mjc0IDIyNDcsMTA0MDUgMjIzMiwxMDM4MiA0MDM5LDkyNTEgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigxNzUsMjAyLDIzNykiIHN0cm9rZT0ibm9uZSIgZD0iTSA0MDQ2LDkyNjMgTCA0MDYwLDkyODYgMjI1NCwxMDQxNyAyMjQwLDEwMzk0IDQwNDYsOTI2MyBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDE3NCwyMDIsMjM3KSIgc3Ryb2tlPSJub25lIiBkPSJNIDQwNTQsOTI3NSBMIDQwNjgsOTI5OCAyMjYxLDEwNDI5IDIyNDcsMTA0MDYgNDA1NCw5Mjc1IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMTczLDIwMSwyMzcpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gNDA2MSw5Mjg3IEwgNDA3NSw5MzEwIDIyNjksMTA0NDEgMjI1NSwxMDQxOCA0MDYxLDkyODcgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigxNzIsMjAxLDIzNykiIHN0cm9rZT0ibm9uZSIgZD0iTSA0MDY4LDkyOTkgTCA0MDgzLDkzMjEgMjI3NiwxMDQ1MiAyMjYyLDEwNDMwIDQwNjgsOTI5OSBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDE3MiwyMDAsMjM2KSIgc3Ryb2tlPSJub25lIiBkPSJNIDQwNzYsOTMxMSBMIDQwOTAsOTMzMyAyMjg0LDEwNDY0IDIyNzAsMTA0NDIgNDA3Niw5MzExIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMTcxLDE5OSwyMzYpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gNDA4Myw5MzIzIEwgNDA5Nyw5MzQ1IDIyOTEsMTA0NzYgMjI3NywxMDQ1NCA0MDgzLDkzMjMgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigxNzAsMTk5LDIzNikiIHN0cm9rZT0ibm9uZSIgZD0iTSA0MDkxLDkzMzQgTCA0MTA1LDkzNTcgMjI5OSwxMDQ4OCAyMjg0LDEwNDY1IDQwOTEsOTMzNCBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDE2OSwxOTgsMjM2KSIgc3Ryb2tlPSJub25lIiBkPSJNIDQwOTgsOTM0NiBMIDQxMTIsOTM2OSAyMzA2LDEwNTAwIDIyOTIsMTA0NzcgNDA5OCw5MzQ2IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMTY4LDE5OCwyMzYpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gNDEwNiw5MzU4IEwgNDEyMCw5MzgxIDIzMTMsMTA1MTIgMjI5OSwxMDQ4OSA0MTA2LDkzNTggWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigxNjgsMTk3LDIzNSkiIHN0cm9rZT0ibm9uZSIgZD0iTSA0MTEzLDkzNzAgTCA0MTI3LDkzOTMgMjMyMSwxMDUyNCAyMzA3LDEwNTAxIDQxMTMsOTM3MCBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDE2NywxOTcsMjM1KSIgc3Ryb2tlPSJub25lIiBkPSJNIDQxMjAsOTM4MiBMIDQxMzUsOTQwNCAyMzI4LDEwNTM1IDIzMTQsMTA1MTMgNDEyMCw5MzgyIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMTY2LDE5NiwyMzUpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gNDEyOCw5Mzk0IEwgNDE0Miw5NDE2IDIzMzYsMTA1NDcgMjMyMiwxMDUyNSA0MTI4LDkzOTQgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigxNjUsMTk2LDIzNSkiIHN0cm9rZT0ibm9uZSIgZD0iTSA0MTM1LDk0MDYgTCA0MTQ5LDk0MjggMjM0MywxMDU1OSAyMzI5LDEwNTM3IDQxMzUsOTQwNiBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDE2NCwxOTUsMjM1KSIgc3Ryb2tlPSJub25lIiBkPSJNIDQxNDMsOTQxNyBMIDQxNTcsOTQ0MCAyMzUxLDEwNTcxIDIzMzYsMTA1NDggNDE0Myw5NDE3IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMTYzLDE5NSwyMzUpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gNDE1MCw5NDI5IEwgNDE2NCw5NDUyIDIzNTgsMTA1ODMgMjM0NCwxMDU2MCA0MTUwLDk0MjkgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigxNjMsMTk0LDIzNCkiIHN0cm9rZT0ibm9uZSIgZD0iTSA0MTU4LDk0NDEgTCA0MTcyLDk0NjQgMjM2NSwxMDU5NSAyMzUxLDEwNTcyIDQxNTgsOTQ0MSBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDE2MiwxOTQsMjM0KSIgc3Ryb2tlPSJub25lIiBkPSJNIDQxNjUsOTQ1MyBMIDQxNzksOTQ3NiAyMzczLDEwNjA3IDIzNTksMTA1ODQgNDE2NSw5NDUzIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMTYxLDE5MywyMzQpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gNDE3Miw5NDY1IEwgNDQ4Niw5OTY2IDI2ODAsMTEwOTcgMjM2NiwxMDU5NiA0MTcyLDk0NjUgWiIvPgogICAgPC9nPgogICAgPHBhdGggZmlsbD0icmdiKDEzLDEwNSwyMDApIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzI4Nyw4Mzg1IEwgMzI2OCw4Mzg1IDIzMTgsODM4NSBDIDIyMjUsODM4NSAyMTUwLDg0NjAgMjE1MCw4NTUzIEwgMjE1MCwxMDI0NiBDIDIxNTAsMTAzMzkgMjIyNSwxMDQxNCAyMzE4LDEwNDE0IEwgMzc1NSwxMDQxNCBDIDM4NDgsMTA0MTQgMzkyMywxMDMzOSAzOTIzLDEwMjQ2IEwgMzkyMyw5MDQwIDM5MjMsOTAyMSAzOTEwLDkwMDcgMzMwMSw4Mzk4IDMyODcsODM4NSBaIE0gMjE5Niw4NTUzIEMgMjE5Niw4NDg2IDIyNTEsODQzMSAyMzE4LDg0MzEgTCAzMjY4LDg0MzEgMzg3Nyw5MDQwIDM4NzcsMTAyNDYgQyAzODc3LDEwMzEzIDM4MjMsMTAzNjggMzc1NSwxMDM2OCBMIDIzMTgsMTAzNjggQyAyMjUxLDEwMzY4IDIxOTYsMTAzMTMgMjE5NiwxMDI0NiBMIDIxOTYsODU1MyBaIi8+CiAgICA8ZGVmcz4KICAgICA8Y2xpcFBhdGggaWQ9ImNsaXBfcGF0aF8yIiBjbGlwUGF0aFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxwYXRoIGQ9Ik0gMjIyMCw4NTUzIEwgMjIyMCwxMDI0NiBDIDIyMjAsMTAzMDAgMjI2NCwxMDM0NCAyMzE4LDEwMzQ0IEwgMzc1NSwxMDM0NCBDIDM4MTAsMTAzNDQgMzg1NCwxMDMwMCAzODU0LDEwMjQ2IEwgMzg1NCw5MDUwIEMgMzg0MSw5MDM3IDMyNzIsODQ2OCAzMjU4LDg0NTQgTCAyMzE4LDg0NTQgQyAyMjY0LDg0NTQgMjIyMCw4NDk5IDIyMjAsODU1MyBaIi8+CiAgICAgPC9jbGlwUGF0aD4KICAgIDwvZGVmcz4KICAgIDxnIGNsaXAtcGF0aD0idXJsKCNjbGlwX3BhdGhfMikiPgogICAgIDxwYXRoIGZpbGw9InJnYigyNTUsMjU1LDI1NSkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzMTQyLDc5MTMgTCAzMzAyLDgxNjggMTU3Nyw5MjQ4IDE0MTcsODk5MyAzMTQyLDc5MTMgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyNTUsMjU1LDI1NSkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzMjk1LDgxNTcgTCAzMzA5LDgxODAgMTU4NCw5MjYwIDE1NzAsOTIzNyAzMjk1LDgxNTcgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyNTQsMjU0LDI1NSkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzMzAyLDgxNjkgTCAzMzE2LDgxOTEgMTU5MSw5MjcxIDE1NzcsOTI0OSAzMzAyLDgxNjkgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyNTMsMjU0LDI1NSkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzMzEwLDgxODAgTCAzMzI0LDgyMDIgMTU5OSw5MjgyIDE1ODUsOTI2MCAzMzEwLDgxODAgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyNTMsMjUzLDI1NCkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzMzE3LDgxOTIgTCAzMzMxLDgyMTQgMTYwNiw5Mjk0IDE1OTIsOTI3MiAzMzE3LDgxOTIgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyNTIsMjUzLDI1NCkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzMzI0LDgyMDMgTCAzMzM4LDgyMjUgMTYxMyw5MzA1IDE1OTksOTI4MyAzMzI0LDgyMDMgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyNTEsMjUyLDI1NCkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzMzMxLDgyMTQgTCAzMzQ1LDgyMzcgMTYyMCw5MzE3IDE2MDYsOTI5NCAzMzMxLDgyMTQgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyNTAsMjUyLDI1NCkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzMzM4LDgyMjYgTCAzMzUyLDgyNDggMTYyNyw5MzI4IDE2MTMsOTMwNiAzMzM4LDgyMjYgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyNDksMjUxLDI1NCkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzMzQ1LDgyMzcgTCAzMzU5LDgyNTkgMTYzNCw5MzM5IDE2MjAsOTMxNyAzMzQ1LDgyMzcgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyNDgsMjUxLDI1NCkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzMzUzLDgyNDkgTCAzMzY2LDgyNzEgMTY0MSw5MzUxIDE2MjgsOTMyOSAzMzUzLDgyNDkgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyNDgsMjUwLDI1MykiIHN0cm9rZT0ibm9uZSIgZD0iTSAzMzYwLDgyNjAgTCAzMzc0LDgyODIgMTY0OSw5MzYyIDE2MzUsOTM0MCAzMzYwLDgyNjAgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyNDcsMjUwLDI1MykiIHN0cm9rZT0ibm9uZSIgZD0iTSAzMzY3LDgyNzEgTCAzMzgxLDgyOTQgMTY1Niw5Mzc0IDE2NDIsOTM1MiAzMzY3LDgyNzEgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyNDYsMjQ5LDI1MykiIHN0cm9rZT0ibm9uZSIgZD0iTSAzMzc0LDgyODMgTCAzMzg4LDgzMDUgMTY2Myw5Mzg1IDE2NDksOTM2MyAzMzc0LDgyODMgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyNDUsMjQ5LDI1MykiIHN0cm9rZT0ibm9uZSIgZD0iTSAzMzgxLDgyOTQgTCAzMzk1LDgzMTcgMTY3MCw5Mzk3IDE2NTYsOTM3NCAzMzgxLDgyOTQgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyNDQsMjQ4LDI1MykiIHN0cm9rZT0ibm9uZSIgZD0iTSAzMzg4LDgzMDYgTCAzNDAyLDgzMjggMTY3Nyw5NDA4IDE2NjMsOTM4NiAzMzg4LDgzMDYgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyNDQsMjQ3LDI1MikiIHN0cm9rZT0ibm9uZSIgZD0iTSAzMzk1LDgzMTcgTCAzNDA5LDgzMzkgMTY4NCw5NDE5IDE2NzAsOTM5NyAzMzk1LDgzMTcgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyNDMsMjQ3LDI1MikiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNDAzLDgzMjkgTCAzNDE2LDgzNTEgMTY5MSw5NDMxIDE2NzgsOTQwOSAzNDAzLDgzMjkgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyNDIsMjQ2LDI1MikiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNDEwLDgzNDAgTCAzNDI0LDgzNjIgMTY5OSw5NDQyIDE2ODUsOTQyMCAzNDEwLDgzNDAgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyNDEsMjQ2LDI1MikiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNDE3LDgzNTEgTCAzNDMxLDgzNzQgMTcwNiw5NDU0IDE2OTIsOTQzMSAzNDE3LDgzNTEgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyNDAsMjQ1LDI1MikiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNDI0LDgzNjMgTCAzNDM4LDgzODUgMTcxMyw5NDY1IDE2OTksOTQ0MyAzNDI0LDgzNjMgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMzksMjQ1LDI1MikiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNDMxLDgzNzQgTCAzNDQ1LDgzOTYgMTcyMCw5NDc2IDE3MDYsOTQ1NCAzNDMxLDgzNzQgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMzksMjQ0LDI1MSkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNDM4LDgzODYgTCAzNDUyLDg0MDggMTcyNyw5NDg4IDE3MTMsOTQ2NiAzNDM4LDgzODYgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMzgsMjQ0LDI1MSkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNDQ1LDgzOTcgTCAzNDU5LDg0MTkgMTczNCw5NDk5IDE3MjAsOTQ3NyAzNDQ1LDgzOTcgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMzcsMjQzLDI1MSkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNDUzLDg0MDggTCAzNDY2LDg0MzEgMTc0MSw5NTExIDE3MjgsOTQ4OCAzNDUzLDg0MDggWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMzYsMjQzLDI1MSkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNDYwLDg0MjAgTCAzNDc0LDg0NDIgMTc0OSw5NTIyIDE3MzUsOTUwMCAzNDYwLDg0MjAgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMzUsMjQyLDI1MSkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNDY3LDg0MzEgTCAzNDgxLDg0NTQgMTc1Niw5NTM0IDE3NDIsOTUxMSAzNDY3LDg0MzEgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMzUsMjQyLDI1MCkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNDc0LDg0NDMgTCAzNDg4LDg0NjUgMTc2Myw5NTQ1IDE3NDksOTUyMyAzNDc0LDg0NDMgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMzQsMjQxLDI1MCkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNDgxLDg0NTQgTCAzNDk1LDg0NzYgMTc3MCw5NTU2IDE3NTYsOTUzNCAzNDgxLDg0NTQgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMzMsMjQwLDI1MCkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNDg4LDg0NjYgTCAzNTAyLDg0ODggMTc3Nyw5NTY4IDE3NjMsOTU0NiAzNDg4LDg0NjYgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMzIsMjQwLDI1MCkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNDk1LDg0NzcgTCAzNTA5LDg0OTkgMTc4NCw5NTc5IDE3NzAsOTU1NyAzNDk1LDg0NzcgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMzEsMjM5LDI1MCkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNTAzLDg0ODggTCAzNTE3LDg1MTEgMTc5Miw5NTkxIDE3NzgsOTU2OCAzNTAzLDg0ODggWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMzAsMjM5LDI1MCkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNTEwLDg1MDAgTCAzNTI0LDg1MjIgMTc5OSw5NjAyIDE3ODUsOTU4MCAzNTEwLDg1MDAgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMzAsMjM4LDI0OSkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNTE3LDg1MTEgTCAzNTMxLDg1MzMgMTgwNiw5NjEzIDE3OTIsOTU5MSAzNTE3LDg1MTEgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMjksMjM4LDI0OSkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNTI0LDg1MjMgTCAzNTM4LDg1NDUgMTgxMyw5NjI1IDE3OTksOTYwMyAzNTI0LDg1MjMgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMjgsMjM3LDI0OSkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNTMxLDg1MzQgTCAzNTQ1LDg1NTYgMTgyMCw5NjM2IDE4MDYsOTYxNCAzNTMxLDg1MzQgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMjcsMjM3LDI0OSkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNTM4LDg1NDUgTCAzNTUyLDg1NjggMTgyNyw5NjQ4IDE4MTMsOTYyNSAzNTM4LDg1NDUgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMjYsMjM2LDI0OSkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNTQ1LDg1NTcgTCAzNTU5LDg1NzkgMTgzNCw5NjU5IDE4MjAsOTYzNyAzNTQ1LDg1NTcgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMjYsMjM2LDI0OCkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNTUzLDg1NjggTCAzNTY3LDg1OTEgMTg0Miw5NjcxIDE4MjgsOTY0OCAzNTUzLDg1NjggWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMjUsMjM1LDI0OCkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNTYwLDg1ODAgTCAzNTc0LDg2MDIgMTg0OSw5NjgyIDE4MzUsOTY2MCAzNTYwLDg1ODAgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMjQsMjM1LDI0OCkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNTY3LDg1OTEgTCAzNTgxLDg2MTMgMTg1Niw5NjkzIDE4NDIsOTY3MSAzNTY3LDg1OTEgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMjMsMjM0LDI0OCkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNTc0LDg2MDMgTCAzNTg4LDg2MjUgMTg2Myw5NzA1IDE4NDksOTY4MyAzNTc0LDg2MDMgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMjIsMjMzLDI0OCkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNTgxLDg2MTQgTCAzNTk1LDg2MzYgMTg3MCw5NzE2IDE4NTYsOTY5NCAzNTgxLDg2MTQgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMjEsMjMzLDI0OCkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNTg4LDg2MjUgTCAzNjAyLDg2NDggMTg3Nyw5NzI4IDE4NjMsOTcwNSAzNTg4LDg2MjUgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMjEsMjMyLDI0NykiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNTk2LDg2MzcgTCAzNjA5LDg2NTkgMTg4NCw5NzM5IDE4NzEsOTcxNyAzNTk2LDg2MzcgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMjAsMjMyLDI0NykiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNjAzLDg2NDggTCAzNjE3LDg2NzAgMTg5Miw5NzUwIDE4NzgsOTcyOCAzNjAzLDg2NDggWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMTksMjMxLDI0NykiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNjEwLDg2NjAgTCAzNjI0LDg2ODIgMTg5OSw5NzYyIDE4ODUsOTc0MCAzNjEwLDg2NjAgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMTgsMjMxLDI0NykiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNjE3LDg2NzEgTCAzNjMxLDg2OTMgMTkwNiw5NzczIDE4OTIsOTc1MSAzNjE3LDg2NzEgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMTcsMjMwLDI0NykiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNjI0LDg2ODIgTCAzNjM4LDg3MDUgMTkxMyw5Nzg1IDE4OTksOTc2MiAzNjI0LDg2ODIgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMTcsMjMwLDI0NikiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNjMxLDg2OTQgTCAzNjQ1LDg3MTYgMTkyMCw5Nzk2IDE5MDYsOTc3NCAzNjMxLDg2OTQgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMTYsMjI5LDI0NikiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNjM4LDg3MDUgTCAzNjUyLDg3MjggMTkyNyw5ODA4IDE5MTMsOTc4NSAzNjM4LDg3MDUgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMTUsMjI5LDI0NikiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNjQ2LDg3MTcgTCAzNjU5LDg3MzkgMTkzNCw5ODE5IDE5MjEsOTc5NyAzNjQ2LDg3MTcgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMTQsMjI4LDI0NikiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNjUzLDg3MjggTCAzNjY3LDg3NTAgMTk0Miw5ODMwIDE5MjgsOTgwOCAzNjUzLDg3MjggWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMTMsMjI4LDI0NikiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNjYwLDg3NDAgTCAzNjc0LDg3NjIgMTk0OSw5ODQyIDE5MzUsOTgyMCAzNjYwLDg3NDAgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMTIsMjI3LDI0NikiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNjY3LDg3NTEgTCAzNjgxLDg3NzMgMTk1Niw5ODUzIDE5NDIsOTgzMSAzNjY3LDg3NTEgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMTIsMjI2LDI0NSkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNjc0LDg3NjIgTCAzNjg4LDg3ODUgMTk2Myw5ODY1IDE5NDksOTg0MiAzNjc0LDg3NjIgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMTEsMjI2LDI0NSkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNjgxLDg3NzQgTCAzNjk1LDg3OTYgMTk3MCw5ODc2IDE5NTYsOTg1NCAzNjgxLDg3NzQgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMTAsMjI1LDI0NSkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNjg4LDg3ODUgTCAzNzAyLDg4MDcgMTk3Nyw5ODg3IDE5NjMsOTg2NSAzNjg4LDg3ODUgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMDksMjI1LDI0NSkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNjk2LDg3OTcgTCAzNzA5LDg4MTkgMTk4NCw5ODk5IDE5NzEsOTg3NyAzNjk2LDg3OTcgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMDgsMjI0LDI0NSkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNzAzLDg4MDggTCAzNzE3LDg4MzAgMTk5Miw5OTEwIDE5NzgsOTg4OCAzNzAzLDg4MDggWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMDgsMjI0LDI0NCkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNzEwLDg4MTkgTCAzNzI0LDg4NDIgMTk5OSw5OTIyIDE5ODUsOTg5OSAzNzEwLDg4MTkgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMDcsMjIzLDI0NCkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNzE3LDg4MzEgTCAzNzMxLDg4NTMgMjAwNiw5OTMzIDE5OTIsOTkxMSAzNzE3LDg4MzEgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMDYsMjIzLDI0NCkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNzI0LDg4NDIgTCAzNzM4LDg4NjUgMjAxMyw5OTQ1IDE5OTksOTkyMiAzNzI0LDg4NDIgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMDUsMjIyLDI0NCkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNzMxLDg4NTQgTCAzNzQ1LDg4NzYgMjAyMCw5OTU2IDIwMDYsOTkzNCAzNzMxLDg4NTQgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMDQsMjIyLDI0NCkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNzM4LDg4NjUgTCAzNzUyLDg4ODcgMjAyNyw5OTY3IDIwMTMsOTk0NSAzNzM4LDg4NjUgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMDQsMjIxLDI0MykiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNzQ2LDg4NzcgTCAzNzYwLDg4OTkgMjAzNSw5OTc5IDIwMjEsOTk1NyAzNzQ2LDg4NzcgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMDMsMjIwLDI0MykiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNzUzLDg4ODggTCAzNzY3LDg5MTAgMjA0Miw5OTkwIDIwMjgsOTk2OCAzNzUzLDg4ODggWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigyMDIsMjIwLDI0MykiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNzYwLDg4OTkgTCAzNzc0LDg5MjIgMjA0OSwxMDAwMiAyMDM1LDk5NzkgMzc2MCw4ODk5IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMjAxLDIxOSwyNDMpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzc2Nyw4OTExIEwgMzc4MSw4OTMzIDIwNTYsMTAwMTMgMjA0Miw5OTkxIDM3NjcsODkxMSBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDIwMCwyMTksMjQzKSIgc3Ryb2tlPSJub25lIiBkPSJNIDM3NzQsODkyMiBMIDM3ODgsODk0NCAyMDYzLDEwMDI0IDIwNDksMTAwMDIgMzc3NCw4OTIyIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMTk5LDIxOCwyNDMpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzc4MSw4OTM0IEwgMzc5NSw4OTU2IDIwNzAsMTAwMzYgMjA1NiwxMDAxNCAzNzgxLDg5MzQgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigxOTksMjE4LDI0MikiIHN0cm9rZT0ibm9uZSIgZD0iTSAzNzg4LDg5NDUgTCAzODAyLDg5NjcgMjA3NywxMDA0NyAyMDYzLDEwMDI1IDM3ODgsODk0NSBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDE5OCwyMTcsMjQyKSIgc3Ryb2tlPSJub25lIiBkPSJNIDM3OTYsODk1NiBMIDM4MTAsODk3OSAyMDg1LDEwMDU5IDIwNzEsMTAwMzYgMzc5Niw4OTU2IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMTk3LDIxNywyNDIpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzgwMyw4OTY4IEwgMzgxNyw4OTkwIDIwOTIsMTAwNzAgMjA3OCwxMDA0OCAzODAzLDg5NjggWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigxOTYsMjE2LDI0MikiIHN0cm9rZT0ibm9uZSIgZD0iTSAzODEwLDg5NzkgTCAzODI0LDkwMDEgMjA5OSwxMDA4MiAyMDg1LDEwMDU5IDM4MTAsODk3OSBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDE5NSwyMTYsMjQyKSIgc3Ryb2tlPSJub25lIiBkPSJNIDM4MTcsODk5MSBMIDM4MzEsOTAxMyAyMTA2LDEwMDkzIDIwOTIsMTAwNzEgMzgxNyw4OTkxIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMTk1LDIxNSwyNDEpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzgyNCw5MDAyIEwgMzgzOCw5MDI0IDIxMTMsMTAxMDQgMjA5OSwxMDA4MiAzODI0LDkwMDIgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigxOTQsMjE1LDI0MSkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzODMxLDkwMTQgTCAzODQ1LDkwMzYgMjEyMCwxMDExNiAyMTA2LDEwMDk0IDM4MzEsOTAxNCBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDE5MywyMTQsMjQxKSIgc3Ryb2tlPSJub25lIiBkPSJNIDM4MzksOTAyNSBMIDM4NTIsOTA0NyAyMTI3LDEwMTI3IDIxMTQsMTAxMDUgMzgzOSw5MDI1IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMTkyLDIxMywyNDEpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzg0Niw5MDM2IEwgMzg2MCw5MDU5IDIxMzUsMTAxMzkgMjEyMSwxMDExNiAzODQ2LDkwMzYgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigxOTEsMjEzLDI0MSkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzODUzLDkwNDggTCAzODY3LDkwNzAgMjE0MiwxMDE1MCAyMTI4LDEwMTI4IDM4NTMsOTA0OCBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDE5MCwyMTIsMjQxKSIgc3Ryb2tlPSJub25lIiBkPSJNIDM4NjAsOTA1OSBMIDM4NzQsOTA4MSAyMTQ5LDEwMTYxIDIxMzUsMTAxMzkgMzg2MCw5MDU5IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMTkwLDIxMiwyNDApIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzg2Nyw5MDcxIEwgMzg4MSw5MDkzIDIxNTYsMTAxNzMgMjE0MiwxMDE1MSAzODY3LDkwNzEgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigxODksMjExLDI0MCkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzODc0LDkwODIgTCAzODg4LDkxMDQgMjE2MywxMDE4NCAyMTQ5LDEwMTYyIDM4NzQsOTA4MiBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDE4OCwyMTEsMjQwKSIgc3Ryb2tlPSJub25lIiBkPSJNIDM4ODEsOTA5MyBMIDM4OTUsOTExNiAyMTcwLDEwMTk2IDIxNTYsMTAxNzMgMzg4MSw5MDkzIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMTg3LDIxMCwyNDApIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzg4OSw5MTA1IEwgMzkwMiw5MTI3IDIxNzcsMTAyMDcgMjE2NCwxMDE4NSAzODg5LDkxMDUgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigxODYsMjEwLDI0MCkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzODk2LDkxMTYgTCAzOTEwLDkxMzggMjE4NSwxMDIxOCAyMTcxLDEwMTk2IDM4OTYsOTExNiBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDE4NiwyMDksMjM5KSIgc3Ryb2tlPSJub25lIiBkPSJNIDM5MDMsOTEyOCBMIDM5MTcsOTE1MCAyMTkyLDEwMjMwIDIxNzgsMTAyMDggMzkwMyw5MTI4IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMTg1LDIwOSwyMzkpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzkxMCw5MTM5IEwgMzkyNCw5MTYxIDIxOTksMTAyNDEgMjE4NSwxMDIxOSAzOTEwLDkxMzkgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigxODQsMjA4LDIzOSkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzOTE3LDkxNTAgTCAzOTMxLDkxNzMgMjIwNiwxMDI1MyAyMTkyLDEwMjMwIDM5MTcsOTE1MCBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDE4MywyMDgsMjM5KSIgc3Ryb2tlPSJub25lIiBkPSJNIDM5MjQsOTE2MiBMIDM5MzgsOTE4NCAyMjEzLDEwMjY0IDIxOTksMTAyNDIgMzkyNCw5MTYyIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMTgyLDIwNywyMzkpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzkzMSw5MTczIEwgMzk0NSw5MTk2IDIyMjAsMTAyNzYgMjIwNiwxMDI1MyAzOTMxLDkxNzMgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigxODEsMjA2LDIzOSkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzOTM5LDkxODUgTCAzOTUyLDkyMDcgMjIyNywxMDI4NyAyMjE0LDEwMjY1IDM5MzksOTE4NSBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDE4MSwyMDYsMjM4KSIgc3Ryb2tlPSJub25lIiBkPSJNIDM5NDYsOTE5NiBMIDM5NjAsOTIxOCAyMjM1LDEwMjk4IDIyMjEsMTAyNzYgMzk0Niw5MTk2IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMTgwLDIwNSwyMzgpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzk1Myw5MjA4IEwgMzk2Nyw5MjMwIDIyNDIsMTAzMTAgMjIyOCwxMDI4OCAzOTUzLDkyMDggWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigxNzksMjA1LDIzOCkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzOTYwLDkyMTkgTCAzOTc0LDkyNDEgMjI0OSwxMDMyMSAyMjM1LDEwMjk5IDM5NjAsOTIxOSBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDE3OCwyMDQsMjM4KSIgc3Ryb2tlPSJub25lIiBkPSJNIDM5NjcsOTIzMCBMIDM5ODEsOTI1MyAyMjU2LDEwMzMzIDIyNDIsMTAzMTAgMzk2Nyw5MjMwIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMTc3LDIwNCwyMzgpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzk3NCw5MjQyIEwgMzk4OCw5MjY0IDIyNjMsMTAzNDQgMjI0OSwxMDMyMiAzOTc0LDkyNDIgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigxNzcsMjAzLDIzNykiIHN0cm9rZT0ibm9uZSIgZD0iTSAzOTgxLDkyNTMgTCAzOTk1LDkyNzUgMjI3MCwxMDM1NSAyMjU2LDEwMzMzIDM5ODEsOTI1MyBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDE3NiwyMDMsMjM3KSIgc3Ryb2tlPSJub25lIiBkPSJNIDM5ODksOTI2NSBMIDQwMDMsOTI4NyAyMjc4LDEwMzY3IDIyNjQsMTAzNDUgMzk4OSw5MjY1IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMTc1LDIwMiwyMzcpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMzk5Niw5Mjc2IEwgNDAxMCw5Mjk4IDIyODUsMTAzNzggMjI3MSwxMDM1NiAzOTk2LDkyNzYgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigxNzQsMjAyLDIzNykiIHN0cm9rZT0ibm9uZSIgZD0iTSA0MDAzLDkyODcgTCA0MDE3LDkzMTAgMjI5MiwxMDM5MCAyMjc4LDEwMzY3IDQwMDMsOTI4NyBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDE3MywyMDEsMjM3KSIgc3Ryb2tlPSJub25lIiBkPSJNIDQwMTAsOTI5OSBMIDQwMjQsOTMyMSAyMjk5LDEwNDAxIDIyODUsMTAzNzkgNDAxMCw5Mjk5IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMTcyLDIwMSwyMzcpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gNDAxNyw5MzEwIEwgNDAzMSw5MzMzIDIzMDYsMTA0MTMgMjI5MiwxMDM5MCA0MDE3LDkzMTAgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigxNzIsMjAwLDIzNikiIHN0cm9rZT0ibm9uZSIgZD0iTSA0MDI0LDkzMjIgTCA0MDM4LDkzNDQgMjMxMywxMDQyNCAyMjk5LDEwNDAyIDQwMjQsOTMyMiBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDE3MSwxOTksMjM2KSIgc3Ryb2tlPSJub25lIiBkPSJNIDQwMzEsOTMzMyBMIDQwNDUsOTM1NSAyMzIwLDEwNDM1IDIzMDYsMTA0MTMgNDAzMSw5MzMzIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMTcwLDE5OSwyMzYpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gNDAzOSw5MzQ1IEwgNDA1Myw5MzY3IDIzMjgsMTA0NDcgMjMxNCwxMDQyNSA0MDM5LDkzNDUgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigxNjksMTk4LDIzNikiIHN0cm9rZT0ibm9uZSIgZD0iTSA0MDQ2LDkzNTYgTCA0MDYwLDkzNzggMjMzNSwxMDQ1OCAyMzIxLDEwNDM2IDQwNDYsOTM1NiBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDE2OCwxOTgsMjM2KSIgc3Ryb2tlPSJub25lIiBkPSJNIDQwNTMsOTM2NyBMIDQwNjcsOTM5MCAyMzQyLDEwNDcwIDIzMjgsMTA0NDcgNDA1Myw5MzY3IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMTY4LDE5NywyMzUpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gNDA2MCw5Mzc5IEwgNDA3NCw5NDAxIDIzNDksMTA0ODEgMjMzNSwxMDQ1OSA0MDYwLDkzNzkgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigxNjcsMTk3LDIzNSkiIHN0cm9rZT0ibm9uZSIgZD0iTSA0MDY3LDkzOTAgTCA0MDgxLDk0MTIgMjM1NiwxMDQ5MiAyMzQyLDEwNDcwIDQwNjcsOTM5MCBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDE2NiwxOTYsMjM1KSIgc3Ryb2tlPSJub25lIiBkPSJNIDQwNzQsOTQwMiBMIDQwODgsOTQyNCAyMzYzLDEwNTA0IDIzNDksMTA0ODIgNDA3NCw5NDAyIFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMTY1LDE5NiwyMzUpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gNDA4Miw5NDEzIEwgNDA5NSw5NDM1IDIzNzAsMTA1MTUgMjM1NywxMDQ5MyA0MDgyLDk0MTMgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigxNjQsMTk1LDIzNSkiIHN0cm9rZT0ibm9uZSIgZD0iTSA0MDg5LDk0MjQgTCA0MTAzLDk0NDcgMjM3OCwxMDUyNyAyMzY0LDEwNTA0IDQwODksOTQyNCBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDE2MywxOTUsMjM1KSIgc3Ryb2tlPSJub25lIiBkPSJNIDQwOTYsOTQzNiBMIDQxMTAsOTQ1OCAyMzg1LDEwNTM4IDIzNzEsMTA1MTYgNDA5Niw5NDM2IFoiLz4KICAgICA8cGF0aCBmaWxsPSJyZ2IoMTYzLDE5NCwyMzQpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gNDEwMyw5NDQ3IEwgNDExNyw5NDcwIDIzOTIsMTA1NTAgMjM3OCwxMDUyNyA0MTAzLDk0NDcgWiIvPgogICAgIDxwYXRoIGZpbGw9InJnYigxNjIsMTk0LDIzNCkiIHN0cm9rZT0ibm9uZSIgZD0iTSA0MTEwLDk0NTkgTCA0MTI0LDk0ODEgMjM5OSwxMDU2MSAyMzg1LDEwNTM5IDQxMTAsOTQ1OSBaIi8+CiAgICAgPHBhdGggZmlsbD0icmdiKDE2MSwxOTMsMjM0KSIgc3Ryb2tlPSJub25lIiBkPSJNIDQxMTcsOTQ3MCBMIDQ0MjAsOTk1MyAyNjk1LDExMDMzIDIzOTIsMTA1NTAgNDExNyw5NDcwIFoiLz4KICAgIDwvZz4KICAgIDxwYXRoIGZpbGw9InJnYigyMTIsMjM1LDI1NSkiIHN0cm9rZT0ibm9uZSIgZD0iTSAzMjY4LDg0MzEgTCAyMzE4LDg0MzEgQyAyMjUxLDg0MzEgMjE5Niw4NDg2IDIxOTYsODU1MyBMIDIxOTYsMTAyNDYgQyAyMTk2LDEwMzEzIDIyNTEsMTAzNjggMjMxOCwxMDM2OCBMIDM3NTUsMTAzNjggQyAzODIyLDEwMzY4IDM4NzcsMTAzMTMgMzg3NywxMDI0NiBMIDM4NzcsOTA0MCAzMjY4LDg0MzEgWiBNIDIzMTgsMTAzMjEgQyAyMjc3LDEwMzIxIDIyNDMsMTAyODcgMjI0MywxMDI0NiBMIDIyNDMsODU1MyBDIDIyNDMsODUxMSAyMjc3LDg0NzggMjMxOCw4NDc4IEwgMzI0OSw4NDc4IDM4MzEsOTA1OSAzODMxLDEwMjQ2IEMgMzgzMSwxMDI4NyAzNzk3LDEwMzIxIDM3NTUsMTAzMjEgTCAyMzE4LDEwMzIxIFoiLz4KICAgIDxwYXRoIGZpbGw9InJnYigxMywxMDUsMjAwKSIgc3Ryb2tlPSJub25lIiBkPSJNIDMyODIsODQxNSBDIDMyODIsODQxNSAzMjkzLDg1MDMgMzI4Miw4ODY0IDMyODIsODk1OSAzMzYxLDkwMzQgMzQ2NSw5MDM0IDM4MTQsOTAyNCAzODgzLDkwMjkgMzg5NCw5MDMyIEwgMzg5NCw5MDI0IDMyODUsODQxNSAzMjgyLDg0MTUgWiBNIDM4OTQsOTAzNCBMIDM4OTQsOTAzMiBDIDM4OTgsOTAzMyAzODk0LDkwMzQgMzg5NCw5MDM0IFoiLz4KICAgIDxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiKDEzLDEwNSwyMDApIiBzdHJva2Utd2lkdGg9IjQ2IiBzdHJva2UtbGluZWpvaW49Im1pdGVyIiBkPSJNIDMyODIsODQxNSBDIDMyODIsODQxNSAzMjkzLDg1MDMgMzI4Miw4ODY0IDMyODIsODk1OSAzMzYxLDkwMzQgMzQ2NSw5MDM0IDM5NDksOTAyMCAzODk0LDkwMzQgMzg5NCw5MDM0IEwgMzg5NCw5MDI0IDMyODUsODQxNSAzMjgyLDg0MTUgWiIvPgogICAgPHBhdGggZmlsbD0icmdiKDI1NSwyNTUsMjU1KSIgc3Ryb2tlPSJub25lIiBkPSJNIDI0MzYsODkxMiBMIDMwNTcsODkxMiAzMDU3LDkwMzMgMjQzNiw5MDMzIDI0MzYsODkxMiBaIi8+CiAgICA8cGF0aCBmaWxsPSJyZ2IoMjU1LDI1NSwyNTUpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMjQzNiw5MTY4IEwgMzA1Nyw5MTY4IDMwNTcsOTI4OSAyNDM2LDkyODkgMjQzNiw5MTY4IFoiLz4KICAgIDxwYXRoIGZpbGw9InJnYigyNTUsMjU1LDI1NSkiIHN0cm9rZT0ibm9uZSIgZD0iTSAyNDM2LDk0MjQgTCAzNjQ3LDk0MjQgMzY0Nyw5NTQ1IDI0MzYsOTU0NSAyNDM2LDk0MjQgWiIvPgogICAgPHBhdGggZmlsbD0icmdiKDI1NSwyNTUsMjU1KSIgc3Ryb2tlPSJub25lIiBkPSJNIDI0MzYsOTY4MCBMIDM2NDcsOTY4MCAzNjQ3LDk4MDIgMjQzNiw5ODAyIDI0MzYsOTY4MCBaIi8+CiAgICA8cGF0aCBmaWxsPSJyZ2IoMjU1LDI1NSwyNTUpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMjQzNiw5OTM3IEwgMzY0Nyw5OTM3IDM2NDcsMTAwNTggMjQzNiwxMDA1OCAyNDM2LDk5MzcgWiIvPgogICAgPHBhdGggZmlsbD0icmdiKDEzLDEwNSwyMDApIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMjM5OSw4ODc2IEwgMzAyMCw4ODc2IDMwMjAsODk5NyAyMzk5LDg5OTcgMjM5OSw4ODc2IFoiLz4KICAgIDxwYXRoIGZpbGw9InJnYigxMywxMDUsMjAwKSIgc3Ryb2tlPSJub25lIiBkPSJNIDIzOTksOTEzMiBMIDMwMjAsOTEzMiAzMDIwLDkyNTMgMjM5OSw5MjUzIDIzOTksOTEzMiBaIi8+CiAgICA8cGF0aCBmaWxsPSJyZ2IoMTMsMTA1LDIwMCkiIHN0cm9rZT0ibm9uZSIgZD0iTSAyMzk5LDkzODggTCAzNjExLDkzODggMzYxMSw5NTA5IDIzOTksOTUwOSAyMzk5LDkzODggWiIvPgogICAgPHBhdGggZmlsbD0icmdiKDEzLDEwNSwyMDApIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMjM5OSw5NjQ0IEwgMzYxMSw5NjQ0IDM2MTEsOTc2NSAyMzk5LDk3NjUgMjM5OSw5NjQ0IFoiLz4KICAgIDxwYXRoIGZpbGw9InJnYigxMywxMDUsMjAwKSIgc3Ryb2tlPSJub25lIiBkPSJNIDIzOTksOTkwMCBMIDM2MTEsOTkwMCAzNjExLDEwMDIxIDIzOTksMTAwMjEgMjM5OSw5OTAwIFoiLz4KICAgIDxpbWFnZSB4PSIyMTQ5IiB5PSI4Mzg0IiB3aWR0aD0iMTc3NiIgaGVpZ2h0PSIyMDMyIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiB4bGluazpocmVmPSJkYXRhOmltYWdlL3BuZztiYXNlNjQsaVZCT1J3MEtHZ29BQUFBTlNVaEVVZ0FBQUVRQUFBQk9DQVlBQUFDWmlMRFVBQUFHT2tsRVFWUjRuTzFiVFc4YlJSaWUyUjE3N1RnT0xiR0FCbG9YMHBaVWdHZ3JCUFNBeEpVVFFuRGdGM0RpeG45QTRpZHdSb2h5NHVQRUVRa29xQlZWb1VVVUNDSFFBbFZpMHRRSlh1L244TTd1YkRvWmJHZDNkdndSWng5cDRvM1hubm5mWitkOTMyZG0xNFJTaW5UQThVUEw5YW1GRWFJZE41d0pLRFV4d25BYzFFS0tqTzF1VUY5Wjd5NysxbklXLzk1MEg5NjBnME5oU0EzMlhkUEFnVVd3Z3pHT2pHSEg4SjdQamcyTXdya3F1ZHVvay9VWFRzMnRMVDFVL1FQZXZnWHROclJRaS9FQ0NMUjMvWUJXM3J1NFh2M2lsM2JBSEt0WFNPbndqRWtkbjFiaGZHU2s3WVoxWW1JWENEUnNMNXdGZzcyWUNGcGxScGRNN0xEWHFGTTRWeUtHdzQ0WlFkRTVBd1hjZWI5ZU1kMjVxZ245WW5iT05RM0VuY2RSUHpqcHg0UitET3pDWVhuTERvNThjbVZqL3M3amM2Zk9MOWJaNlcxb3k5QldvUDBLemRORnlCdHZYVmlsSDF4cU9XZWJ0ZUNkMTVyb3pMRWFNOTVKeUFDNHdvQWhQMGY0L3g0L2ovam51OUFDL3IvUHoxSGVYUDRlNHAvWmE0eGtCdmh0TzNBL3ZOU2lGNWUzS0pEcVBQdm9MSENOVGtKN0ROcnpLQ2JtQnJTMVhJUjh0ZHoyTDF4dXVlZWFOZnJSbTB1MFdqWkVvMlhEWk9jZHlmbkV3VHpPOXh3RFpoUjYvYmxHOFBHVkRlZmIxVzBLc3hFOWMzelc0V093aTNNQzJsRVVoOUlQL0RVN0llOS8zWElZMVcrLzJneUFqTlJYRE8yKzhvbGhXcHp2TTRZTG9lYS9jdTUrOU9uVmpmRGFyWTRENFJVK2ZiUW05OU9BZHA0VGNnM0ZvWldla011cjIrall2TVZtaUtyUlEzRWU5U0Y0RnZMUHkyZm52Yyt1MzBIZjMreUVrR2VjSnhabWVsMG9SZ3dMcGF2UVdxa0pjYnpRUHZGQVZkWG9vVHJmYjR5YVphQ1huanpzZmY3VFhmZkh2MnhrUUhJK3ZWQVZ4eEQ3d1duSmlBaGhsYUZzWWhXakUrZXpoSmEydkRKakdjR0xTL2VoTDM5dSt5dXRyZ3N6aFo1OHNDS1B3Vjd2WkNLRWxjRXl3Vm1NVGd6TE1pdUdrbGRtb0FDQU52Ry9XZGxDb0hFQ1ZyS1BOeXh4akUzQmwzU0VXS0FYTUU1bGRGZkZhTFNiWU8yaEJZVUFnUzV4djd2NXI3ZjZqNE9ZaG1uT1c0bXQ3U3hrUklSRWYwdzg2SXFKczBKN1B0RFJUNlZraEdlZzJsei9zK090YjNtcytxQ0ZRMlgyK1V6aEVuRUJuZG1RU0hwZHNjUm8zYzRQSmJTc2t0Rjk2cEZhY09PMmpkYmFIa3NEM2Nac0tWUEpaU0JzaXNFYW90OWd3M1JlWjJoRjlnQUo5UFNScXZ0N3kvRmhxYkV0ZkQ4MUNJU0x6eFpUMG1DamRENVBhUDNQVmdnWDJteFlDT1RFWmdZZWRrQ2c1Q1prREpMZTQzQmVXUkN5YWxNeXpjemh3c0JDSmxweENoMEdmSUN4Nmd5VVR4RGF3dmN6Z1VEWjZrQlNIVnN5Uk5sblY1b0x0WlhHK1Y0Z2JCT0g3eitvT0QvSzBFb3JDSmtHNmFTbllEZFlVdlZBbktrYVBZclF5aW9JYmFHdnpHQkpOUmxBWnlXUXE1WkthS2tLUWp1bDd6MGhKdFZoaXF3c29aVkhFTnFDclVxSWxLcVpQNm5xQ3EyOGdqRFg3R0FnYkJNNFkxSWRacW5OMHc4VnZxOE1Vb0tsUHlqVmNlc01IVlVyeVZ1NVFJaXhRNGF1WkpobGRzbXpJay9WVWhKaU1naTdPY1R2b2ZSelhqUmFaMmgxVVg2Q1pWdHpBNUlxdGswOFVwM2hET2hIdFdwcFE2UlVEWXhIcFROMDdMckpGMG9yQ050UExmZFBxbG1tNjZEUVVoVlpnd2dlQ3NTa09reWRvYnRrRHcyeFVvMDNpSWFsTThTS2tyZHFEUjJSVWpYaXh4QjA2Z3p4aHJldXFqVVNSRE1FcXN3NFJGYmFxalZTd0dyWGNFQ0g2TkFacXRKN1VOVWFPUWd4ZDV5UVY1eWkrdHVYSWtzRmhEMjF3M2ZkVlhTR3FzZ2FSUEJZRVNWVkhOL0x6S296ZEltc3NjOEtFZEd0VFA2TVZ6K2pCNGtzWGF2amlRRlRxdXptVHBaa0tGY1VoUExwaklrQ1NSNS9SSHNud3l4NUpVM1Zta2hFRDh4WThmSS9qY2hTdlI4NzBiTkNCRStxMFhFV2thV3FNeVllUEtsaVhTSnI3Tkk3TDlnVFJGMUlxbUkrMENHeXhpYTk4d0tTS2dyd3ZaQ1lLcEdsQWhJL2VOODNxV2FWOEJNbHNsUWdKdFc5UkZaYW5iR3ZFVDkwRisrYTZkZ3EzUGVBcElxNzVGNVNWZFVaVTRNb2gyQThtZnViNHdCYi9nZmxlUGsvY2Z1YjR3Q3hTcmlMNCtmanAwNWtxWUFuMWVrVVdTb2dGVkNxS1pQcWdRQXhvcVNLcDFKa3FZQ3dXeEFEa3VxQkEyRVB6Zk9mSEUxMU9VMkxYajhQT2REZ3R6SVA5cXdRUVFveWRvUHMvWkdEaFlJUUNRVWhFZ3BDSkJTRVNDZ0lrVkFRSXFFZ1JFSkJpSVNDRUFrRklSSUtRaVFVaEVnb0NKRlFFQ0toSUVSQ1FZaUVnaEFKL3dGeG5CNWZsdXcrY2dBQUFBQkpSVTVFcmtKZ2dnPT0iLz4KICAgPC9nPgogIDwvZz4KICA8ZyBjbGFzcz0iY29tLnN1bi5zdGFyLmRyYXdpbmcuQ3VzdG9tU2hhcGUiPgogICA8ZyBpZD0iaWQ0Ij4KICAgIDxyZWN0IGNsYXNzPSJCb3VuZGluZ0JveCIgc3Ryb2tlPSJub25lIiBmaWxsPSJub25lIiB4PSI1ODA3IiB5PSI4Mzc0IiB3aWR0aD0iMzU4NCIgaGVpZ2h0PSI1OTcwIi8+CiAgICA8Zz4KICAgICA8ZGVmcz4KICAgICAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkaWVudDEiIHgxPSI1ODY0IiB5MT0iODM1NSIgeDI9IjkzMzMiIHkyPSIxNDM2MiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgogICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdHlsZT0ic3RvcC1jb2xvcjpyZ2IoMjU1LDI1NSwyNTUpIi8+CiAgICAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0eWxlPSJzdG9wLWNvbG9yOnJnYigyNTUsMjEyLDQwKSIvPgogICAgICA8L2xpbmVhckdyYWRpZW50PgogICAgIDwvZGVmcz4KICAgICA8cGF0aCBzdHlsZT0iZmlsbDp1cmwoI2dyYWRpZW50MSkiIGQ9Ik0gNzU5OSwxNDMzNCBMIDU4MTYsMTQzMzQgNTgxNiw4MzgzIDkzODEsODM4MyA5MzgxLDE0MzM0IDc1OTksMTQzMzQgWiIvPgogICAgPC9nPgogICAgPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2IoMCwwLDApIiBzdHJva2Utd2lkdGg9IjE4IiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNIDc1OTksMTQzMzQgTCA1ODE2LDE0MzM0IDU4MTYsODM4MyA5MzgxLDgzODMgOTM4MSwxNDMzNCA3NTk5LDE0MzM0IFoiLz4KICAgIDx0ZXh0IGNsYXNzPSJUZXh0U2hhcGUiPjx0c3BhbiBjbGFzcz0iVGV4dFBhcmFncmFwaCIgZm9udC1mYW1pbHk9IkxpYmVyYXRpb24gU2Fucywgc2Fucy1zZXJpZiIgZm9udC1zaXplPSI2MzVweCIgZm9udC13ZWlnaHQ9IjcwMCI+PHRzcGFuIGNsYXNzPSJUZXh0UG9zaXRpb24iIHg9IjYyOTUiIHk9IjExNTc5Ij48dHNwYW4gZmlsbD0icmdiKDAsMCwwKSIgc3Ryb2tlPSJub25lIj5NYW5hZ2VyPC90c3Bhbj48L3RzcGFuPjwvdHNwYW4+PC90ZXh0PgogICA8L2c+CiAgPC9nPgogIDxnIGNsYXNzPSJjb20uc3VuLnN0YXIuZHJhd2luZy5UZXh0U2hhcGUiPgogICA8ZyBpZD0iaWQ1Ij4KICAgIDxyZWN0IGNsYXNzPSJCb3VuZGluZ0JveCIgc3Ryb2tlPSJub25lIiBmaWxsPSJub25lIiB4PSIxNzg5IiB5PSIxMDM3MSIgd2lkdGg9IjI1MTQiIGhlaWdodD0iODQwIi8+CiAgICA8dGV4dCBjbGFzcz0iVGV4dFNoYXBlIj48dHNwYW4gY2xhc3M9IlRleHRQYXJhZ3JhcGgiIGZvbnQtZmFtaWx5PSJMaWJlcmF0aW9uIFNhbnMsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTI5cHgiIGZvbnQtd2VpZ2h0PSI0MDAiPjx0c3BhbiBjbGFzcz0iVGV4dFBvc2l0aW9uIiB4PSIyMDU1IiB5PSIxMDk3NCI+PHRzcGFuIGZpbGw9InJnYigwLDAsMCkiIHN0cm9rZT0ibm9uZSI+VGV4dCBGaWxlPC90c3Bhbj48L3RzcGFuPjwvdHNwYW4+PC90ZXh0PgogICA8L2c+CiAgPC9nPgogIDxnIGNsYXNzPSJjb20uc3VuLnN0YXIuZHJhd2luZy5DdXN0b21TaGFwZSI+CiAgIDxnIGlkPSJpZDYiPgogICAgPHJlY3QgY2xhc3M9IkJvdW5kaW5nQm94IiBzdHJva2U9Im5vbmUiIGZpbGw9Im5vbmUiIHg9IjE1NDY4IiB5PSI4Mzc0IiB3aWR0aD0iMzU4NCIgaGVpZ2h0PSI1OTcwIi8+CiAgICA8Zz4KICAgICA8ZGVmcz4KICAgICAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkaWVudDIiIHgxPSIxNTUyNSIgeTE9IjgzNTUiIHgyPSIxODk5NCIgeTI9IjE0MzYyIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0eWxlPSJzdG9wLWNvbG9yOnJnYigyNTUsMjU1LDI1NSkiLz4KICAgICAgIDxzdG9wIG9mZnNldD0iMSIgc3R5bGU9InN0b3AtY29sb3I6cmdiKDExOSwxODgsMTAxKSIvPgogICAgICA8L2xpbmVhckdyYWRpZW50PgogICAgIDwvZGVmcz4KICAgICA8cGF0aCBzdHlsZT0iZmlsbDp1cmwoI2dyYWRpZW50MikiIGQ9Ik0gMTcyNjAsMTQzMzQgTCAxNTQ3NywxNDMzNCAxNTQ3Nyw4MzgzIDE5MDQyLDgzODMgMTkwNDIsMTQzMzQgMTcyNjAsMTQzMzQgWiIvPgogICAgPC9nPgogICAgPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2IoMCwwLDApIiBzdHJva2Utd2lkdGg9IjE4IiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNIDE3MjYwLDE0MzM0IEwgMTU0NzcsMTQzMzQgMTU0NzcsODM4MyAxOTA0Miw4MzgzIDE5MDQyLDE0MzM0IDE3MjYwLDE0MzM0IFoiLz4KICAgIDx0ZXh0IGNsYXNzPSJUZXh0U2hhcGUiPjx0c3BhbiBjbGFzcz0iVGV4dFBhcmFncmFwaCIgZm9udC1mYW1pbHk9IkxpYmVyYXRpb24gU2Fucywgc2Fucy1zZXJpZiIgZm9udC1zaXplPSI2MzVweCIgZm9udC13ZWlnaHQ9IjcwMCI+PHRzcGFuIGNsYXNzPSJUZXh0UG9zaXRpb24iIHg9IjE2MTc0IiB5PSIxMTU3OSI+PHRzcGFuIGZpbGw9InJnYigwLDAsMCkiIHN0cm9rZT0ibm9uZSI+V29ya2VyPC90c3Bhbj48L3RzcGFuPjwvdHNwYW4+PC90ZXh0PgogICA8L2c+CiAgPC9nPgogIDxnIGNsYXNzPSJjb20uc3VuLnN0YXIuZHJhd2luZy5MaW5lU2hhcGUiPgogICA8ZyBpZD0iaWQ3Ij4KICAgIDxyZWN0IGNsYXNzPSJCb3VuZGluZ0JveCIgc3Ryb2tlPSJub25lIiBmaWxsPSJub25lIiB4PSIxMzgwMCIgeT0iOTQ0NiIgd2lkdGg9IjE2NzkiIGhlaWdodD0iMzgxIi8+CiAgICA8cGF0aCBmaWxsPSJub25lIiBzdHJva2U9InJnYig1MiwxMDEsMTY0KSIgc3Ryb2tlLXdpZHRoPSI1MyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0iTSAxMzgyNyw5NjM2IEwgMTUyMDEsOTYzNiIvPgogICAgPHBhdGggZmlsbD0icmdiKDUyLDEwMSwxNjQpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMTU0NzgsOTYzNSBMIDE1MTc2LDk0NDcgMTUxNzYsOTgyNiAxNTQ3OCw5NjM1IFoiLz4KICAgPC9nPgogIDwvZz4KICA8ZyBjbGFzcz0iY29tLnN1bi5zdGFyLmRyYXdpbmcuQ3VzdG9tU2hhcGUiPgogICA8ZyBpZD0iaWQ4Ij4KICAgIDxyZWN0IGNsYXNzPSJCb3VuZGluZ0JveCIgc3Ryb2tlPSJub25lIiBmaWxsPSJub25lIiB4PSIxMDkzMSIgeT0iOTA1MyIgd2lkdGg9IjI5MjUiIGhlaWdodD0iMTE0NyIvPgogICAgPHBhdGggZmlsbD0icmdiKDExNCwxNTksMjA3KSIgc3Ryb2tlPSJub25lIiBkPSJNIDEwOTMyLDk2MjYgQyAxMDkzMiw5OTM4IDExMDk4LDEwMTk4IDExMjk3LDEwMTk4IEwgMTM0ODgsMTAxOTggQyAxMzY4NywxMDE5OCAxMzg1NCw5OTM4IDEzODU0LDk2MjYgMTM4NTQsOTMxNCAxMzY4Nyw5MDU0IDEzNDg4LDkwNTQgTCAxMTI5Nyw5MDU0IEMgMTEwOTgsOTA1NCAxMDkzMiw5MzE0IDEwOTMyLDk2MjYgTCAxMDkzMiw5NjI2IFoiLz4KICAgIDxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiKDUyLDEwMSwxNjQpIiBkPSJNIDEwOTMyLDk2MjYgQyAxMDkzMiw5OTM4IDExMDk4LDEwMTk4IDExMjk3LDEwMTk4IEwgMTM0ODgsMTAxOTggQyAxMzY4NywxMDE5OCAxMzg1NCw5OTM4IDEzODU0LDk2MjYgMTM4NTQsOTMxNCAxMzY4Nyw5MDU0IDEzNDg4LDkwNTQgTCAxMTI5Nyw5MDU0IEMgMTEwOTgsOTA1NCAxMDkzMiw5MzE0IDEwOTMyLDk2MjYgWiIvPgogICAgPHBhdGggZmlsbD0icmdiKDE2NSwxOTUsMjI2KSIgc3Ryb2tlPSJub25lIiBkPSJNIDEwOTMyLDk2MjYgQyAxMDkzMiw5OTM4IDExMDk4LDEwMTk4IDExMjk3LDEwMTk4IDExNDk2LDEwMTk4IDExNjYyLDk5MzggMTE2NjIsOTYyNiAxMTY2Miw5MzE0IDExNDk2LDkwNTQgMTEyOTcsOTA1NCAxMTA5OCw5MDU0IDEwOTMyLDkzMTQgMTA5MzIsOTYyNiBMIDEwOTMyLDk2MjYgWiIvPgogICAgPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2IoNTIsMTAxLDE2NCkiIGQ9Ik0gMTA5MzIsOTYyNiBDIDEwOTMyLDk5MzggMTEwOTgsMTAxOTggMTEyOTcsMTAxOTggMTE0OTYsMTAxOTggMTE2NjIsOTkzOCAxMTY2Miw5NjI2IDExNjYyLDkzMTQgMTE0OTYsOTA1NCAxMTI5Nyw5MDU0IDExMDk4LDkwNTQgMTA5MzIsOTMxNCAxMDkzMiw5NjI2IFoiLz4KICAgPC9nPgogIDwvZz4KICA8ZyBjbGFzcz0iY29tLnN1bi5zdGFyLmRyYXdpbmcuVGV4dFNoYXBlIj4KICAgPGcgaWQ9ImlkOSI+CiAgICA8cmVjdCBjbGFzcz0iQm91bmRpbmdCb3giIHN0cm9rZT0ibm9uZSIgZmlsbD0ibm9uZSIgeD0iMTExODciIHk9IjkxODIiIHdpZHRoPSIzMDQ5IiBoZWlnaHQ9Ijg3OSIvPgogICAgPHRleHQgY2xhc3M9IlRleHRTaGFwZSI+PHRzcGFuIGNsYXNzPSJUZXh0UGFyYWdyYXBoIiBmb250LWZhbWlseT0iTGliZXJhdGlvbiBTYW5zLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2NHB4IiBmb250LXdlaWdodD0iNDAwIj48dHNwYW4gY2xhc3M9IlRleHRQb3NpdGlvbiIgeD0iMTE5MTEiIHk9Ijk4MTUiPjx0c3BhbiBmaWxsPSJyZ2IoMCwwLDApIiBzdHJva2U9Im5vbmUiPlBpcGUgMTwvdHNwYW4+PC90c3Bhbj48L3RzcGFuPjwvdGV4dD4KICAgPC9nPgogIDwvZz4KICA8ZyBjbGFzcz0iY29tLnN1bi5zdGFyLmRyYXdpbmcuTGluZVNoYXBlIj4KICAgPGcgaWQ9ImlkMTAiPgogICAgPHJlY3QgY2xhc3M9IkJvdW5kaW5nQm94IiBzdHJva2U9Im5vbmUiIGZpbGw9Im5vbmUiIHg9Ijk0MDkiIHk9IjEyODIxIiB3aWR0aD0iMTU1MCIgaGVpZ2h0PSIzODEiLz4KICAgIDxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiKDUyLDEwMSwxNjQpIiBzdHJva2Utd2lkdGg9IjUzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNIDEwOTMxLDEzMDExIEwgOTY4NiwxMzAxMSIvPgogICAgPHBhdGggZmlsbD0icmdiKDUyLDEwMSwxNjQpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gOTQwOSwxMzAxMiBMIDk3MTEsMTMyMDEgOTcxMSwxMjgyMiA5NDA5LDEzMDEyIFoiLz4KICAgPC9nPgogIDwvZz4KICA8ZyBjbGFzcz0iY29tLnN1bi5zdGFyLmRyYXdpbmcuQ3VzdG9tU2hhcGUiPgogICA8ZyBpZD0iaWQxMSI+CiAgICA8cmVjdCBjbGFzcz0iQm91bmRpbmdCb3giIHN0cm9rZT0ibm9uZSIgZmlsbD0ibm9uZSIgeD0iMTA5MjkiIHk9IjEyNDUxIiB3aWR0aD0iMjkyNSIgaGVpZ2h0PSIxMTQ3Ii8+CiAgICA8cGF0aCBmaWxsPSJyZ2IoMTE0LDE1OSwyMDcpIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMTM4NTIsMTMwMjQgQyAxMzg1MiwxMjcxMiAxMzY4NiwxMjQ1MiAxMzQ4NywxMjQ1MiBMIDExMjk2LDEyNDUyIEMgMTEwOTcsMTI0NTIgMTA5MzAsMTI3MTIgMTA5MzAsMTMwMjQgMTA5MzAsMTMzMzYgMTEwOTcsMTM1OTYgMTEyOTYsMTM1OTYgTCAxMzQ4NywxMzU5NiBDIDEzNjg2LDEzNTk2IDEzODUyLDEzMzM2IDEzODUyLDEzMDI0IEwgMTM4NTIsMTMwMjQgWiIvPgogICAgPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2IoNTIsMTAxLDE2NCkiIGQ9Ik0gMTM4NTIsMTMwMjQgQyAxMzg1MiwxMjcxMiAxMzY4NiwxMjQ1MiAxMzQ4NywxMjQ1MiBMIDExMjk2LDEyNDUyIEMgMTEwOTcsMTI0NTIgMTA5MzAsMTI3MTIgMTA5MzAsMTMwMjQgMTA5MzAsMTMzMzYgMTEwOTcsMTM1OTYgMTEyOTYsMTM1OTYgTCAxMzQ4NywxMzU5NiBDIDEzNjg2LDEzNTk2IDEzODUyLDEzMzM2IDEzODUyLDEzMDI0IFoiLz4KICAgIDxwYXRoIGZpbGw9InJnYigxNjUsMTk1LDIyNikiIHN0cm9rZT0ibm9uZSIgZD0iTSAxMzg1MiwxMzAyNCBDIDEzODUyLDEyNzEyIDEzNjg2LDEyNDUyIDEzNDg3LDEyNDUyIDEzMjg4LDEyNDUyIDEzMTIyLDEyNzEyIDEzMTIyLDEzMDI0IDEzMTIyLDEzMzM2IDEzMjg4LDEzNTk2IDEzNDg3LDEzNTk2IDEzNjg2LDEzNTk2IDEzODUyLDEzMzM2IDEzODUyLDEzMDI0IEwgMTM4NTIsMTMwMjQgWiIvPgogICAgPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2IoNTIsMTAxLDE2NCkiIGQ9Ik0gMTM4NTIsMTMwMjQgQyAxMzg1MiwxMjcxMiAxMzY4NiwxMjQ1MiAxMzQ4NywxMjQ1MiAxMzI4OCwxMjQ1MiAxMzEyMiwxMjcxMiAxMzEyMiwxMzAyNCAxMzEyMiwxMzMzNiAxMzI4OCwxMzU5NiAxMzQ4NywxMzU5NiAxMzY4NiwxMzU5NiAxMzg1MiwxMzMzNiAxMzg1MiwxMzAyNCBaIi8+CiAgIDwvZz4KICA8L2c+CiAgPGcgY2xhc3M9ImNvbS5zdW4uc3Rhci5kcmF3aW5nLlRleHRTaGFwZSI+CiAgIDxnIGlkPSJpZDEyIj4KICAgIDxyZWN0IGNsYXNzPSJCb3VuZGluZ0JveCIgc3Ryb2tlPSJub25lIiBmaWxsPSJub25lIiB4PSIxMDUyNSIgeT0iMTI1ODIiIHdpZHRoPSIzMTEwIiBoZWlnaHQ9Ijg3OSIvPgogICAgPHRleHQgY2xhc3M9IlRleHRTaGFwZSI+PHRzcGFuIGNsYXNzPSJUZXh0UGFyYWdyYXBoIiBmb250LWZhbWlseT0iTGliZXJhdGlvbiBTYW5zLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2NHB4IiBmb250LXdlaWdodD0iNDAwIj48dHNwYW4gY2xhc3M9IlRleHRQb3NpdGlvbiIgeD0iMTEyODAiIHk9IjEzMjE1Ij48dHNwYW4gZmlsbD0icmdiKDAsMCwwKSIgc3Ryb2tlPSJub25lIj5QaXBlIDI8L3RzcGFuPjwvdHNwYW4+PC90c3Bhbj48L3RleHQ+CiAgIDwvZz4KICA8L2c+CiAgPGcgY2xhc3M9ImNvbS5zdW4uc3Rhci5kcmF3aW5nLlBvbHlMaW5lU2hhcGUiPgogICA8ZyBpZD0iaWQxMyI+CiAgICA8cmVjdCBjbGFzcz0iQm91bmRpbmdCb3giIHN0cm9rZT0ibm9uZSIgZmlsbD0ibm9uZSIgeD0iNzU3NyIgeT0iMTI5ODQiIHdpZHRoPSIxODU3IiBoZWlnaHQ9IjEzNzkiLz4KICAgIDxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiKDUyLDEwMSwxNjQpIiBzdHJva2Utd2lkdGg9IjUzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNIDk0MDYsMTMwMTEgTCA5MzAyLDEzMDExIi8+CiAgICA8cGF0aCBmaWxsPSJub25lIiBzdHJva2U9InJnYig1MiwxMDEsMTY0KSIgc3Ryb2tlLXdpZHRoPSI1MyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0iTSA5MjM0LDEzMDExIEwgOTEzMCwxMzAxMSIvPgogICAgPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2IoNTIsMTAxLDE2NCkiIHN0cm9rZS13aWR0aD0iNTMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Ik0gOTA2MywxMzAxMSBMIDg5NTgsMTMwMTEiLz4KICAgIDxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiKDUyLDEwMSwxNjQpIiBzdHJva2Utd2lkdGg9IjUzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNIDg4OTEsMTMwMTEgTCA4Nzg2LDEzMDExIi8+CiAgICA8cGF0aCBmaWxsPSJub25lIiBzdHJva2U9InJnYig1MiwxMDEsMTY0KSIgc3Ryb2tlLXdpZHRoPSI1MyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0iTSA4NzE5LDEzMDExIEwgODYxNSwxMzAxMSIvPgogICAgPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2IoNTIsMTAxLDE2NCkiIHN0cm9rZS13aWR0aD0iNTMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Ik0gODU0NywxMzAxMSBMIDg0NDMsMTMwMTEiLz4KICAgIDxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiKDUyLDEwMSwxNjQpIiBzdHJva2Utd2lkdGg9IjUzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNIDgzNzYsMTMwMTEgTCA4MjcxLDEzMDExIi8+CiAgICA8cGF0aCBmaWxsPSJub25lIiBzdHJva2U9InJnYig1MiwxMDEsMTY0KSIgc3Ryb2tlLXdpZHRoPSI1MyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0iTSA4MjA0LDEzMDExIEwgODEwMCwxMzAxMSIvPgogICAgPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2IoNTIsMTAxLDE2NCkiIHN0cm9rZS13aWR0aD0iNTMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Ik0gODAzMiwxMzAxMSBMIDc5MjgsMTMwMTEiLz4KICAgIDxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiKDUyLDEwMSwxNjQpIiBzdHJva2Utd2lkdGg9IjUzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNIDc4NjEsMTMwMTEgTCA3NzU2LDEzMDExIi8+CiAgICA8cGF0aCBmaWxsPSJub25lIiBzdHJva2U9InJnYig1MiwxMDEsMTY0KSIgc3Ryb2tlLXdpZHRoPSI1MyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0iTSA3Njg5LDEzMDExIEwgNzYwNCwxMzAxMSA3NjA0LDEzMDMxIi8+CiAgICA8cGF0aCBmaWxsPSJub25lIiBzdHJva2U9InJnYig1MiwxMDEsMTY0KSIgc3Ryb2tlLXdpZHRoPSI1MyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0iTSA3NjA0LDEzMDk4IEwgNzYwNCwxMzIwMiIvPgogICAgPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2IoNTIsMTAxLDE2NCkiIHN0cm9rZS13aWR0aD0iNTMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Ik0gNzYwNCwxMzI3MCBMIDc2MDQsMTMzNzQiLz4KICAgIDxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiKDUyLDEwMSwxNjQpIiBzdHJva2Utd2lkdGg9IjUzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNIDc2MDQsMTM0NDEgTCA3NjA0LDEzNTQ2Ii8+CiAgICA8cGF0aCBmaWxsPSJub25lIiBzdHJva2U9InJnYig1MiwxMDEsMTY0KSIgc3Ryb2tlLXdpZHRoPSI1MyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0iTSA3NjA0LDEzNjEzIEwgNzYwNCwxMzcxNyIvPgogICAgPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2IoNTIsMTAxLDE2NCkiIHN0cm9rZS13aWR0aD0iNTMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Ik0gNzYwNCwxMzc4NSBMIDc2MDQsMTM4ODkiLz4KICAgIDxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiKDUyLDEwMSwxNjQpIiBzdHJva2Utd2lkdGg9IjUzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNIDc2MDQsMTM5NTcgTCA3NjA0LDE0MDYxIi8+CiAgICA8cGF0aCBmaWxsPSJub25lIiBzdHJva2U9InJnYig1MiwxMDEsMTY0KSIgc3Ryb2tlLXdpZHRoPSI1MyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0iTSA3NjA0LDE0MTI4IEwgNzYwNCwxNDIzMyIvPgogICAgPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2IoNTIsMTAxLDE2NCkiIHN0cm9rZS13aWR0aD0iNTMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Ik0gNzYwNCwxNDMwMCBMIDc2MDQsMTQzMzUiLz4KICAgPC9nPgogIDwvZz4KICA8ZyBjbGFzcz0iY29tLnN1bi5zdGFyLmRyYXdpbmcuTGluZVNoYXBlIj4KICAgPGcgaWQ9ImlkMTQiPgogICAgPHJlY3QgY2xhc3M9IkJvdW5kaW5nQm94IiBzdHJva2U9Im5vbmUiIGZpbGw9Im5vbmUiIHg9Ijc0MTQiIHk9IjE0MzA4IiB3aWR0aD0iMzgxIiBoZWlnaHQ9IjEwNDQiLz4KICAgIDxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiKDUyLDEwMSwxNjQpIiBzdHJva2Utd2lkdGg9IjUzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNIDc2MDQsMTQzMzUgTCA3NjA0LDE1MDc0Ii8+CiAgICA8cGF0aCBmaWxsPSJyZ2IoNTIsMTAxLDE2NCkiIHN0cm9rZT0ibm9uZSIgZD0iTSA3NjA1LDE1MzUxIEwgNzc5NCwxNTA0OSA3NDE1LDE1MDQ5IDc2MDUsMTUzNTEgWiIvPgogICA8L2c+CiAgPC9nPgogIDxnIGNsYXNzPSJjb20uc3VuLnN0YXIuZHJhd2luZy5UZXh0U2hhcGUiPgogICA8ZyBpZD0iaWQxNSI+CiAgICA8cmVjdCBjbGFzcz0iQm91bmRpbmdCb3giIHN0cm9rZT0ibm9uZSIgZmlsbD0ibm9uZSIgeD0iNjAxOSIgeT0iMTUyMzUiIHdpZHRoPSIzMTEwIiBoZWlnaHQ9Ijg3OSIvPgogICAgPHRleHQgY2xhc3M9IlRleHRTaGFwZSI+PHRzcGFuIGNsYXNzPSJUZXh0UGFyYWdyYXBoIiBmb250LWZhbWlseT0iTGliZXJhdGlvbiBTYW5zLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2NHB4IiBmb250LXN0eWxlPSJpdGFsaWMiIGZvbnQtd2VpZ2h0PSI0MDAiPjx0c3BhbiBjbGFzcz0iVGV4dFBvc2l0aW9uIiB4PSI2ODA1IiB5PSIxNTg2OCI+PHRzcGFuIGZpbGw9InJnYigyMDEsMzMsMzApIiBzdHJva2U9Im5vbmUiPnN0ZG91dDwvdHNwYW4+PC90c3Bhbj48L3RzcGFuPjwvdGV4dD4KICAgPC9nPgogIDwvZz4KICA8ZyBjbGFzcz0iY29tLnN1bi5zdGFyLmRyYXdpbmcuVGV4dFNoYXBlIj4KICAgPGcgaWQ9ImlkMTYiPgogICAgPHJlY3QgY2xhc3M9IkJvdW5kaW5nQm94IiBzdHJva2U9Im5vbmUiIGZpbGw9Im5vbmUiIHg9IjE1NDQzIiB5PSI5MTM5IiB3aWR0aD0iMTgxNCIgaGVpZ2h0PSI4NzkiLz4KICAgIDx0ZXh0IGNsYXNzPSJUZXh0U2hhcGUiPjx0c3BhbiBjbGFzcz0iVGV4dFBhcmFncmFwaCIgZm9udC1mYW1pbHk9IkxpYmVyYXRpb24gU2Fucywgc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NjRweCIgZm9udC1zdHlsZT0iaXRhbGljIiBmb250LXdlaWdodD0iNDAwIj48dHNwYW4gY2xhc3M9IlRleHRQb3NpdGlvbiIgeD0iMTU2OTMiIHk9Ijk3NzIiPjx0c3BhbiBmaWxsPSJyZ2IoMjAxLDMzLDMwKSIgc3Ryb2tlPSJub25lIj5zdGRpbjwvdHNwYW4+PC90c3Bhbj48L3RzcGFuPjwvdGV4dD4KICAgPC9nPgogIDwvZz4KICA8ZyBjbGFzcz0iY29tLnN1bi5zdGFyLmRyYXdpbmcuVGV4dFNoYXBlIj4KICAgPGcgaWQ9ImlkMTciPgogICAgPHJlY3QgY2xhc3M9IkJvdW5kaW5nQm94IiBzdHJva2U9Im5vbmUiIGZpbGw9Im5vbmUiIHg9IjE1NDQ0IiB5PSIxMjUzOSIgd2lkdGg9IjIxNTkiIGhlaWdodD0iODc5Ii8+CiAgICA8dGV4dCBjbGFzcz0iVGV4dFNoYXBlIj48dHNwYW4gY2xhc3M9IlRleHRQYXJhZ3JhcGgiIGZvbnQtZmFtaWx5PSJMaWJlcmF0aW9uIFNhbnMsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTY0cHgiIGZvbnQtc3R5bGU9Iml0YWxpYyIgZm9udC13ZWlnaHQ9IjQwMCI+PHRzcGFuIGNsYXNzPSJUZXh0UG9zaXRpb24iIHg9IjE1Njk0IiB5PSIxMzE3MiI+PHRzcGFuIGZpbGw9InJnYigyMDEsMzMsMzApIiBzdHJva2U9Im5vbmUiPnN0ZG91dDwvdHNwYW4+PC90c3Bhbj48L3RzcGFuPjwvdGV4dD4KICAgPC9nPgogIDwvZz4KICA8ZyBjbGFzcz0iY29tLnN1bi5zdGFyLmRyYXdpbmcuTGluZVNoYXBlIj4KICAgPGcgaWQ9ImlkMTgiPgogICAgPHJlY3QgY2xhc3M9IkJvdW5kaW5nQm94IiBzdHJva2U9Im5vbmUiIGZpbGw9Im5vbmUiIHg9IjM4OTQiIHk9Ijk0NDYiIHdpZHRoPSIxOTcyIiBoZWlnaHQ9IjM4MSIvPgogICAgPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2IoNTIsMTAxLDE2NCkiIHN0cm9rZS13aWR0aD0iNTMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Ik0gMzkyMSw5NjM2IEwgNTU4OCw5NjM2Ii8+CiAgICA8cGF0aCBmaWxsPSJyZ2IoNTIsMTAxLDE2NCkiIHN0cm9rZT0ibm9uZSIgZD0iTSA1ODY1LDk2MzUgTCA1NTYzLDk0NDcgNTU2Myw5ODI2IDU4NjUsOTYzNSBaIi8+CiAgIDwvZz4KICA8L2c+CiAgPGcgY2xhc3M9ImNvbS5zdW4uc3Rhci5kcmF3aW5nLkxpbmVTaGFwZSI+CiAgIDxnIGlkPSJpZDE5Ij4KICAgIDxyZWN0IGNsYXNzPSJCb3VuZGluZ0JveCIgc3Ryb2tlPSJub25lIiBmaWxsPSJub25lIiB4PSI1NzgxIiB5PSI5NjA5IiB3aWR0aD0iMzYyOSIgaGVpZ2h0PSI1NSIvPgogICAgPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2IoNTIsMTAxLDE2NCkiIHN0cm9rZS13aWR0aD0iNTMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Ik0gNTgwOCw5NjM2IEwgNTkxMiw5NjM2Ii8+CiAgICA8cGF0aCBmaWxsPSJub25lIiBzdHJva2U9InJnYig1MiwxMDEsMTY0KSIgc3Ryb2tlLXdpZHRoPSI1MyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0iTSA1OTgwLDk2MzYgTCA2MDg0LDk2MzYiLz4KICAgIDxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiKDUyLDEwMSwxNjQpIiBzdHJva2Utd2lkdGg9IjUzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNIDYxNTEsOTYzNiBMIDYyNTYsOTYzNiIvPgogICAgPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2IoNTIsMTAxLDE2NCkiIHN0cm9rZS13aWR0aD0iNTMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Ik0gNjMyMyw5NjM2IEwgNjQyOCw5NjM2Ii8+CiAgICA8cGF0aCBmaWxsPSJub25lIiBzdHJva2U9InJnYig1MiwxMDEsMTY0KSIgc3Ryb2tlLXdpZHRoPSI1MyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0iTSA2NDk1LDk2MzYgTCA2NTk5LDk2MzYiLz4KICAgIDxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiKDUyLDEwMSwxNjQpIiBzdHJva2Utd2lkdGg9IjUzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNIDY2NjcsOTYzNiBMIDY3NzEsOTYzNiIvPgogICAgPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2IoNTIsMTAxLDE2NCkiIHN0cm9rZS13aWR0aD0iNTMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Ik0gNjgzOCw5NjM2IEwgNjk0Myw5NjM2Ii8+CiAgICA8cGF0aCBmaWxsPSJub25lIiBzdHJva2U9InJnYig1MiwxMDEsMTY0KSIgc3Ryb2tlLXdpZHRoPSI1MyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0iTSA3MDEwLDk2MzYgTCA3MTE0LDk2MzYiLz4KICAgIDxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiKDUyLDEwMSwxNjQpIiBzdHJva2Utd2lkdGg9IjUzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNIDcxODIsOTYzNiBMIDcyODYsOTYzNiIvPgogICAgPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2IoNTIsMTAxLDE2NCkiIHN0cm9rZS13aWR0aD0iNTMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Ik0gNzM1Myw5NjM2IEwgNzQ1OCw5NjM2Ii8+CiAgICA8cGF0aCBmaWxsPSJub25lIiBzdHJva2U9InJnYig1MiwxMDEsMTY0KSIgc3Ryb2tlLXdpZHRoPSI1MyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0iTSA3NTI1LDk2MzYgTCA3NjMwLDk2MzYiLz4KICAgIDxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiKDUyLDEwMSwxNjQpIiBzdHJva2Utd2lkdGg9IjUzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNIDc2OTcsOTYzNiBMIDc4MDEsOTYzNiIvPgogICAgPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2IoNTIsMTAxLDE2NCkiIHN0cm9rZS13aWR0aD0iNTMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Ik0gNzg2OSw5NjM2IEwgNzk3Myw5NjM2Ii8+CiAgICA8cGF0aCBmaWxsPSJub25lIiBzdHJva2U9InJnYig1MiwxMDEsMTY0KSIgc3Ryb2tlLXdpZHRoPSI1MyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0iTSA4MDQwLDk2MzYgTCA4MTQ1LDk2MzYiLz4KICAgIDxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiKDUyLDEwMSwxNjQpIiBzdHJva2Utd2lkdGg9IjUzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNIDgyMTIsOTYzNiBMIDgzMTYsOTYzNiIvPgogICAgPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2IoNTIsMTAxLDE2NCkiIHN0cm9rZS13aWR0aD0iNTMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Ik0gODM4NCw5NjM2IEwgODQ4OCw5NjM2Ii8+CiAgICA8cGF0aCBmaWxsPSJub25lIiBzdHJva2U9InJnYig1MiwxMDEsMTY0KSIgc3Ryb2tlLXdpZHRoPSI1MyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0iTSA4NTU2LDk2MzYgTCA4NjYwLDk2MzYiLz4KICAgIDxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiKDUyLDEwMSwxNjQpIiBzdHJva2Utd2lkdGg9IjUzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNIDg3MjcsOTYzNiBMIDg4MzIsOTYzNiIvPgogICAgPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2IoNTIsMTAxLDE2NCkiIHN0cm9rZS13aWR0aD0iNTMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Ik0gODg5OSw5NjM2IEwgOTAwMyw5NjM2Ii8+CiAgICA8cGF0aCBmaWxsPSJub25lIiBzdHJva2U9InJnYig1MiwxMDEsMTY0KSIgc3Ryb2tlLXdpZHRoPSI1MyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0iTSA5MDcxLDk2MzYgTCA5MTc1LDk2MzYiLz4KICAgIDxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiKDUyLDEwMSwxNjQpIiBzdHJva2Utd2lkdGg9IjUzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNIDkyNDIsOTYzNiBMIDkzNDcsOTYzNiIvPgogICA8L2c+CiAgPC9nPgogIDxnIGNsYXNzPSJjb20uc3VuLnN0YXIuZHJhd2luZy5MaW5lU2hhcGUiPgogICA8ZyBpZD0iaWQyMCI+CiAgICA8cmVjdCBjbGFzcz0iQm91bmRpbmdCb3giIHN0cm9rZT0ibm9uZSIgZmlsbD0ibm9uZSIgeD0iOTM4NyIgeT0iOTQ0NiIgd2lkdGg9IjE1MjAiIGhlaWdodD0iMzgxIi8+CiAgICA8cGF0aCBmaWxsPSJub25lIiBzdHJva2U9InJnYig1MiwxMDEsMTY0KSIgc3Ryb2tlLXdpZHRoPSI1MyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0iTSA5NDE0LDk2MzYgTCAxMDYyOSw5NjM2Ii8+CiAgICA8cGF0aCBmaWxsPSJyZ2IoNTIsMTAxLDE2NCkiIHN0cm9rZT0ibm9uZSIgZD0iTSAxMDkwNiw5NjM1IEwgMTA2MDQsOTQ0NyAxMDYwNCw5ODI2IDEwOTA2LDk2MzUgWiIvPgogICA8L2c+CiAgPC9nPgogIDxnIGNsYXNzPSJjb20uc3VuLnN0YXIuZHJhd2luZy5MaW5lU2hhcGUiPgogICA8ZyBpZD0iaWQyMSI+CiAgICA8cmVjdCBjbGFzcz0iQm91bmRpbmdCb3giIHN0cm9rZT0ibm9uZSIgZmlsbD0ibm9uZSIgeD0iMTM4NTkiIHk9IjEyODIxIiB3aWR0aD0iMTY1NCIgaGVpZ2h0PSIzODEiLz4KICAgIDxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiKDUyLDEwMSwxNjQpIiBzdHJva2Utd2lkdGg9IjUzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNIDE1NDg1LDEzMDExIEwgMTQxMzYsMTMwMTEiLz4KICAgIDxwYXRoIGZpbGw9InJnYig1MiwxMDEsMTY0KSIgc3Ryb2tlPSJub25lIiBkPSJNIDEzODU5LDEzMDEyIEwgMTQxNjEsMTMyMDEgMTQxNjEsMTI4MjIgMTM4NTksMTMwMTIgWiIvPgogICA8L2c+CiAgPC9nPgogIDxnIGNsYXNzPSJjb20uc3VuLnN0YXIuZHJhd2luZy5Qb2x5TGluZVNoYXBlIj4KICAgPGcgaWQ9ImlkMjIiPgogICAgPHJlY3QgY2xhc3M9IkJvdW5kaW5nQm94IiBzdHJva2U9Im5vbmUiIGZpbGw9Im5vbmUiIHg9Ijc1NzciIHk9IjY2ODgiIHdpZHRoPSI5ODcwIiBoZWlnaHQ9IjE3MDYiLz4KICAgIDxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiKDAsMCwwKSIgc3Ryb2tlLXdpZHRoPSI1MyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0iTSA3NjA0LDgzNjYgTCA3NjA0LDY3MTUgMTcyNTYsNjcxNSAxNzI1Niw4MDg5Ii8+CiAgICA8cGF0aCBmaWxsPSJyZ2IoMCwwLDApIiBzdHJva2U9Im5vbmUiIGQ9Ik0gMTcyNTcsODM2NiBMIDE3NDQ2LDgwNjQgMTcwNjcsODA2NCAxNzI1Nyw4MzY2IFoiLz4KICAgPC9nPgogIDwvZz4KICA8ZyBjbGFzcz0iY29tLnN1bi5zdGFyLmRyYXdpbmcuVGV4dFNoYXBlIj4KICAgPGcgaWQ9ImlkMjMiPgogICAgPHJlY3QgY2xhc3M9IkJvdW5kaW5nQm94IiBzdHJva2U9Im5vbmUiIGZpbGw9Im5vbmUiIHg9IjEwOTA2IiB5PSI1ODI2IiB3aWR0aD0iMzMwMyIgaGVpZ2h0PSI4NzkiLz4KICAgIDx0ZXh0IGNsYXNzPSJUZXh0U2hhcGUiPjx0c3BhbiBjbGFzcz0iVGV4dFBhcmFncmFwaCIgZm9udC1mYW1pbHk9IkxpYmVyYXRpb24gU2Fucywgc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NjRweCIgZm9udC13ZWlnaHQ9IjQwMCI+PHRzcGFuIGNsYXNzPSJUZXh0UG9zaXRpb24iIHg9IjExMjU1IiB5PSI2NDU5Ij48dHNwYW4gZmlsbD0icmdiKDAsMCwwKSIgc3Ryb2tlPSJub25lIj5mb3JrIC8gZXhlYzwvdHNwYW4+PC90c3Bhbj48L3RzcGFuPjwvdGV4dD4KICAgPC9nPgogIDwvZz4KIDwvZz4KPC9zdmc+" alt="Manager Behavior">
+ </p>
+ <p>
+ The manager must create two pipes and fork the process.
+ </p>
+ <p>
+ The child process has to:
+ </p>
+ <ul>
+ <li>Redirect some sides of the pipes (and close the others).</li>
+ <li>Execute the worker.</li>
+ </ul>
+ <p>The parent process has to:</p>
+ <ul>
+ <li>Close the unused sides of the pipes.</li>
+ <li>Send the contents of the text file to the worker (via pipe 1).</li>
+ <li>Read the response from the worker (via pipe 2).</li>
+ <li>Send the response to <i>stdout</i>.</li>
+ <li>Close the file and the pipes.</li>
+ </ul>
+ <p>
+ As the size of the text file cannot be known at compile time,
+ you have to use a buffer to send the contents of the file and to read the response.
+ </p>
+ <p>
+ To read the text file, you first need to open it with the
+ <a href="https://manpages.debian.org/bookworm/manpages-dev/open.2.en.html">open(2)</a> function.
+ Use the <code class="s">O_RDONLY</code> flag.
+ That function returns a file descriptor that can be used with
+ <a href="https://manpages.debian.org/bookworm/manpages-dev/read.2.en.html">read(2)</a>.
+ </p>
+ <p>
+ To simplify the error management, we consider that the
+ <a href="https://manpages.debian.org/bookworm/manpages-dev/write.2.en.html">write(2)</a>
+ function must return a value equal to the third parameter.
+ If not, you can exit by calling the
+ <a href="https://manpages.debian.org/bookworm/manpages-dev/errx.3.en.html">errx(3)</a> function.
+ For instance:
+ </p>
+ <pre class="language-c"><code class="language-c"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">write</span><span class="token punctuation">(</span>STDOUT_FILENO<span class="token punctuation">,</span> buffer<span class="token punctuation">,</span> size<span class="token punctuation">)</span> <span class="token operator">!=</span> size<span class="token punctuation">)</span>
+    <span class="token function">errx</span><span class="token punctuation">(</span>EXIT_FAILURE<span class="token punctuation">,</span> <span class="token string">"Could not write data to stdout"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+ <p>
+ The expected result is as follows:
+ </p>
+ <pre class="language-none"><code class="language-none">$ ./manager Makefile ./chg_case
+# makefile
+
+cc = gcc
+cflags = -wall -wextra
+ldflags =
+ldlibs =
+
+exe = chg_case manager
+
+all: $(exe)
+
+$(foreach f, $(exe), $(eval $(f):))
+
+.phony: clean
+
+clean:
+	${rm} $(exe)
+
+# end
+$ ./manager Makefile ./chg_case -U
+# MAKEFILE
+
+CC = GCC
+CFLAGS = -WALL -WEXTRA
+LDFLAGS =
+LDLIBS =
+
+EXE = CHG_CASE MANAGER
+
+ALL: $(EXE)
+
+$(FOREACH F, $(EXE), $(EVAL $(F):))
+
+.PHONY: CLEAN
+
+CLEAN:
+	${RM} $(EXE)
+
+# END</code></pre>
+ <p>
+ Note that if the worker fails with an error message,
+ such a message must be displayed on <i>stderr</i>.
+ The error message must be as follows (use
+ <a href="https://manpages.debian.org/bookworm/manpages-dev/err.3.en.html">err(3)</a> or
+ <a href="https://manpages.debian.org/bookworm/manpages-dev/err.3.en.html">errx(3)</a> accordingly).
+ Only these two cases will be taken into account for the grading.
+ </p>
+ <pre class="language-none"><code class="language-none">$ ./manager nofile ./chg_case -U
+manager: Could not open 'nofile': No such file or directory
+$ ./manager Makefile ./chg_case -abcd
+chg_case: Usage: ./chg_case [-l|-U]
+manager: Could not read data from ./chg_case</code></pre>
+ <p>Complete the <code class="s">manager.c</code> file.</p>
+ </main>
+ <footer>
+ <span>
+ <a href="mailto:david.bouchet.epita@gmail.com">David Bouchet</a>
+ </span>
+ </footer>
+ 
+ 
+ 
+</body></html>

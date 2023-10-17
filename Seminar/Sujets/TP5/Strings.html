@@ -1,0 +1,2671 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <meta name="author" content="David Bouchet">
+        <title>Strings</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+          body
+{
+	font-family: sans-serif;
+    background-color: #ffffff;
+	display: flex;
+	flex-direction: column;
+
+	margin: 0px;
+	
+
+}
+
+h2.exercise
+{
+	counter-reset: q;
+}
+
+p.question:before
+{
+	counter-increment: q;
+	content: counter(q) ". ";
+	font-weight: bold;
+}
+
+h3.question:before
+{
+	counter-increment: q;
+	content: counter(q) ". ";
+}
+
+span.date
+{
+	color: #006786;
+}
+
+details
+{
+    transition: height 250ms ease;
+    overflow: hidden;
+}
+
+details:not([open])
+{
+    height: 1.5em;
+}
+
+details[open]
+{
+    height: 5em;
+}
+
+summary
+{
+	color: green;
+}
+
+summary:hover
+{
+  text-decoration: underline;
+	cursor: help;
+}
+
+header
+{
+	position: fixed;
+	width: 100%;
+	margin: auto;
+	background: rgba(0, 0, 0, 0.6);
+	color: white;
+	top: Oem;
+	transition: top 250ms;
+}
+
+header div
+{
+	display: flex;
+	justify-content: space-between;
+	padding: 0.2rem 2rem;
+	font-weight: bold;
+}
+
+header a:link,
+header a:visited
+{
+	color: white;
+	text-decoration: none;
+}
+
+nav
+{
+	margin: 0rem auto 0rem auto;
+	width: 900px;
+	box-sizing: border-box;
+	border-right: dashed 1px black;
+	padding-right: 1rem;
+	border-left: dashed 1px black;
+	padding-left: 1rem;
+	padding-top: 1rem;
+}
+
+
+nav h2,
+nav h3,
+nav h4
+{
+	background: none;
+	border: none;
+	margin: 0px;
+	padding: 0px;
+	font-size: 1.1rem;
+	text-shadow: none;
+	font-weight: normal;
+	line-height: 1.6;
+}
+
+nav h2
+{
+	font-weight: bold;
+	font-size: 1.3rem;
+	margin-top: 0.5rem;
+}
+
+nav h3
+{
+	margin-left: 2rem;
+	font-size: 1.1rem;
+}
+
+nav h4
+{
+	margin-left: 4rem;
+}
+
+nav h2 a:link,
+nav h3 a:link,
+nav h4 a:link,
+nav h2 a:visited,
+nav h3 a:visited,
+nav h4 a:visited
+{
+	color: #006786;
+	text-decoration: none;
+}
+
+nav h2 a:hover,
+nav h3 a:hover,
+nav h4 a:hover
+{
+	color: white;
+	background-color: #006786;
+}
+
+
+.title
+{
+	display: flex;
+	flex-direction: column;
+	background-color: white;
+	justify-content: space-between;
+}
+
+.practical_number
+{
+	margin: 0px;
+	text-align: left;
+	padding-left: 2em;
+	background-color: black;
+	color: white;
+	font-size: 3em;
+	width: 30rem;
+	border-top: solid 0.1rem black;
+	position: relative;
+	top: 2rem;
+	border-radius: 0px 8px 0px 0px;
+}
+
+h1
+{
+	background-color: #2F97B6;
+	margin-top: 0px;
+	color: white;
+	text-shadow: 2px 2px 2px black;
+	/*border-bottom: solid 1px black;*/
+	border-top: solid 0.5rem black;
+	text-align: center;
+	font-size: 3rem;
+	margin: 0px;
+	width: 100%;
+	line-height: 1.2;
+	padding-top: 3rem;
+	padding-bottom: 1rem;
+}
+
+.bonus
+{
+	color: #d00000;
+	font-weight: bold;
+}
+
+mark
+{
+	color: #d00000;
+	background: none;
+	/*font-weight: bold;*/
+}
+
+code.s
+{
+	font-family: monospace;
+	color: darkgoldenrod;
+	font-weight: bold;
+}
+
+mark code.s
+{
+	color: inherit;
+}
+
+
+strong
+{
+	font-style: italic;
+}
+
+p + ul
+{
+	margin-top: -1em;
+}
+
+h2
+{
+	color: #0087B6;
+	/*color: #e03043;*/
+	text-shadow: 1px 1px 1px black;
+	font-size: 2.2rem;
+	border-bottom: solid 0.2rem #0087B6;
+	padding-bottom: 1.5rem;
+	margin-top: 4rem;
+	line-height: 1.2;
+	font-weight: normal;
+}
+
+h3
+{
+	background-color: #2F97B6;
+	color: white;
+	padding: 0.3rem 1rem;
+	font-weight: normal;
+	border-left: solid 0.5rem black;
+	font-size: 1.3rem;
+}
+
+h4
+{
+	color: #0087B6;
+	font-size: 1.3rem;
+}
+
+main
+{
+	box-sizing: border-box;
+	width: 900px;
+	margin: auto;
+	font-size: 1.1rem;
+	line-height: 1.6;
+	text-align: justify;
+	border-right: dashed 1px black;
+	padding-right: 1rem;
+	border-left: dashed 1px black;
+	padding-left: 1rem;
+}
+
+a:link, a:visited
+{
+	color: #ff7000;
+	/*color: darkorange;*/
+	text-decoration: underline;
+}
+
+a:hover
+{
+	text-decoration: underline;
+	background-color: #ff7000;
+	color: white;
+}
+
+div.filename
+{
+	border: solid 1px gray;
+	margin-left: 3.3rem;
+	color: white;
+	background-color: #272822;
+	padding: 0.2rem 1.2rem;
+	border-radius: 0.7rem 0.7rem 0px 0px;
+	font-family: monospace;
+	font-size: 1rem;
+	font-weight: bold;
+	text-align: center;
+	width: 12rem;
+}
+
+pre + div.filename
+{
+	margin-top: 2rem;
+}
+
+table.ls_f,
+table.ls_owner_group_other
+{
+	border-collapse: collapse;
+	margin: 2em auto;
+	border: solid 2px #004076;
+}
+
+table.ls_f th,
+table.ls_owner_group_other th
+{
+	padding: 0.2em 1em;
+	background-color: #2F97B6;
+	color: white;
+	border: solid 1px #004076;
+}
+
+table.ls_f td,
+table.ls_owner_group_other td
+{
+	border: solid 1px #004076;
+	padding: 0.2em 1em;
+}
+
+table.ls_f tr th:first-child,
+table.ls_f tr td:first-child,
+table.ls_owner_group_other tr th,
+table.ls_owner_group_other tr td
+{
+	text-align: center;
+}
+
+table tr th.description,
+table tr td.description
+{
+	text-align: left;
+}
+
+
+kbd
+{
+	font-size: 1.1rem;
+	border-style: solid;
+	border-width: 2px;
+	padding: 2px 7px 3px 7px;
+	margin-left: 1px;
+	margin-right: 4px;
+	border-radius: 5px;
+	background-color: #f0f0f0;
+	box-shadow: 1px 1px 3px black;
+}
+
+img
+{
+	width: 60%;
+	margin-left: 20%;
+	margin-right: 20%;
+}
+
+img.screenshot
+{
+	width: 90%;
+	margin-left: 5%;
+	margin-right: 5%;
+    box-shadow: 3px 3px 8px black;
+}
+
+body > footer
+{
+	display: flex;
+	justify-content: center;
+	background: #2F97B6;
+	color: white;
+	border-top: solid black 1px;
+}
+
+body > footer span
+{
+	margin: 0rem 2rem 0rem 2rem;
+}
+
+body > footer a:visited,
+body > footer a:link
+{
+	color: white;
+	text-decoration: none;
+}
+
+body > footer a:hover
+{
+	background: none;
+	text-decoration: underline;
+}
+
+dt
+{
+	font-weight: bold;
+}
+
+dd
+{
+	margin-bottom: 1rem;
+}
+
+
+@media (max-width: 900px)
+{
+    body
+    {
+        width: auto;
+        margin: 0px;
+        padding: 0px;
+        box-sizing: border-box;
+    }
+	header div
+	{
+		padding: 0rem 1rem;
+	  font-weight: normal;
+	}
+	
+	nav
+	{
+		width: 100%;
+	}
+
+
+    main
+    {
+        width: auto;
+        margin-left: 0px;
+        margin-right: 0px;
+		    text-align: left;
+    }
+	
+    .practical_number
+    {
+        margin: 0px;
+        text-align: center;
+        padding-left: 0em;
+        background-color: black;
+        color: white;
+        font-size: 2.5em;
+        width: 100%;
+        border-top: solid 0.1rem black;
+        position: relative;
+        top: 2rem;
+        border-radius: 0px;
+    }
+	
+	h1
+	{
+		font-size: 2.5em;
+	}
+
+	img
+	{
+		width: 90%;
+		margin-left: 5%;
+		margin-right: 5%;
+	}
+
+}
+
+blockquote
+{
+	border: 1px dotted black;
+	padding: 0.7rem 1.2rem;
+	background-color: #eee;
+	box-shadow: 1px 1px 1px black;
+	font-style: italic;
+}
+
+/* PrismJS 1.14.0
+http://prismjs.com/download.html#themes=prism-okaidia&languages=clike+c+bash+makefile&plugins=line-numbers+normalize-whitespace */
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+ code[class*="language-"],
+pre[class*="language-"] {
+	color: #ffffff;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 0.5em;
+	margin: 0em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: slategray;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+
+pre.line-numbers {
+	position: relative;
+	padding-left: 3.8em;
+	counter-reset: linenumber;
+}
+
+pre.line-numbers > code {
+	position: relative;
+    white-space: inherit;
+}
+
+.line-numbers .line-numbers-rows {
+	position: absolute;
+	pointer-events: none;
+	top: 0;
+	font-size: 100%;
+	left: -3.8em;
+	width: 3em; /* works for line-numbers below 1000 lines */
+	letter-spacing: -1px;
+	border-right: 1px solid #999;
+
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+
+}
+
+	.line-numbers-rows > span {
+		pointer-events: none;
+		display: block;
+		counter-increment: linenumber;
+	}
+
+		.line-numbers-rows > span:before {
+			content: counter(linenumber);
+			color: #999;
+			display: block;
+			padding-right: 0.8em;
+			text-align: right;
+		}
+        </style>
+        <script>
+          /* PrismJS 1.14.0
+http://prismjs.com/download.html#themes=prism-okaidia&languages=clike+c+bash+makefile&plugins=line-numbers+normalize-whitespace */
+var _self = (typeof window !== 'undefined')
+	? window   // if in browser
+	: (
+		(typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope)
+		? self // if in worker
+		: {}   // if in node js
+	);
+
+/**
+ * Prism: Lightweight, robust, elegant syntax highlighting
+ * MIT license http://www.opensource.org/licenses/mit-license.php/
+ * @author Lea Verou http://lea.verou.me
+ */
+
+var Prism = (function(){
+
+// Private helper vars
+var lang = /\blang(?:uage)?-([\w-]+)\b/i;
+var uniqueId = 0;
+
+var _ = _self.Prism = {
+	manual: _self.Prism && _self.Prism.manual,
+	disableWorkerMessageHandler: _self.Prism && _self.Prism.disableWorkerMessageHandler,
+	util: {
+		encode: function (tokens) {
+			if (tokens instanceof Token) {
+				return new Token(tokens.type, _.util.encode(tokens.content), tokens.alias);
+			} else if (_.util.type(tokens) === 'Array') {
+				return tokens.map(_.util.encode);
+			} else {
+				return tokens.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/\u00a0/g, ' ');
+			}
+		},
+
+		type: function (o) {
+			return Object.prototype.toString.call(o).match(/\[object (\w+)\]/)[1];
+		},
+
+		objId: function (obj) {
+			if (!obj['__id']) {
+				Object.defineProperty(obj, '__id', { value: ++uniqueId });
+			}
+			return obj['__id'];
+		},
+
+		// Deep clone a language definition (e.g. to extend it)
+		clone: function (o, visited) {
+			var type = _.util.type(o);
+			visited = visited || {};
+
+			switch (type) {
+				case 'Object':
+					if (visited[_.util.objId(o)]) {
+						return visited[_.util.objId(o)];
+					}
+					var clone = {};
+					visited[_.util.objId(o)] = clone;
+
+					for (var key in o) {
+						if (o.hasOwnProperty(key)) {
+							clone[key] = _.util.clone(o[key], visited);
+						}
+					}
+
+					return clone;
+
+				case 'Array':
+					if (visited[_.util.objId(o)]) {
+						return visited[_.util.objId(o)];
+					}
+					var clone = [];
+					visited[_.util.objId(o)] = clone;
+
+					o.forEach(function (v, i) {
+						clone[i] = _.util.clone(v, visited);
+					});
+
+					return clone;
+			}
+
+			return o;
+		}
+	},
+
+	languages: {
+		extend: function (id, redef) {
+			var lang = _.util.clone(_.languages[id]);
+
+			for (var key in redef) {
+				lang[key] = redef[key];
+			}
+
+			return lang;
+		},
+
+		/**
+		 * Insert a token before another token in a language literal
+		 * As this needs to recreate the object (we cannot actually insert before keys in object literals),
+		 * we cannot just provide an object, we need anobject and a key.
+		 * @param inside The key (or language id) of the parent
+		 * @param before The key to insert before. If not provided, the function appends instead.
+		 * @param insert Object with the key/value pairs to insert
+		 * @param root The object that contains `inside`. If equal to Prism.languages, it can be omitted.
+		 */
+		insertBefore: function (inside, before, insert, root) {
+			root = root || _.languages;
+			var grammar = root[inside];
+
+			if (arguments.length == 2) {
+				insert = arguments[1];
+
+				for (var newToken in insert) {
+					if (insert.hasOwnProperty(newToken)) {
+						grammar[newToken] = insert[newToken];
+					}
+				}
+
+				return grammar;
+			}
+
+			var ret = {};
+
+			for (var token in grammar) {
+
+				if (grammar.hasOwnProperty(token)) {
+
+					if (token == before) {
+
+						for (var newToken in insert) {
+
+							if (insert.hasOwnProperty(newToken)) {
+								ret[newToken] = insert[newToken];
+							}
+						}
+					}
+
+					ret[token] = grammar[token];
+				}
+			}
+
+			// Update references in other language definitions
+			_.languages.DFS(_.languages, function(key, value) {
+				if (value === root[inside] && key != inside) {
+					this[key] = ret;
+				}
+			});
+
+			return root[inside] = ret;
+		},
+
+		// Traverse a language definition with Depth First Search
+		DFS: function(o, callback, type, visited) {
+			visited = visited || {};
+			for (var i in o) {
+				if (o.hasOwnProperty(i)) {
+					callback.call(o, i, o[i], type || i);
+
+					if (_.util.type(o[i]) === 'Object' && !visited[_.util.objId(o[i])]) {
+						visited[_.util.objId(o[i])] = true;
+						_.languages.DFS(o[i], callback, null, visited);
+					}
+					else if (_.util.type(o[i]) === 'Array' && !visited[_.util.objId(o[i])]) {
+						visited[_.util.objId(o[i])] = true;
+						_.languages.DFS(o[i], callback, i, visited);
+					}
+				}
+			}
+		}
+	},
+	plugins: {},
+
+	highlightAll: function(async, callback) {
+		_.highlightAllUnder(document, async, callback);
+	},
+
+	highlightAllUnder: function(container, async, callback) {
+		var env = {
+			callback: callback,
+			selector: 'code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code'
+		};
+
+		_.hooks.run("before-highlightall", env);
+
+		var elements = env.elements || container.querySelectorAll(env.selector);
+
+		for (var i=0, element; element = elements[i++];) {
+			_.highlightElement(element, async === true, env.callback);
+		}
+	},
+
+	highlightElement: function(element, async, callback) {
+		// Find language
+		var language, grammar, parent = element;
+
+		while (parent && !lang.test(parent.className)) {
+			parent = parent.parentNode;
+		}
+
+		if (parent) {
+			language = (parent.className.match(lang) || [,''])[1].toLowerCase();
+			grammar = _.languages[language];
+		}
+
+		// Set language on the element, if not present
+		element.className = element.className.replace(lang, '').replace(/\s+/g, ' ') + ' language-' + language;
+
+		if (element.parentNode) {
+			// Set language on the parent, for styling
+			parent = element.parentNode;
+
+			if (/pre/i.test(parent.nodeName)) {
+				parent.className = parent.className.replace(lang, '').replace(/\s+/g, ' ') + ' language-' + language;
+			}
+		}
+
+		var code = element.textContent;
+
+		var env = {
+			element: element,
+			language: language,
+			grammar: grammar,
+			code: code
+		};
+
+		_.hooks.run('before-sanity-check', env);
+
+		if (!env.code || !env.grammar) {
+			if (env.code) {
+				_.hooks.run('before-highlight', env);
+				env.element.textContent = env.code;
+				_.hooks.run('after-highlight', env);
+			}
+			_.hooks.run('complete', env);
+			return;
+		}
+
+		_.hooks.run('before-highlight', env);
+
+		if (async && _self.Worker) {
+			var worker = new Worker(_.filename);
+
+			worker.onmessage = function(evt) {
+				env.highlightedCode = evt.data;
+
+				_.hooks.run('before-insert', env);
+
+				env.element.innerHTML = env.highlightedCode;
+
+				callback && callback.call(env.element);
+				_.hooks.run('after-highlight', env);
+				_.hooks.run('complete', env);
+			};
+
+			worker.postMessage(JSON.stringify({
+				language: env.language,
+				code: env.code,
+				immediateClose: true
+			}));
+		}
+		else {
+			env.highlightedCode = _.highlight(env.code, env.grammar, env.language);
+
+			_.hooks.run('before-insert', env);
+
+			env.element.innerHTML = env.highlightedCode;
+
+			callback && callback.call(element);
+
+			_.hooks.run('after-highlight', env);
+			_.hooks.run('complete', env);
+		}
+	},
+
+	highlight: function (text, grammar, language) {
+		var env = {
+			code: text,
+			grammar: grammar,
+			language: language
+		};
+		_.hooks.run('before-tokenize', env);
+		env.tokens = _.tokenize(env.code, env.grammar);
+		_.hooks.run('after-tokenize', env);
+		return Token.stringify(_.util.encode(env.tokens), env.language);
+	},
+
+	matchGrammar: function (text, strarr, grammar, index, startPos, oneshot, target) {
+		var Token = _.Token;
+
+		for (var token in grammar) {
+			if(!grammar.hasOwnProperty(token) || !grammar[token]) {
+				continue;
+			}
+
+			if (token == target) {
+				return;
+			}
+
+			var patterns = grammar[token];
+			patterns = (_.util.type(patterns) === "Array") ? patterns : [patterns];
+
+			for (var j = 0; j < patterns.length; ++j) {
+				var pattern = patterns[j],
+					inside = pattern.inside,
+					lookbehind = !!pattern.lookbehind,
+					greedy = !!pattern.greedy,
+					lookbehindLength = 0,
+					alias = pattern.alias;
+
+				if (greedy && !pattern.pattern.global) {
+					// Without the global flag, lastIndex won't work
+					var flags = pattern.pattern.toString().match(/[imuy]*$/)[0];
+					pattern.pattern = RegExp(pattern.pattern.source, flags + "g");
+				}
+
+				pattern = pattern.pattern || pattern;
+
+				// Donâ€™t cache length as it changes during the loop
+				for (var i = index, pos = startPos; i < strarr.length; pos += strarr[i].length, ++i) {
+
+					var str = strarr[i];
+
+					if (strarr.length > text.length) {
+						// Something went terribly wrong, ABORT, ABORT!
+						return;
+					}
+
+					if (str instanceof Token) {
+						continue;
+					}
+
+					if (greedy && i != strarr.length - 1) {
+						pattern.lastIndex = pos;
+						var match = pattern.exec(text);
+						if (!match) {
+							break;
+						}
+
+						var from = match.index + (lookbehind ? match[1].length : 0),
+						    to = match.index + match[0].length,
+						    k = i,
+						    p = pos;
+
+						for (var len = strarr.length; k < len && (p < to || (!strarr[k].type && !strarr[k - 1].greedy)); ++k) {
+							p += strarr[k].length;
+							// Move the index i to the element in strarr that is closest to from
+							if (from >= p) {
+								++i;
+								pos = p;
+							}
+						}
+
+						// If strarr[i] is a Token, then the match starts inside another Token, which is invalid
+						if (strarr[i] instanceof Token) {
+							continue;
+						}
+
+						// Number of tokens to delete and replace with the new match
+						delNum = k - i;
+						str = text.slice(pos, p);
+						match.index -= pos;
+					} else {
+						pattern.lastIndex = 0;
+
+						var match = pattern.exec(str),
+							delNum = 1;
+					}
+
+					if (!match) {
+						if (oneshot) {
+							break;
+						}
+
+						continue;
+					}
+
+					if(lookbehind) {
+						lookbehindLength = match[1] ? match[1].length : 0;
+					}
+
+					var from = match.index + lookbehindLength,
+					    match = match[0].slice(lookbehindLength),
+					    to = from + match.length,
+					    before = str.slice(0, from),
+					    after = str.slice(to);
+
+					var args = [i, delNum];
+
+					if (before) {
+						++i;
+						pos += before.length;
+						args.push(before);
+					}
+
+					var wrapped = new Token(token, inside? _.tokenize(match, inside) : match, alias, match, greedy);
+
+					args.push(wrapped);
+
+					if (after) {
+						args.push(after);
+					}
+
+					Array.prototype.splice.apply(strarr, args);
+
+					if (delNum != 1)
+						_.matchGrammar(text, strarr, grammar, i, pos, true, token);
+
+					if (oneshot)
+						break;
+				}
+			}
+		}
+	},
+
+	tokenize: function(text, grammar, language) {
+		var strarr = [text];
+
+		var rest = grammar.rest;
+
+		if (rest) {
+			for (var token in rest) {
+				grammar[token] = rest[token];
+			}
+
+			delete grammar.rest;
+		}
+
+		_.matchGrammar(text, strarr, grammar, 0, 0, false);
+
+		return strarr;
+	},
+
+	hooks: {
+		all: {},
+
+		add: function (name, callback) {
+			var hooks = _.hooks.all;
+
+			hooks[name] = hooks[name] || [];
+
+			hooks[name].push(callback);
+		},
+
+		run: function (name, env) {
+			var callbacks = _.hooks.all[name];
+
+			if (!callbacks || !callbacks.length) {
+				return;
+			}
+
+			for (var i=0, callback; callback = callbacks[i++];) {
+				callback(env);
+			}
+		}
+	}
+};
+
+var Token = _.Token = function(type, content, alias, matchedStr, greedy) {
+	this.type = type;
+	this.content = content;
+	this.alias = alias;
+	// Copy of the full string this token was created from
+	this.length = (matchedStr || "").length|0;
+	this.greedy = !!greedy;
+};
+
+Token.stringify = function(o, language, parent) {
+	if (typeof o == 'string') {
+		return o;
+	}
+
+	if (_.util.type(o) === 'Array') {
+		return o.map(function(element) {
+			return Token.stringify(element, language, o);
+		}).join('');
+	}
+
+	var env = {
+		type: o.type,
+		content: Token.stringify(o.content, language, parent),
+		tag: 'span',
+		classes: ['token', o.type],
+		attributes: {},
+		language: language,
+		parent: parent
+	};
+
+	if (o.alias) {
+		var aliases = _.util.type(o.alias) === 'Array' ? o.alias : [o.alias];
+		Array.prototype.push.apply(env.classes, aliases);
+	}
+
+	_.hooks.run('wrap', env);
+
+	var attributes = Object.keys(env.attributes).map(function(name) {
+		return name + '="' + (env.attributes[name] || '').replace(/"/g, '&quot;') + '"';
+	}).join(' ');
+
+	return '<' + env.tag + ' class="' + env.classes.join(' ') + '"' + (attributes ? ' ' + attributes : '') + '>' + env.content + '</' + env.tag + '>';
+
+};
+
+if (!_self.document) {
+	if (!_self.addEventListener) {
+		// in Node.js
+		return _self.Prism;
+	}
+
+	if (!_.disableWorkerMessageHandler) {
+		// In worker
+		_self.addEventListener('message', function (evt) {
+			var message = JSON.parse(evt.data),
+				lang = message.language,
+				code = message.code,
+				immediateClose = message.immediateClose;
+
+			_self.postMessage(_.highlight(code, _.languages[lang], lang));
+			if (immediateClose) {
+				_self.close();
+			}
+		}, false);
+	}
+
+	return _self.Prism;
+}
+
+//Get current script and highlight
+var script = document.currentScript || [].slice.call(document.getElementsByTagName("script")).pop();
+
+if (script) {
+	_.filename = script.src;
+
+	if (!_.manual && !script.hasAttribute('data-manual')) {
+		if(document.readyState !== "loading") {
+			if (window.requestAnimationFrame) {
+				window.requestAnimationFrame(_.highlightAll);
+			} else {
+				window.setTimeout(_.highlightAll, 16);
+			}
+		}
+		else {
+			document.addEventListener('DOMContentLoaded', _.highlightAll);
+		}
+	}
+}
+
+return _self.Prism;
+
+})();
+
+if (typeof module !== 'undefined' && module.exports) {
+	module.exports = Prism;
+}
+
+// hack for components to work correctly in node.js
+if (typeof global !== 'undefined') {
+	global.Prism = Prism;
+}
+;
+Prism.languages.clike = {
+	'comment': [
+		{
+			pattern: /(^|[^\\])\/\*[\s\S]*?(?:\*\/|$)/,
+			lookbehind: true
+		},
+		{
+			pattern: /(^|[^\\:])\/\/.*/,
+			lookbehind: true,
+			greedy: true
+		}
+	],
+	'string': {
+		pattern: /(["'])(?:\\(?:\r\n|[\s\S])|(?!\1)[^\\\r\n])*\1/,
+		greedy: true
+	},
+	'class-name': {
+		pattern: /((?:\b(?:class|interface|extends|implements|trait|instanceof|new)\s+)|(?:catch\s+\())[\w.\\]+/i,
+		lookbehind: true,
+		inside: {
+			punctuation: /[.\\]/
+		}
+	},
+	'keyword': /\b(?:if|else|while|do|for|return|in|instanceof|function|new|try|throw|catch|finally|null|break|continue)\b/,
+	'boolean': /\b(?:true|false)\b/,
+	'function': /[a-z0-9_]+(?=\()/i,
+	'number': /\b0x[\da-f]+\b|(?:\b\d+\.?\d*|\B\.\d+)(?:e[+-]?\d+)?/i,
+	'operator': /--?|\+\+?|!=?=?|<=?|>=?|==?=?|&&?|\|\|?|\?|\*|\/|~|\^|%/,
+	'punctuation': /[{}[\];(),.:]/
+};
+
+Prism.languages.c = Prism.languages.extend('clike', {
+	'keyword': /\b(?:_Alignas|_Alignof|_Atomic|_Bool|_Complex|_Generic|_Imaginary|_Noreturn|_Static_assert|_Thread_local|asm|typeof|inline|auto|break|case|char|const|continue|default|do|double|else|enum|extern|float|for|goto|if|int|long|register|return|short|signed|size_t|sizeof|static|struct|switch|typedef|union|unsigned|void|volatile|while)\b/,
+	'operator': /-[>-]?|\+\+?|!=?|<<?=?|>>?=?|==?|&&?|\|\|?|[~^%?*\/]/,
+	'number': /(?:\b0x[\da-f]+|(?:\b\d+\.?\d*|\B\.\d+)(?:e[+-]?\d+)?)[ful]*/i
+});
+
+Prism.languages.insertBefore('c', 'string', {
+	'macro': {
+		// allow for multiline macro definitions
+		// spaces after the # character compile fine with gcc
+		pattern: /(^\s*)#\s*[a-z]+(?:[^\r\n\\]|\\(?:\r\n|[\s\S]))*/im,
+		lookbehind: true,
+		alias: 'property',
+		inside: {
+			// highlight the path of the include statement as a string
+			'string': {
+				pattern: /(#\s*include\s*)(?:<.+?>|("|')(?:\\?.)+?\2)/,
+				lookbehind: true
+			},
+			// highlight macro directives as keywords
+			'directive': {
+				pattern: /(#\s*)\b(?:define|defined|elif|else|endif|error|ifdef|ifndef|if|import|include|line|pragma|undef|using)\b/,
+				lookbehind: true,
+				alias: 'keyword'
+			}
+		}
+	},
+	// highlight predefined macros as constants
+	'constant': /\b(?:__FILE__|__LINE__|__DATE__|__TIME__|__TIMESTAMP__|__func__|EOF|NULL|SEEK_CUR|SEEK_END|SEEK_SET|stdin|stdout|stderr)\b/
+});
+
+delete Prism.languages.c['class-name'];
+delete Prism.languages.c['boolean'];
+
+(function(Prism) {
+	var insideString = {
+		variable: [
+			// Arithmetic Environment
+			{
+				pattern: /\$?\(\([\s\S]+?\)\)/,
+				inside: {
+					// If there is a $ sign at the beginning highlight $(( and )) as variable
+					variable: [{
+							pattern: /(^\$\(\([\s\S]+)\)\)/,
+							lookbehind: true
+						},
+						/^\$\(\(/
+					],
+					number: /\b0x[\dA-Fa-f]+\b|(?:\b\d+\.?\d*|\B\.\d+)(?:[Ee]-?\d+)?/,
+					// Operators according to https://www.gnu.org/software/bash/manual/bashref.html#Shell-Arithmetic
+					operator: /--?|-=|\+\+?|\+=|!=?|~|\*\*?|\*=|\/=?|%=?|<<=?|>>=?|<=?|>=?|==?|&&?|&=|\^=?|\|\|?|\|=|\?|:/,
+					// If there is no $ sign at the beginning highlight (( and )) as punctuation
+					punctuation: /\(\(?|\)\)?|,|;/
+				}
+			},
+			// Command Substitution
+			{
+				pattern: /\$\([^)]+\)|`[^`]+`/,
+				greedy: true,
+				inside: {
+					variable: /^\$\(|^`|\)$|`$/
+				}
+			},
+			/\$(?:[\w#?*!@]+|\{[^}]+\})/i
+		]
+	};
+
+	Prism.languages.bash = {
+		'shebang': {
+			pattern: /^#!\s*\/bin\/bash|^#!\s*\/bin\/sh/,
+			alias: 'important'
+		},
+		'comment': {
+			pattern: /(^|[^"{\\])#.*/,
+			lookbehind: true
+		},
+		'string': [
+			//Support for Here-Documents https://en.wikipedia.org/wiki/Here_document
+			{
+				pattern: /((?:^|[^<])<<\s*)["']?(\w+?)["']?\s*\r?\n(?:[\s\S])*?\r?\n\2/,
+				lookbehind: true,
+				greedy: true,
+				inside: insideString
+			},
+			{
+				pattern: /(["'])(?:\\[\s\S]|\$\([^)]+\)|`[^`]+`|(?!\1)[^\\])*\1/,
+				greedy: true,
+				inside: insideString
+			}
+		],
+		'variable': insideString.variable,
+		// Originally based on http://ss64.com/bash/
+		'function': {
+			pattern: /(^|[\s;|&])(?:!!|!-2|!c|alias|apropos|apt-get|aptitude|aspell|awk|basename|bash|bc|bg|builtin|bzip2|cal|cat|cd|cfdisk|chgrp|chmod|chown|chroot|chkconfig|cksum|clear|cmp|comm|command|cp|cron|crontab|csplit|curl|cut|date|dc|dd|ddrescue|df|diff|diff3|dig|dir|dircolors|dirname|dirs|dmesg|du|egrep|eject|enable|env|ethtool|eval|exec|expand|expect|export|expr|fdformat|fdisk|fg|fgrep|file|find|fmt|fold|format|free|fsck|ftp|fuser|gawk|gcc|getopts|git|grep|groupadd|groupdel|groupmod|groups|gzip|hash|head|help|hg|history|hostname|htop|iconv|id|ifconfig|ifdown|ifup|import|install|info|jobs|join|kill|killall|less|link|ln|locate|logname|logout|look|lpc|lpr|lprint|lprintd|lprintq|lprm|ls|lsof|make|man|mkdir|mkfifo|mkisofs|mknod|more|most|mount|mtools|mtr|mv|mmv|nano|netstat|nice|nl|nohup|notify-send|npm|nslookup|open|op|passwd|paste|pathchk|ping|pkg-config|pkill|popd|pr|printcap|printenv|printf|ps|pushd|pv|pwd|quota|quotacheck|quotactl|ram|rar|rcp|read|readarray|readonly|reboot|rename|renice|remsync|rev|rm|rmdir|rsync|screen|scp|sdiff|sed|seq|service|sftp|shift|shopt|shutdown|sleep|slocate|sort|source|split|ssh|stat|strace|su|sudo|sum|suspend|sync|tail|tar|tee|test|time|timeout|times|touch|top|traceroute|trap|tr|tree|tsort|tty|type|ulimit|umask|umount|unalias|uname|unexpand|uniq|units|unrar|unshar|uptime|useradd|userdel|usermod|users|uuencode|uudecode|v|vdir|vi|vmstat|wait|watch|wc|wget|whereis|which|who|whoami|write|xargs|xdg-open|yes|zip)(?=$|[\s;|&])/,
+			lookbehind: true
+		},
+		'keyword': {
+			pattern: /(^|[\s;|&])(?:let|:|\.|if|then|else|elif|fi|for|break|continue|while|in|case|function|select|do|done|until|echo|exit|return|set|declare)(?=$|[\s;|&])/,
+			lookbehind: true
+		},
+		'boolean': {
+			pattern: /(^|[\s;|&])(?:true|false)(?=$|[\s;|&])/,
+			lookbehind: true
+		},
+		'operator': /&&?|\|\|?|==?|!=?|<<<?|>>|<=?|>=?|=~/,
+		'punctuation': /\$?\(\(?|\)\)?|\.\.|[{}[\];]/
+	};
+
+	var inside = insideString.variable[1].inside;
+	inside.string = Prism.languages.bash.string;
+	inside['function'] = Prism.languages.bash['function'];
+	inside.keyword = Prism.languages.bash.keyword;
+	inside['boolean'] = Prism.languages.bash['boolean'];
+	inside.operator = Prism.languages.bash.operator;
+	inside.punctuation = Prism.languages.bash.punctuation;
+	
+	Prism.languages.shell = Prism.languages.bash;
+})(Prism);
+
+Prism.languages.makefile = {
+	'comment': {
+		pattern: /(^|[^\\])#(?:\\(?:\r\n|[\s\S])|[^\\\r\n])*/,
+		lookbehind: true
+	},
+	'string': {
+		pattern: /(["'])(?:\\(?:\r\n|[\s\S])|(?!\1)[^\\\r\n])*\1/,
+		greedy: true
+	},
+
+	// Built-in target names
+	'builtin': /\.[A-Z][^:#=\s]+(?=\s*:(?!=))/,
+
+	// Targets
+	'symbol': {
+		pattern: /^[^:=\r\n]+(?=\s*:(?!=))/m,
+		inside: {
+			'variable': /\$+(?:[^(){}:#=\s]+|(?=[({]))/
+		}
+	},
+	'variable': /\$+(?:[^(){}:#=\s]+|\([@*%<^+?][DF]\)|(?=[({]))/,
+
+	'keyword': [
+		// Directives
+		/-include\b|\b(?:define|else|endef|endif|export|ifn?def|ifn?eq|include|override|private|sinclude|undefine|unexport|vpath)\b/,
+		// Functions
+		{
+			pattern: /(\()(?:addsuffix|abspath|and|basename|call|dir|error|eval|file|filter(?:-out)?|findstring|firstword|flavor|foreach|guile|if|info|join|lastword|load|notdir|or|origin|patsubst|realpath|shell|sort|strip|subst|suffix|value|warning|wildcard|word(?:s|list)?)(?=[ \t])/,
+			lookbehind: true
+		}
+	],
+	'operator': /(?:::|[?:+!])?=|[|@]/,
+	'punctuation': /[:;(){}]/
+};
+(function () {
+
+	if (typeof self === 'undefined' || !self.Prism || !self.document) {
+		return;
+	}
+
+	/**
+	 * Plugin name which is used as a class name for <pre> which is activating the plugin
+	 * @type {String}
+	 */
+	var PLUGIN_NAME = 'line-numbers';
+	
+	/**
+	 * Regular expression used for determining line breaks
+	 * @type {RegExp}
+	 */
+	var NEW_LINE_EXP = /\n(?!$)/g;
+
+	/**
+	 * Resizes line numbers spans according to height of line of code
+	 * @param {Element} element <pre> element
+	 */
+	var _resizeElement = function (element) {
+		var codeStyles = getStyles(element);
+		var whiteSpace = codeStyles['white-space'];
+
+		if (whiteSpace === 'pre-wrap' || whiteSpace === 'pre-line') {
+			var codeElement = element.querySelector('code');
+			var lineNumbersWrapper = element.querySelector('.line-numbers-rows');
+			var lineNumberSizer = element.querySelector('.line-numbers-sizer');
+			var codeLines = codeElement.textContent.split(NEW_LINE_EXP);
+
+			if (!lineNumberSizer) {
+				lineNumberSizer = document.createElement('span');
+				lineNumberSizer.className = 'line-numbers-sizer';
+
+				codeElement.appendChild(lineNumberSizer);
+			}
+
+			lineNumberSizer.style.display = 'block';
+
+			codeLines.forEach(function (line, lineNumber) {
+				lineNumberSizer.textContent = line || '\n';
+				var lineSize = lineNumberSizer.getBoundingClientRect().height;
+				lineNumbersWrapper.children[lineNumber].style.height = lineSize + 'px';
+			});
+
+			lineNumberSizer.textContent = '';
+			lineNumberSizer.style.display = 'none';
+		}
+	};
+
+	/**
+	 * Returns style declarations for the element
+	 * @param {Element} element
+	 */
+	var getStyles = function (element) {
+		if (!element) {
+			return null;
+		}
+
+		return window.getComputedStyle ? getComputedStyle(element) : (element.currentStyle || null);
+	};
+
+	window.addEventListener('resize', function () {
+		Array.prototype.forEach.call(document.querySelectorAll('pre.' + PLUGIN_NAME), _resizeElement);
+	});
+
+	Prism.hooks.add('complete', function (env) {
+		if (!env.code) {
+			return;
+		}
+
+		// works only for <code> wrapped inside <pre> (not inline)
+		var pre = env.element.parentNode;
+		var clsReg = /\s*\bline-numbers\b\s*/;
+		if (
+			!pre || !/pre/i.test(pre.nodeName) ||
+			// Abort only if nor the <pre> nor the <code> have the class
+			(!clsReg.test(pre.className) && !clsReg.test(env.element.className))
+		) {
+			return;
+		}
+
+		if (env.element.querySelector('.line-numbers-rows')) {
+			// Abort if line numbers already exists
+			return;
+		}
+
+		if (clsReg.test(env.element.className)) {
+			// Remove the class 'line-numbers' from the <code>
+			env.element.className = env.element.className.replace(clsReg, ' ');
+		}
+		if (!clsReg.test(pre.className)) {
+			// Add the class 'line-numbers' to the <pre>
+			pre.className += ' line-numbers';
+		}
+
+		var match = env.code.match(NEW_LINE_EXP);
+		var linesNum = match ? match.length + 1 : 1;
+		var lineNumbersWrapper;
+
+		var lines = new Array(linesNum + 1);
+		lines = lines.join('<span></span>');
+
+		lineNumbersWrapper = document.createElement('span');
+		lineNumbersWrapper.setAttribute('aria-hidden', 'true');
+		lineNumbersWrapper.className = 'line-numbers-rows';
+		lineNumbersWrapper.innerHTML = lines;
+
+		if (pre.hasAttribute('data-start')) {
+			pre.style.counterReset = 'linenumber ' + (parseInt(pre.getAttribute('data-start'), 10) - 1);
+		}
+
+		env.element.appendChild(lineNumbersWrapper);
+
+		_resizeElement(pre);
+
+		Prism.hooks.run('line-numbers', env);
+	});
+
+	Prism.hooks.add('line-numbers', function (env) {
+		env.plugins = env.plugins || {};
+		env.plugins.lineNumbers = true;
+	});
+	
+	/**
+	 * Global exports
+	 */
+	Prism.plugins.lineNumbers = {
+		/**
+		 * Get node for provided line number
+		 * @param {Element} element pre element
+		 * @param {Number} number line number
+		 * @return {Element|undefined}
+		 */
+		getLine: function (element, number) {
+			if (element.tagName !== 'PRE' || !element.classList.contains(PLUGIN_NAME)) {
+				return;
+			}
+
+			var lineNumberRows = element.querySelector('.line-numbers-rows');
+			var lineNumberStart = parseInt(element.getAttribute('data-start'), 10) || 1;
+			var lineNumberEnd = lineNumberStart + (lineNumberRows.children.length - 1);
+
+			if (number < lineNumberStart) {
+				number = lineNumberStart;
+			}
+			if (number > lineNumberEnd) {
+				number = lineNumberEnd;
+			}
+
+			var lineIndex = number - lineNumberStart;
+
+			return lineNumberRows.children[lineIndex];
+		}
+	};
+
+}());
+(function() {
+
+var assign = Object.assign || function (obj1, obj2) {
+	for (var name in obj2) {
+		if (obj2.hasOwnProperty(name))
+			obj1[name] = obj2[name];
+	}
+	return obj1;
+}
+
+function NormalizeWhitespace(defaults) {
+	this.defaults = assign({}, defaults);
+}
+
+function toCamelCase(value) {
+	return value.replace(/-(\w)/g, function(match, firstChar) {
+		return firstChar.toUpperCase();
+	});
+}
+
+function tabLen(str) {
+	var res = 0;
+	for (var i = 0; i < str.length; ++i) {
+		if (str.charCodeAt(i) == '\t'.charCodeAt(0))
+			res += 3;
+	}
+	return str.length + res;
+}
+
+NormalizeWhitespace.prototype = {
+	setDefaults: function (defaults) {
+		this.defaults = assign(this.defaults, defaults);
+	},
+	normalize: function (input, settings) {
+		settings = assign(this.defaults, settings);
+
+		for (var name in settings) {
+			var methodName = toCamelCase(name);
+			if (name !== "normalize" && methodName !== 'setDefaults' &&
+					settings[name] && this[methodName]) {
+				input = this[methodName].call(this, input, settings[name]);
+			}
+		}
+
+		return input;
+	},
+
+	/*
+	 * Normalization methods
+	 */
+	leftTrim: function (input) {
+		return input.replace(/^\s+/, '');
+	},
+	rightTrim: function (input) {
+		return input.replace(/\s+$/, '');
+	},
+	tabsToSpaces: function (input, spaces) {
+		spaces = spaces|0 || 4;
+		return input.replace(/\t/g, new Array(++spaces).join(' '));
+	},
+	spacesToTabs: function (input, spaces) {
+		spaces = spaces|0 || 4;
+		return input.replace(new RegExp(' {' + spaces + '}', 'g'), '\t');
+	},
+	removeTrailing: function (input) {
+		return input.replace(/\s*?$/gm, '');
+	},
+	// Support for deprecated plugin remove-initial-line-feed
+	removeInitialLineFeed: function (input) {
+		return input.replace(/^(?:\r?\n|\r)/, '');
+	},
+	removeIndent: function (input) {
+		var indents = input.match(/^[^\S\n\r]*(?=\S)/gm);
+
+		if (!indents || !indents[0].length)
+			return input;
+
+		indents.sort(function(a, b){return a.length - b.length; });
+
+		if (!indents[0].length)
+			return input;
+
+		return input.replace(new RegExp('^' + indents[0], 'gm'), '');
+	},
+	indent: function (input, tabs) {
+		return input.replace(/^[^\S\n\r]*(?=\S)/gm, new Array(++tabs).join('\t') + '$&');
+	},
+	breakLines: function (input, characters) {
+		characters = (characters === true) ? 80 : characters|0 || 80;
+
+		var lines = input.split('\n');
+		for (var i = 0; i < lines.length; ++i) {
+			if (tabLen(lines[i]) <= characters)
+				continue;
+
+			var line = lines[i].split(/(\s+)/g),
+			    len = 0;
+
+			for (var j = 0; j < line.length; ++j) {
+				var tl = tabLen(line[j]);
+				len += tl;
+				if (len > characters) {
+					line[j] = '\n' + line[j];
+					len = tl;
+				}
+			}
+			lines[i] = line.join('');
+		}
+		return lines.join('\n');
+	}
+};
+
+// Support node modules
+if (typeof module !== 'undefined' && module.exports) {
+	module.exports = NormalizeWhitespace;
+}
+
+// Exit if prism is not loaded
+if (typeof Prism === 'undefined') {
+	return;
+}
+
+Prism.plugins.NormalizeWhitespace = new NormalizeWhitespace({
+	'remove-trailing': true,
+	'remove-indent': true,
+	'left-trim': true,
+	'right-trim': true,
+	/*'break-lines': 80,
+	'indent': 2,
+	'remove-initial-line-feed': false,
+	'tabs-to-spaces': 4,
+	'spaces-to-tabs': 4*/
+});
+
+Prism.hooks.add('before-sanity-check', function (env) {
+	var Normalizer = Prism.plugins.NormalizeWhitespace;
+
+	// Check settings
+	if (env.settings && env.settings['whitespace-normalization'] === false) {
+		return;
+	}
+
+	// Simple mode if there is no env.element
+	if ((!env.element || !env.element.parentNode) && env.code) {
+		env.code = Normalizer.normalize(env.code, env.settings);
+		return;
+	}
+
+	// Normal mode
+	var pre = env.element.parentNode;
+	var clsReg = /\bno-whitespace-normalization\b/;
+	if (!env.code || !pre || pre.nodeName.toLowerCase() !== 'pre' ||
+			clsReg.test(pre.className) || clsReg.test(env.element.className))
+		return;
+
+	var children = pre.childNodes,
+	    before = '',
+	    after = '',
+	    codeFound = false;
+
+	// Move surrounding whitespace from the <pre> tag into the <code> tag
+	for (var i = 0; i < children.length; ++i) {
+		var node = children[i];
+
+		if (node == env.element) {
+			codeFound = true;
+		} else if (node.nodeName === "#text") {
+			if (codeFound) {
+				after += node.nodeValue;
+			} else {
+				before += node.nodeValue;
+			}
+
+			pre.removeChild(node);
+			--i;
+		}
+	}
+
+	if (!env.element.children.length || !Prism.plugins.KeepMarkup) {
+		env.code = before + env.code + after;
+		env.code = Normalizer.normalize(env.code, env.settings);
+	} else {
+		// Preserve markup for keep-markup plugin
+		var html = before + env.element.innerHTML + after;
+		env.element.innerHTML = Normalizer.normalize(html, env.settings);
+		env.code = env.element.textContent;
+	}
+});
+
+}());
+var previous = 0;
+var derniere_position_de_scroll_connue = 0;
+var ticking = false;
+var header = document.querySelector("header");
+
+function faitQuelquechose(old_pos, new_pos) {
+  if (new_pos - old_pos > 0)
+      header.style.top = "-2em";
+  else
+      header.style.top = "0em";
+
+}
+
+window.addEventListener('scroll', function(e) {
+    var old = derniere_position_de_scroll_connue;
+  derniere_position_de_scroll_connue = window.scrollY;
+  if (!ticking) {
+    window.requestAnimationFrame(function() {
+      faitQuelquechose(old, derniere_position_de_scroll_connue);
+      ticking = false;
+    });
+  }
+  ticking = true;
+});
+
+var global_id = 1000
+
+function open_tag(tagName, id)
+{
+    return "<" + tagName.toLowerCase() + "><a href=\"#" + id + "\">";
+}
+
+function close_tag(tagName)
+{
+    return "</a></" + tagName.toLowerCase() + ">";
+}
+
+var nav = document.querySelector("nav");
+
+if (nav !== null)
+{
+    var hs = document.querySelectorAll("h2, h3, h4");
+    var tc = "";
+    var n = 0;
+
+    for (var i = 0; i < hs.length; i++)
+    {
+        var tagName = hs[i].tagName;
+
+        if (hs[i].id == "")
+            hs[i].id = "head_" + global_id++;
+
+        var qn = "";
+        if (hs[i].className == "question")
+            qn = ++n + ". ";
+
+        tc += open_tag(tagName, hs[i].id) + qn + hs[i].innerText + close_tag(tagName);
+    }
+
+    nav.innerHTML = tc;
+}
+        </script>
+    </head>
+      <body>
+          <div class="title">
+              <div class="practical_number">Practical Work #5</div>
+              <h1>Strings</h1>
+          </div>
+          <nav id="table_of_contents"></nav>
+          <main>
+              <h2>Submission</h2>
+              <h3>Due Date</h3>
+              <p>By Monday 11 September 2023 11:42 <b><mark>(three days)</mark></b></p>
+              <h3>Directory Hierarchy</h3>
+              <p>
+                  When you are done, your git repository must contain the following files and directories:
+              </p>
+              <pre class=" language-none"><code class=" language-none">$ tree
+.
+├── AUTHORS
+├── basics
+│   ├── basics.c
+│   ├── basics.h
+│   ├── Makefile
+│   └── test.c
+├── jumbled_text
+│   ├── main.c
+│   ├── Makefile
+│   ├── mix.c
+│   └── mix.h
+├── split_merge
+│   ├── Makefile
+│   ├── split_merge.c
+│   ├── split_merge.h
+│   └── test.c
+└── substrings
+    ├── main.c
+    └── Makefile</code></pre>
+              <p>
+                  The <code class="s">AUTHORS</code> file
+                  must contain the following information.
+              </p>
+              <div class="filename">AUTHORS</div>
+              <pre class="line-numbers language-bash"><code class=" language-bash">First Name
+Family Name
+Login
+Email Address<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+              <p>
+                  The last character of your <code class="s">AUTHORS</code> file must be a newline character.
+              </p>
+              <p>For instance:</p>
+              <div class="filename">AUTHORS</div>
+              <pre class=" language-bash"><code class=" language-bash">$ <span class="token function">cat</span> AUTHORS
+John
+Smith
+john.smith
+john.smith@epita.fr
+$ <span class="token comment"># Command prompt ready for the next command...</span></code></pre>
+              <p>
+                  <mark>
+                      Be careful, if you do not follow all the given instructions,
+                      no point will be given to your answers.
+                  </mark>
+              </p>
+              <h2>Basic String Manipulations</h2>
+              <h3>Provided Code</h3>
+              <h4>The Makefile</h4>
+              <div class="filename">Makefile</div>
+              <pre class=" language-makefile"><code class=" language-makefile"><span class="token comment"># Makefile</span>
+
+CC <span class="token operator">=</span> gcc
+CPPFLAGS <span class="token operator">=</span> -MMD
+CFLAGS <span class="token operator">=</span> -Wall -Wextra
+LDFLAGS <span class="token operator">=</span>
+LDLIBS <span class="token operator">=</span>
+
+SRC <span class="token operator">=</span> test.c basics.c
+OBJ <span class="token operator">=</span> <span class="token variable">$</span><span class="token punctuation">{</span>SRC<span class="token punctuation">:</span>.c<span class="token operator">=</span>.o<span class="token punctuation">}</span>
+DEP <span class="token operator">=</span> <span class="token variable">$</span><span class="token punctuation">{</span>SRC<span class="token punctuation">:</span>.c<span class="token operator">=</span>.d<span class="token punctuation">}</span>
+
+<span class="token symbol">test</span><span class="token punctuation">:</span> <span class="token variable">$</span><span class="token punctuation">{</span>OBJ<span class="token punctuation">}</span>
+
+<span class="token keyword">-include</span> <span class="token variable">$</span><span class="token punctuation">{</span>DEP<span class="token punctuation">}</span>
+
+<span class="token builtin">.PHONY</span><span class="token punctuation">:</span> clean
+
+<span class="token symbol">clean</span><span class="token punctuation">:</span>
+  <span class="token variable">$</span><span class="token punctuation">{</span>RM<span class="token punctuation">}</span> <span class="token variable">$</span><span class="token punctuation">{</span>OBJ<span class="token punctuation">}</span>
+  <span class="token variable">$</span><span class="token punctuation">{</span>RM<span class="token punctuation">}</span> <span class="token variable">$</span><span class="token punctuation">{</span>DEP<span class="token punctuation">}</span>
+  <span class="token variable">$</span><span class="token punctuation">{</span>RM<span class="token punctuation">}</span> test
+
+<span class="token comment"># END</span></code></pre>
+              <h4>The basics.c File</h4>
+              <div class="filename">basics.c</div>
+              <pre class=" language-c"><code class=" language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stddef.h&gt;</span></span>
+
+<span class="token keyword">size_t</span> <span class="token function">str_chr</span><span class="token punctuation">(</span><span class="token keyword">char</span> s<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">char</span> c<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// TODO</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">str_cat</span><span class="token punctuation">(</span><span class="token keyword">char</span> s1<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">char</span> s2<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// TODO</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">str_cmp</span><span class="token punctuation">(</span><span class="token keyword">char</span> s1<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">char</span> s2<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// TODO</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">unsigned</span> <span class="token keyword">int</span> <span class="token function">str_toui</span><span class="token punctuation">(</span><span class="token keyword">char</span> s<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// TODO</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">rm_chr</span><span class="token punctuation">(</span><span class="token keyword">char</span> c<span class="token punctuation">,</span> <span class="token keyword">char</span> s<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// TODO</span>
+<span class="token punctuation">}</span></code></pre>
+              <h4>The basics.h File</h4>
+              <div class="filename">basics.h</div>
+              <pre class=" language-c"><code class=" language-c"><span class="token macro property">#<span class="token directive keyword">pragma</span> once</span>
+
+<span class="token keyword">size_t</span> <span class="token function">str_chr</span><span class="token punctuation">(</span><span class="token keyword">char</span> s<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">char</span> c<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">str_cat</span><span class="token punctuation">(</span><span class="token keyword">char</span> s1<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">char</span> s2<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">str_cmp</span><span class="token punctuation">(</span><span class="token keyword">char</span> s1<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">char</span> s2<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">unsigned</span> <span class="token keyword">int</span> <span class="token function">str_toui</span><span class="token punctuation">(</span><span class="token keyword">char</span> s<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">rm_chr</span><span class="token punctuation">(</span><span class="token keyword">char</span> c<span class="token punctuation">,</span> <span class="token keyword">char</span> s<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+              <h4>The test.c File</h4>
+              <div class="filename">test.c</div>
+              <pre class=" language-c"><code class=" language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;string.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;err.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"basics.h"</span></span>
+
+<span class="token keyword">void</span> <span class="token function">exit_help</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">char</span> help<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span>
+        <span class="token string">"Usage:\n"</span>
+        <span class="token string">"--chr char string\n"</span>
+        <span class="token string">"--cat string1 string2\n"</span>
+        <span class="token string">"--cmp string1 string2\n"</span>
+        <span class="token string">"--toui string\n"</span>
+        <span class="token string">"--rmchr char string"</span><span class="token punctuation">;</span>
+
+    <span class="token function">errx</span><span class="token punctuation">(</span>EXIT_FAILURE<span class="token punctuation">,</span> <span class="token string">"%s"</span><span class="token punctuation">,</span> help<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">test_chr</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>argc <span class="token operator">!=</span> <span class="token number">4</span> <span class="token operator">||</span> <span class="token function">strlen</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token function">exit_help</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%zu\n"</span><span class="token punctuation">,</span> <span class="token function">str_chr</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span> argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">test_cat</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>argc <span class="token operator">!=</span> <span class="token number">4</span><span class="token punctuation">)</span>
+        <span class="token function">exit_help</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">size_t</span> len1 <span class="token operator">=</span> <span class="token function">strlen</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">size_t</span> len2 <span class="token operator">=</span> <span class="token function">strlen</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">char</span><span class="token operator">*</span> str1 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span>len1 <span class="token operator">+</span> len2 <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">strcpy</span><span class="token punctuation">(</span>str1<span class="token punctuation">,</span> argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">str_cat</span><span class="token punctuation">(</span>str1<span class="token punctuation">,</span> argv<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%s\n"</span><span class="token punctuation">,</span> str1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">free</span><span class="token punctuation">(</span>str1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">test_cmp</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>argc <span class="token operator">!=</span> <span class="token number">4</span><span class="token punctuation">)</span>
+        <span class="token function">exit_help</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">int</span> result <span class="token operator">=</span> <span class="token function">str_cmp</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> argv<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">char</span> cmp<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>result <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        cmp <span class="token operator">=</span> <span class="token string">'&lt;'</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>result <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        cmp <span class="token operator">=</span> <span class="token string">'='</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span>
+        cmp <span class="token operator">=</span> <span class="token string">'&gt;'</span><span class="token punctuation">;</span>
+
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\"%s\" %c \"%s\"\n"</span><span class="token punctuation">,</span> argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> cmp<span class="token punctuation">,</span> argv<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">test_atoui</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>argc <span class="token operator">!=</span> <span class="token number">3</span><span class="token punctuation">)</span>
+        <span class="token function">exit_help</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%u\n"</span><span class="token punctuation">,</span> <span class="token function">str_toui</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">test_rmchr</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>argc <span class="token operator">!=</span> <span class="token number">4</span> <span class="token operator">||</span> <span class="token function">strlen</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token function">exit_help</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">char</span><span class="token operator">*</span> str <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token function">strlen</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">strcpy</span><span class="token punctuation">(</span>str<span class="token punctuation">,</span> argv<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">rm_chr</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> str<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%s\n"</span><span class="token punctuation">,</span> str<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">free</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>argc <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token function">exit_help</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">strcmp</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">"--chr"</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token function">test_chr</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">strcmp</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">"--cat"</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token function">test_cat</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">strcmp</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">"--cmp"</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token function">test_cmp</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">strcmp</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">"--toui"</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token function">test_atoui</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">strcmp</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">"--rmchr"</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token function">test_rmchr</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span>
+        <span class="token function">exit_help</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> EXIT_SUCCESS<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+              <h3>Implementation</h3>
+              <p>
+                  You have to complete the five functions in the <code class="s">basics.c</code> file.
+                  You are not allowed to:
+              </p>
+              <ul>
+                  <li>Modify any other files.</li>
+                  <li>Include any other files.</li>
+              </ul>
+              <p>
+                  At the beginning, do not hesitate to comment out some parts of the given files
+                  that are relative to the functions you have not started yet.
+                  That way, you will be able to compile and test the function you are writing
+                  (without any warnings or errors).
+                  Be careful, do not forget to uncomment them before you commit the final version of your code
+                  (because you are allowed to modify <code class="s">basics.c</code> only).
+              </p>
+              <h4>The str_chr() Function</h4>
+              <pre class=" language-c"><code class=" language-c"><span class="token keyword">size_t</span> <span class="token function">str_chr</span><span class="token punctuation">(</span><span class="token keyword">char</span> s<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">char</span> c<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+              <p>
+                  This function returns the index of
+                  the first occurrence of the <var>c</var> character in the <var>s</var> string.
+                  If <var>c</var> is not found, it returns the index of the null character.
+              </p>
+              <p>
+                  To test your function, you can execute the following commands.
+              </p>
+              <pre class=" language-none"><code class=" language-none">$ ./test --chr o "Hello World"
+4
+$ ./test --chr e "Hello World"
+1
+$ ./test --chr w "Hello World"
+11
+$ ./test --chr W "Hello World"
+6</code></pre>
+              <h4>The str_cat() Function</h4>
+              <pre class=" language-c"><code class=" language-c"><span class="token keyword">void</span> <span class="token function">str_cat</span><span class="token punctuation">(</span><span class="token keyword">char</span> s1<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">char</span> s2<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+              <p>
+                  This function appends the <var>s2</var> string to the <var>s1</var> string (null character included).
+                  We assume that <var>s1</var> and <var>s2</var> are not empty
+                  and that <var>s1</var> has enough space to contain the result.
+              </p>
+              <p>
+                  To test your function, you can execute the following commands.
+              </p>
+              <pre class=" language-none"><code class=" language-none">$ ./test --cat Hello World
+HelloWorld
+$ ./test --cat "Hello, " "World!"
+Hello, World!</code></pre>
+              <h4>The str_cmp() Function</h4>
+              <pre class=" language-c"><code class=" language-c"><span class="token keyword">int</span> <span class="token function">str_cmp</span><span class="token punctuation">(</span><span class="token keyword">char</span> s1<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">char</span> s2<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+              <p>
+                  This function compares the <var>s1</var> and <var>s2</var> strings lexicographically.
+                  We assume that <var>s1</var> and <var>s2</var> are not empty.
+                  It returns:
+              </p>
+              <ul>
+                  <li>A negative integer if <var>s1</var> is less than <var>s2</var>.</li>
+                  <li>Zero if <var>s1</var> is equal to <var>s2</var>.</li>
+                  <li>A positive integer if <var>s1</var> is greater than <var>s2</var>.</li>
+              </ul>
+              <p>
+                  In fact, the return value is the difference between
+                  the first pair of characters that differ in the strings.
+              </p>
+              <p>
+                  For instance, if <var>s1 = "pop<b>c</b>orn"</var> and <var>s2 = "pop<b>u</b>lar"</var>,
+                  the first pair of characters that differ is <var>'c'</var> and <var>'u'</var>.
+                  So, the return value will be the ASCII code of <var>'c'</var> (99)
+                  minus the ASCII code of <var>'u'</var> (117).
+                  As the result is negative (-18), <var>s1</var> is less than <var>s2</var>.
+              </p>
+              <p>
+                  To test your function, you can execute the following commands.
+              </p>
+              <pre class=" language-none"><code class=" language-none">$ ./test --cmp popcorn popular
+"popcorn" &lt; "popular"
+$ ./test --cmp hello hello
+"hello" = "hello"
+$ ./test --cmp A a
+"A" &lt; "a"
+$ ./test --cmp B a
+"B" &lt; "a"
+$ ./test --cmp 123 124
+"123" &lt; "124"
+$ ./test --cmp 1235 124
+"1235" &lt; "124"
+$ ./test --cmp 124 1235
+"124" &gt; "1235"
+$ ./test --cmp abcd abcde
+"abcd" &lt; "abcde"</code></pre>
+              <h4>The str_toui() Function</h4>
+              <pre class=" language-c"><code class=" language-c"><span class="token keyword">unsigned</span> <span class="token keyword">int</span> <span class="token function">str_toui</span><span class="token punctuation">(</span><span class="token keyword">char</span> s<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+              <p>
+                  This function converts the <var>s</var> string into an unsigned integer.
+                  We assume that the string is always valid.
+                  That is, it contains an integer that can be converted.
+              </p>
+              <p>
+                  To test your function, you can execute the following commands.
+              </p>
+              <pre class=" language-none"><code class=" language-none">$ ./test --toui 0
+0
+$ ./test --toui 1
+1
+$ ./test --toui 0
+0
+$ ./test --toui 500
+500
+$ ./test --toui 65536
+65536
+$ ./test --toui 1000000
+1000000
+$ ./test --toui 1000000000
+1000000000
+$ ./test --toui 4294967295
+4294967295</code></pre>
+              <h4>The str_rmchr() Function</h4>
+              <pre class=" language-c"><code class=" language-c"><span class="token keyword">void</span> <span class="token function">rm_chr</span><span class="token punctuation">(</span><span class="token keyword">char</span> c<span class="token punctuation">,</span> <span class="token keyword">char</span> s<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+              <p>
+                  This function removes the <var>c</var> character from the <var>s</var> string.
+                  The <var>s</var> string is modified in place (do not create a new string).
+                  Note that the null character may need to be moved.
+              </p>
+              <p>
+                  To test your function, you can execute the following commands.
+              </p>
+              <pre class=" language-none"><code class=" language-none">$ ./test --rmchr o "Hello World"
+Hell Wrld
+$ ./test --rmchr " " "An apple a day keeps the doctor away"
+Anappleadaykeepsthedoctoraway
+$ ./test --rmchr 0 000040000000000000000200000
+42</code></pre>
+              <h2>Splitting and Merging Strings</h2>
+              <h3>Provided Code</h3>
+              <h4>The Makefile</h4>
+              <div class="filename">Makefile</div>
+              <pre class=" language-makefile"><code class=" language-makefile"><span class="token comment"># Makefile</span>
+
+CC <span class="token operator">=</span> gcc
+CPPFLAGS <span class="token operator">=</span> -MMD
+CFLAGS <span class="token operator">=</span> -Wall -Wextra
+LDFLAGS <span class="token operator">=</span>
+LDLIBS <span class="token operator">=</span>
+
+SRC <span class="token operator">=</span> test.c split_merge.c
+OBJ <span class="token operator">=</span> <span class="token variable">$</span><span class="token punctuation">{</span>SRC<span class="token punctuation">:</span>.c<span class="token operator">=</span>.o<span class="token punctuation">}</span>
+DEP <span class="token operator">=</span> <span class="token variable">$</span><span class="token punctuation">{</span>SRC<span class="token punctuation">:</span>.c<span class="token operator">=</span>.d<span class="token punctuation">}</span>
+
+<span class="token symbol">test</span><span class="token punctuation">:</span> <span class="token variable">$</span><span class="token punctuation">{</span>OBJ<span class="token punctuation">}</span>
+
+<span class="token keyword">-include</span> <span class="token variable">$</span><span class="token punctuation">{</span>DEP<span class="token punctuation">}</span>
+
+<span class="token builtin">.PHONY</span><span class="token punctuation">:</span> clean
+
+<span class="token symbol">clean</span><span class="token punctuation">:</span>
+  <span class="token variable">$</span><span class="token punctuation">{</span>RM<span class="token punctuation">}</span> <span class="token variable">$</span><span class="token punctuation">{</span>OBJ<span class="token punctuation">}</span>
+  <span class="token variable">$</span><span class="token punctuation">{</span>RM<span class="token punctuation">}</span> <span class="token variable">$</span><span class="token punctuation">{</span>DEP<span class="token punctuation">}</span>
+  <span class="token variable">$</span><span class="token punctuation">{</span>RM<span class="token punctuation">}</span> test
+
+<span class="token comment"># END</span></code></pre>
+              <h4>The split_merge.c File</h4>
+              <div class="filename">split_merge.c</div>
+              <pre class=" language-c"><code class=" language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stddef.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"split_merge.h"</span></span>
+
+<span class="token keyword">void</span> <span class="token function">split</span><span class="token punctuation">(</span><span class="token keyword">char</span> s<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">char</span> words<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span>MAX_CHAR<span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// TODO</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">merge</span><span class="token punctuation">(</span><span class="token keyword">char</span> s<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">size_t</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// TODO</span>
+<span class="token punctuation">}</span></code></pre>
+              <h4>The split_merge.h File</h4>
+              <div class="filename">split_merge.h</div>
+              <pre class=" language-c"><code class=" language-c"><span class="token macro property">#<span class="token directive keyword">pragma</span> once</span>
+
+<span class="token macro property">#<span class="token directive keyword">define</span> MAX_WORD 20</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> MAX_CHAR 20</span>
+
+<span class="token keyword">void</span> <span class="token function">split</span><span class="token punctuation">(</span><span class="token keyword">char</span> s<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">char</span> words<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span>MAX_CHAR<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">merge</span><span class="token punctuation">(</span><span class="token keyword">char</span> s<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">size_t</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+              <h4>The test.c File</h4>
+              <div class="filename">test.c</div>
+              <pre class=" language-c"><code class=" language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;string.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;err.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"split_merge.h"</span></span>
+
+<span class="token keyword">void</span> <span class="token function">exit_help</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">char</span> help<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span>
+        <span class="token string">"Usage:\n"</span>
+        <span class="token string">"--split string\n"</span>
+        <span class="token string">"--merge string1 string2 ..."</span><span class="token punctuation">;</span>
+
+    <span class="token function">errx</span><span class="token punctuation">(</span>EXIT_FAILURE<span class="token punctuation">,</span> <span class="token string">"%s"</span><span class="token punctuation">,</span> help<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">test_split</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>argc <span class="token operator">!=</span> <span class="token number">3</span><span class="token punctuation">)</span>
+        <span class="token function">exit_help</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">char</span> words<span class="token punctuation">[</span>MAX_WORD<span class="token punctuation">]</span><span class="token punctuation">[</span>MAX_CHAR<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+    <span class="token function">split</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> words<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">size_t</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> words<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"word %02zu: %s\n"</span><span class="token punctuation">,</span> i<span class="token punctuation">,</span> words<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">test_merge</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>argc <span class="token operator">&lt;</span> <span class="token number">2</span><span class="token punctuation">)</span>
+        <span class="token function">exit_help</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">char</span> str<span class="token punctuation">[</span>MAX_WORD <span class="token operator">*</span> MAX_CHAR<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+    <span class="token function">merge</span><span class="token punctuation">(</span>str<span class="token punctuation">,</span> argc<span class="token punctuation">,</span> argv<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%s\n"</span><span class="token punctuation">,</span> str<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>argc <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token function">exit_help</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">strcmp</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">"--split"</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token function">test_split</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">strcmp</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">"--merge"</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token function">test_merge</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span>
+        <span class="token function">exit_help</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> EXIT_SUCCESS<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+              <h3>Implementation</h3>
+              <p>
+                  You have to complete the two functions in the <code class="s">split_merge.c</code> file.
+                  You are not allowed to:
+              </p>
+              <ul>
+                  <li>Modify any other files.</li>
+                  <li>Include any other files.</li>
+              </ul>
+              <p>
+                  As in the previous section, do not hesitate to comment out some parts of the given files
+                  that are relative to the functions you have not started yet.
+                  That way, you will be able to compile and test the function you are writing
+                  (without any warnings or errors).
+                  Be careful, do not forget to uncomment them before you commit the final version of your code
+                  (because you are allowed to modify <code class="s">split_merge.c</code> only).
+              </p>
+              <h4 id="splitting">The split() Function</h4>
+              <pre class=" language-c"><code class=" language-c"><span class="token keyword">void</span> <span class="token function">split</span><span class="token punctuation">(</span><span class="token keyword">char</span> s<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">char</span> words<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span>MAX_CHAR<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+              <p>
+                  This function splits the <var>s</var> string by the space character.
+                  We assume that <var>s</var> is not empty.
+                  The substrings (words) must be stored in the <var>words</var> array of strings.
+                  To mark the end of the array,
+                  the last substring must be an empty string.
+                  An empty string contains the null character only.
+              </p>
+              <p>
+                  We assume that the <var>s</var> string is made up of simple words
+                  separated by a single space character.
+                  The <var>words</var> array can contain as many words as <code class="s">MAX_WORD</code>
+                  (the empty string included)
+                  and each word can contain as many characters as <code class="s">MAX_CHAR</code> (the null character included).
+                  We assume that <var>s</var> can be split so that <var>words</var> can store the result.
+                  The <code class="s">MAX_WORD</code> and <code class="s">MAX_CHAR</code> constants
+                  are defined in <code class="s">split_merge.h</code>.
+              </p>
+              <p>
+                  To test your function, you can execute the following commands.
+              </p>
+              <pre class=" language-none"><code class=" language-none">$ ./test --split "Hello World"
+word 00: Hello
+word 01: World
+$ ./test --split "An apple a day keeps the doctor away"
+word 00: An
+word 01: apple
+word 02: a
+word 03: day
+word 04: keeps
+word 05: the
+word 06: doctor
+word 07: away
+$ ./test --split "NoSpace"
+word 00: NoSpace</code></pre>
+              <h4>The merge() Function</h4>
+              <pre class=" language-c"><code class=" language-c"><span class="token keyword">void</span> <span class="token function">merge</span><span class="token punctuation">(</span><span class="token keyword">char</span> s<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">size_t</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+              <p>
+                  This function is the opposite of the <code class="s">split()</code> function.
+                  It merges all the strings in the <var>argv</var> array into the <var>s</var> string.
+                  We assume that <var>argv</var> contains at least one string that is not empty.
+              </p>
+              <p>
+                  The <var>argc</var> and <var>argv</var> parameters are those of the main function.
+                  Note that <var>argv</var> is a pointer to a pointer to a char
+                  but it acts as an array of strings.
+              </p>
+              <p>
+                  For example, for the following command:
+              </p>
+              <pre class=" language-none"><code class=" language-none">$ ./test --merge Hello World !</code></pre>
+              <p>
+                  We have:
+              </p>
+              <ul>
+                  <li><var>argc</var> = 5</li>
+                  <li><var>argv[0]</var> = <code class="s">"./test"</code></li>
+                  <li><var>argv[1]</var> = <code class="s">"--merge"</code></li>
+                  <li><var>argv[2]</var> = <code class="s">"Hello"</code></li>
+                  <li><var>argv[3]</var> = <code class="s">"World"</code></li>
+                  <li><var>argv[4]</var> = <code class="s">"!"</code></li>
+              </ul>
+              <p>
+                  So, in the above example, you should merge from <var>argv[2]</var> to <var>argv[4]</var>.
+              </p>
+              <p>
+                  Also, note that:
+              </p>
+              <ul>
+                  <li><var>argv[2][0]</var> = <code class="s">'H'</code></li>
+                  <li><var>argv[2][1]</var> = <code class="s">'e'</code></li>
+                  <li><var>argv[2][2]</var> = <code class="s">'l'</code></li>
+                  <li><var>argv[2][3]</var> = <code class="s">'l'</code></li>
+                  <li><var>argv[2][4]</var> = <code class="s">'o'</code></li>
+                  <li><var>argv[2][5]</var> = 0</li>
+              </ul>
+              <p>
+                  The <var>s</var> string can contain
+                  as many characters as (<code class="s">MAX_WORD</code> x <code class="s">MAX_CHAR</code>).
+                  So, we assume that the strings in the command line
+                  can be merged so that <var>s</var> can store the result.
+              </p>
+              <p>
+                  To test your function, you can execute the following commands.
+              </p>
+              <pre class=" language-none"><code class=" language-none">$ ./test --merge Hello World !
+HelloWorld!
+$ ./test --merge "Hello " "World" !
+Hello World!
+$ ./test --merge ab cd efgh ijkl m nopqrstuvwxyz
+abcdefghijklmnopqrstuvwxyz
+$ ./test --merge "An apple" " a day " "keep the doctor " "away"
+An apple a day keep the doctor away</code></pre>
+              <h2>Substrings</h2>
+              <p>
+                  In this section, you will write a program that has
+                  the following behavior.
+              </p>
+              <pre class=" language-none"><code class=" language-none">$ ./main "Hello World!" World
+Hello World!
+      ^
+$ ./main "Hello World!" Warld
+Not Found!
+$ ./main "Hello World!" "o W"
+Hello World!
+    ^
+$ ./main "Hello World!" "ld"
+Hello World!
+         ^
+$ ./main "Hello World!" o
+Hello World!
+    ^
+$ ./main "Sweet Child O' Mine" child
+Not Found!
+$ ./main "Sweet Child O' Mine" Child
+Sweet Child O' Mine
+      ^
+$ ./main
+main: Usage: str1 str2
+$ echo $?
+1</code></pre>
+              <p>
+                  Additional information:
+              </p>
+              <ul>
+                  <li>
+                      We can pass two parameters to your program.
+                      They are both strings of characters.
+                  </li>
+                  <li>
+                      The two strings must not contain accented letters.
+                  </li>
+                  <li>
+                      Your program must find if the second string
+                      is contained in the first one.
+                  </li>
+                  <li>
+                      If the second string is not found,
+                      your program must print <code>"Not found!"</code>.
+                  </li>
+                  <li>
+                      If the second string is found,
+                      your program must print the first string
+                      and the <code class="s">^</code> symbol
+                      just under the first occurrence of the second string.
+                  </li>
+                  <li>
+                      Your program must be case-sensitive.
+                  </li>
+                  <li>
+                      When the number of strings passed as parameters
+                      is different from two,
+                      your program must print an error message
+                      and exit with the error code 1.
+                      To do so, you can use the <code class="s">errx()</code>
+                      function of the standard library.
+                      To check the return code of your program you can
+                      use the following command:
+                      <code class="s">echo $?</code>
+                  </li>
+                  <li>
+                      Your program will be made up of two files:
+                      <ul>
+                          <li>
+                              <code class="s">main.c</code>
+                              that contains all the functions of your program.
+                              You are free to write all the functions you need.
+                          </li>
+                          <li>
+                              <code class="s">Makefile</code>
+                              that compiles your <code class="s"></code>
+                              file and generates the executable file.
+                          </li>
+                      </ul>
+                  </li>
+                  <li>
+                      <mark>
+                          You are not allowed to include
+                          <code class="s">&lt;string.h&gt;</code>
+                      </mark>
+                  </li>
+              </ul>
+              <h2>Jumbled Text</h2>
+              <p>
+                  Can you read this?
+              </p>
+              <blockquote>
+                  Accroidng to a rseaecrehr at Cmarbdige Uinevsrtiy,
+                  it deosn't mtaetr in waht odrer the lteetrs in a wrod are,
+                  the olny ipmroatnt tihng is taht the frist and
+                  lsat lteetrs be at the rgiht palce.
+                  The rset can be a ttoal mses and you can sitll raed it wtiohut porlbem.
+                  Tihs is bceuase the hmuan mnid deos not raed eevry
+                  lteetr by istlef but the wrod as a wohle.
+              </blockquote>
+              <p>
+                  You were certainly able to read it.
+                  If not, here is the correct version:
+              </p>
+              <blockquote id="jumble">
+                  According to a researcher at Cambridge University,
+                  it doesn't matter in what order the letters in a word are,
+                  the only important thing is that the first and
+                  last letters be at the right place.
+                  The rest can be a total mess and you can still read it without problem.
+                  This is because the human mind does not read every
+                  letter by itself but the word as a whole.
+              </blockquote>
+              <p>
+                  In this section, you will write a program that generates jumbled text.
+                  That is to say, it will keep only the first and last letters
+                  of each word in the right place and jumble the other letters up.
+              </p>
+              <p>
+                  Your program will be made up of four files:
+                  <code class="s">main.c</code>,
+                  <code class="s">mix.c</code>,
+                  <code class="s">mix.h</code>,
+                  <code class="s">Makefile</code>.
+              </p>
+              <p>
+                  About the <code class="s">main.c</code> file.
+              </p>
+              <ul>
+                  <li>
+                      It will contain your main function.
+                  </li>
+                  <li>
+                      It must not contain any other functions than the main function.
+                  </li>
+                  <li>
+                      It can contain some include directives.
+                  </li>
+              </ul>
+              <p>
+                  About the <code class="s">mix.c</code> file.
+              </p>
+              <ul>
+                  <li>
+                      It will contain all your functions (but for the main function).
+                  </li>
+                  <li>
+                      You are free to write all the functions you need.
+                  </li>
+                  <li>
+                      It must contain a <code class="s">mix()</code> function
+                      that will be called from the main function
+                      (see below for its prototype).
+                  </li>
+              </ul>
+              <p>
+                  About the <code class="s">mix.h</code> file.
+              </p>
+              <ul>
+                  <li>
+                      It is the header of the <code class="s">mix.c</code> file.
+                  </li>
+                  <li>
+                      It is used to export the <code class="s">mix()</code> function only.
+                  </li>
+              </ul>
+              <p>
+                  About the <i>Makefile</i>.
+              </p>
+              <ul>
+                  <li>Make it simple.</li>
+                  <li>It must compile your source files and generate the executable file.</li>
+              </ul>
+              <p>
+                  Prototype of the <code class="s">mix()</code> function:
+              </p>
+              <pre class=" language-c"><code class=" language-c"><span class="token keyword">void</span> <span class="token function">mix</span><span class="token punctuation">(</span><span class="token keyword">char</span> s<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+              <p>
+                  The <code class="s">mix()</code> function converts a string of characters
+                  into jumble text.
+              </p>
+              <ul>
+                  <li>
+                      <code class="s">s</code>:
+                      Holds a string of characters to be converted into jumbled text.
+                  </li>
+              </ul>
+              <p>
+                  This function must modify the string passed as a parameter
+                  (the original string will be lost).
+                  This original string can contain:
+              </p>
+              <ul>
+                  <li>small letters <b>without accents</b>,</li>
+                  <li>capital letters <b>without accents</b>,</li>
+                  <li>digits,</li>
+                  <li>spaces,</li>
+                  <li>punctuation marks.</li>
+              </ul>
+              <p>
+                  Characters that are not letters will be called separators.
+                  Two words are separated by at least one separator.
+                  Only the following separators are allowed:
+              </p>
+              <pre class=" language-c"><code class=" language-c"><span class="token keyword">char</span> separator<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">" ,;:!?./%*$=+)@_-('&amp;1234567890\"\r\n"</span></code></pre>
+              <p>
+                  When mixing the letters of a word, you have to follow the
+                  instructions below:
+              </p>
+              <ul>
+                  <li>
+                      The first letter of a word does not change.
+                  </li>
+                  <li>
+                      The last letter of a word does not change.
+                  </li>
+                  <li>
+                      If the length of a word is lower than or equal to three,
+                      the word does not change.
+                  </li>
+                  <li>
+                      Two letters of a word are swapped by pair successively
+                      from the second letter to the last but one
+                      (for odd numbers, the last but one letter does not change).
+                      For instance:
+                      <ul>
+                          <li>
+                              <code>"abcd"</code> becomes <code>"acbd"</code>.
+                          </li>
+                          <li>
+                              <code>"abcde"</code> becomes <code>"acbde"</code>.
+                          </li>
+                          <li>
+                              <code>"abcdefg"</code> becomes <code>"acbedfg"</code>.
+                          </li>
+                          <li>
+                              <code>"abcdefghij"</code> becomes <code>"acbedgfihj"</code>.
+                          </li>
+                      </ul>
+                  </li>
+              </ul>
+              <p>
+                  The user can pass the string to be converted as a parameter.
+                  The original and converted strings are both printed.
+                  For instance:
+              </p>
+              <pre class=" language-none"><code class=" language-none">$ ./main "Hello World!"
+Hello World!
+Hlelo Wrold!
+$ ./main "I am not a number! I'm a free man!"
+I am not a number! I'm a free man!
+I am not a nmuebr! I'm a fere man!
+$ ./main "I was born ready!"
+I was born ready!
+I was bron raedy!</code></pre>
+              <p>
+                  If the number of parameters that are passed in is different from one,
+                  your program must use a default text.
+                  You are free to use the text you want.
+                  For instance:
+              </p>
+              <pre class=" language-none"><code class=" language-none">$ ./main
+This is the default text.
+Tihs is the dfeualt txet.
+$ ./main Hello World
+This is the default text.
+Tihs is the dfeualt txet.</code></pre>
+          </main>
+          <footer>
+              <span>
+                  <a href="mailto:david.bouchet.epita@gmail.com">David Bouchet</a>
+              </span>
+          </footer>
+      
+  </body></html>

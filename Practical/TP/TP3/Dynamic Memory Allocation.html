@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en"><!--
+  Page saved with SingleFile 
+  url: http://www.debug-pro.com/epita/asm/s3/b5/pw/03_dynamic_memory_allocation/index.html#head_1009 
+  saved date: Wed Sep 13 2023 20:08:55 GMT+0200 (heure d’été d’Europe centrale)
+ --><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><meta charset="utf-8">
+ <meta name="author" content="David Bouchet">
+ <title>Dynamic Memory Allocation</title>
+ <style>body{background-color: #FFFFFF;font-family:sans-serif;display:flex;flex-direction:column;margin:0px}header{position:fixed;width:100%;margin:auto;background:rgba(0,0,0,0.6);color:white;transition:top 250ms}header div{display:flex;justify-content:space-between;padding:0.2rem 2rem;font-weight:bold}header a:link,header a:visited{color:white;text-decoration:none}nav{margin:0rem auto 0rem auto;width:900px;box-sizing:border-box;border-right:dashed 1px black;padding-right:1rem;border-left:dashed 1px black;padding-left:1rem;padding-top:1rem}nav h2,nav h3,nav h4{background:none;border:none;margin:0px;padding:0px;font-size:1.1rem;text-shadow:none;font-weight:normal;line-height:1.6}nav h2{font-weight:bold;font-size:1.3rem;margin-top:0.5rem}nav h3{margin-left:2rem;font-size:1.1rem}nav h4{margin-left:4rem}nav h2 a:link,nav h3 a:link,nav h4 a:link,nav h2 a:visited,nav h3 a:visited,nav h4 a:visited{color:#006786;text-decoration:none}nav h2 a:hover,nav h3 a:hover,nav h4 a:hover{color:white;background-color:#006786}.title{display:flex;flex-direction:column;background-color:white;justify-content:space-between}.practical_number{margin:0px;text-align:left;padding-left:2em;background-color:black;color:white;font-size:3em;width:30rem;border-top:solid 0.1rem black;position:relative;top:2rem;border-radius:0px 8px 0px 0px}h1{background-color:#2F97B6;margin-top:0px;color:white;text-shadow:2px 2px 2px black;border-top:solid 0.5rem black;text-align:center;font-size:3rem;margin:0px;width:100%;line-height:1.2;padding-top:3rem;padding-bottom:1rem}mark{color:#d00000;background:none}code.s{font-family:monospace;color:darkgoldenrod;font-weight:bold}p+ul{margin-top:-1em}h2{color:#0087B6;text-shadow:1px 1px 1px black;font-size:2.2rem;border-bottom:solid 0.2rem #0087B6;padding-bottom:1.5rem;margin-top:4rem;line-height:1.2;font-weight:normal}h3{background-color:#2F97B6;color:white;padding:0.3rem 1rem;font-weight:normal;border-left:solid 0.5rem black;font-size:1.3rem}h4{color:#0087B6;font-size:1.3rem}main{box-sizing:border-box;width:900px;margin:auto;font-size:1.1rem;line-height:1.6;text-align:justify;border-right:dashed 1px black;padding-right:1rem;border-left:dashed 1px black;padding-left:1rem}a:link,a:visited{color:#ff7000;text-decoration:underline}a:hover{text-decoration:underline;background-color:#ff7000;color:white}div.filename{border:solid 1px gray;margin-left:3.3rem;color:white;background-color:#272822;padding:0.2rem 1.2rem;border-radius:0.7rem 0.7rem 0px 0px;font-family:monospace;font-size:1rem;font-weight:bold;text-align:center;width:12rem}body>footer{display:flex;justify-content:center;background:#2F97B6;color:white;border-top:solid black 1px}body>footer span{margin:0rem 2rem 0rem 2rem}body>footer a:visited,body>footer a:link{color:white;text-decoration:none}body>footer a:hover{background:none;text-decoration:underline}@media (max-width:900px){body{width:auto;margin:0px;padding:0px;box-sizing:border-box}header div{padding:0rem 1rem;font-weight:normal}nav{width:100%}main{width:auto;margin-left:0px;margin-right:0px;text-align:left}.practical_number{margin:0px;text-align:center;padding-left:0em;background-color:black;color:white;font-size:2.5em;width:100%;border-top:solid 0.1rem black;position:relative;top:2rem;border-radius:0px}h1{font-size:2.5em}}code[class*="language-"],pre[class*="language-"]{color:#ffffff;background:none;text-shadow:0 1px rgba(0,0,0,0.3);font-family:Consolas,Monaco,"Andale Mono","Ubuntu Mono",monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*="language-"]{padding:0.5em;margin:0em 0;overflow:auto;border-radius:0.3em}:not(pre)>code[class*="language-"],pre[class*="language-"]{background:#272822}:not(pre)>code[class*="language-"]{padding:.1em;border-radius:.3em;white-space:normal}.token.comment{color:slategray}.token.punctuation{color:#f8f8f2}.token.property,.token.constant,.token.symbol{color:#f92672}.token.number{color:#ae81ff}.token.string,.token.builtin{color:#a6e22e}.token.operator,.token.variable{color:#f8f8f2}.token.function{color:#e6db74}.token.keyword{color:#66d9ef}pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}pre.line-numbers>code{position:relative;white-space:inherit}.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:0;font-size:100%;left:-3.8em;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:0.8em;text-align:right}</style>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <link rel="canonical" href="http://www.debug-pro.com/epita/asm/s3/b5/pw/03_dynamic_memory_allocation/index.html#head_1009"><meta http-equiv="content-security-policy" content="default-src 'none'; font-src 'self' data:; img-src 'self' data:; style-src 'unsafe-inline'; media-src 'self' data:; script-src 'unsafe-inline' data:; object-src 'self' data:; frame-src 'self' data:;"><style>img[src="data:,"],source[src="data:,"]{display:none!important}</style></head>
+  <body>
+  <div class="title">
+  <div class="practical_number">Practical Work #3</div>
+  <h1>Dynamic Memory Allocation</h1>
+  </div>
+  <nav id="table_of_contents"><h2><a href="#head_1000">Submission</a></h2><h3><a href="#head_1001">Due Date</a></h3><h3><a href="#head_1002">Directory Hierarchy</a></h3><h2><a href="#head_1003">Instructions</a></h2><h2><a href="#head_1004">Basic Memory Allocations</a></h2><h3><a href="#head_1005">Provided Code</a></h3><h4><a href="#head_1006">The Makefile</a></h4><h4><a href="#head_1007">The basics.c File</a></h4><h4><a href="#head_1008">The basics.h File</a></h4><h4><a href="#head_1009">The test.c File</a></h4><h3><a href="#head_1010">Implementation</a></h3><h4><a href="#head_1011">The array_fibo() Function</a></h4><h4><a href="#head_1012">The str_toupper() Function</a></h4><h4><a href="#head_1013">The array_pal_1() Function</a></h4><h4><a href="#head_1014">The array_pal_2() Function</a></h4><h4><a href="#head_1015">The array_min() Function</a></h4><h4><a href="#head_1016">The str_checksum() Function</a></h4><h2><a href="#head_1017">Splitting Strings</a></h2><h3><a href="#head_1018">Provided Code</a></h3><h4><a href="#head_1019">The Makefile</a></h4><h4><a href="#head_1020">The split.c File</a></h4><h4><a href="#head_1021">The test.c File</a></h4><h3><a href="#head_1022">Implementation</a></h3><h2><a href="#head_1023">Replacing Substrings</a></h2><h3><a href="#head_1024">Provided Code</a></h3><h4><a href="#head_1025">The Makefile</a></h4><h4><a href="#head_1026">The replace.c File</a></h4><h4><a href="#head_1027">The test.c File</a></h4><h3><a href="#head_1028">Implementation</a></h3></nav>
+  <main>
+  <h2 id="head_1000">Submission</h2>
+  <h3 id="head_1001">Due Date</h3>
+  <p>By Monday 9 October 2023 11:42 am</p>
+  <h3 id="head_1002">Directory Hierarchy</h3>
+  <p>
+  When you are done, your git repository must contain the following files and directories:
+  </p>
+  <pre class="language-none"><code class="language-none">$ tree
+ .
+ ├── AUTHORS
+ ├── basics
+ │&nbsp;&nbsp; ├── basics.c
+ │&nbsp;&nbsp; ├── basics.h
+ │&nbsp;&nbsp; ├── Makefile
+ │&nbsp;&nbsp; └── test.c
+ ├── replace
+ │&nbsp;&nbsp; ├── Makefile
+ │&nbsp;&nbsp; ├── replace.c
+ │&nbsp;&nbsp; └── test.c
+ └── split
+     ├── Makefile
+     ├── split.c
+     └── test.c</code></pre>
+  <p>
+  The <code class="s">AUTHORS</code> file
+  must contain the following information.
+  </p>
+  <div class="filename">AUTHORS</div>
+  <pre class="line-numbers language-bash"><code class="language-bash">First Name
+ Family Name
+ Login
+ Email Address<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+  <p>
+  The last character of your <code class="s">AUTHORS</code> file must be a newline character.
+  </p>
+  <p>For instance:</p>
+  <div class="filename">AUTHORS</div>
+  <pre class="language-bash"><code class="language-bash">$ <span class="token function">cat</span> AUTHORS
+ John
+ Smith
+ john.smith
+ john.smith@epita.fr
+ $ <span class="token comment"># Command prompt ready for the next command...</span></code></pre>
+  <p>
+  <mark>
+  Be careful, if you do not follow all the given instructions,
+  no point will be given to your answers.
+  </mark>
+  </p>
+  <h2 id="head_1003">Instructions</h2>
+  <p>
+  For the whole practical,
+  we consider that strings of characters consist of simple characters only
+  (whose <a href="https://en.wikipedia.org/wiki/ASCII#Character_set">ASCII</a> codes are lower than 0x7F).
+  </p>
+  <h2 id="head_1004">Basic Memory Allocations</h2>
+  <h3 id="head_1005">Provided Code</h3>
+  <h4 id="head_1006">The Makefile</h4>
+  <div class="filename">Makefile</div>
+  <pre class="language-makefile"><code class="language-makefile"><span class="token comment"># Makefile</span>
+ 
+ CC <span class="token operator">=</span> gcc
+ CPPFLAGS <span class="token operator">=</span> -MMD
+ CFLAGS <span class="token operator">=</span> -Wall -Wextra -fsanitize<span class="token operator">=</span>address
+ LDFLAGS <span class="token operator">=</span> -fsanitize<span class="token operator">=</span>address
+ LDLIBS <span class="token operator">=</span>
+ 
+ SRC <span class="token operator">=</span> test.c basics.c
+ OBJ <span class="token operator">=</span> <span class="token variable">$</span><span class="token punctuation">{</span>SRC<span class="token punctuation">:</span>.c<span class="token operator">=</span>.o<span class="token punctuation">}</span>
+ DEP <span class="token operator">=</span> <span class="token variable">$</span><span class="token punctuation">{</span>SRC<span class="token punctuation">:</span>.c<span class="token operator">=</span>.d<span class="token punctuation">}</span>
+ 
+ <span class="token symbol">test</span><span class="token punctuation">:</span> <span class="token variable">$</span><span class="token punctuation">{</span>OBJ<span class="token punctuation">}</span>
+ 
+ <span class="token keyword">-include</span> <span class="token variable">$</span><span class="token punctuation">{</span>DEP<span class="token punctuation">}</span>
+ 
+ <span class="token builtin">.PHONY</span><span class="token punctuation">:</span> clean
+ 
+ <span class="token symbol">clean</span><span class="token punctuation">:</span>
+   <span class="token variable">$</span><span class="token punctuation">{</span>RM<span class="token punctuation">}</span> <span class="token variable">$</span><span class="token punctuation">{</span>OBJ<span class="token punctuation">}</span>
+   <span class="token variable">$</span><span class="token punctuation">{</span>RM<span class="token punctuation">}</span> <span class="token variable">$</span><span class="token punctuation">{</span>DEP<span class="token punctuation">}</span>
+   <span class="token variable">$</span><span class="token punctuation">{</span>RM<span class="token punctuation">}</span> test
+ 
+ <span class="token comment"># END</span></code></pre>
+  <h4 id="head_1007">The basics.c File</h4>
+  <div class="filename">basics.c</div>
+  <pre class="language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">define</span> _GNU_SOURCE</span>
+ <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+ <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stddef.h&gt;</span></span>
+ <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h&gt;</span></span>
+ <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;string.h&gt;</span></span>
+ <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;ctype.h&gt;</span></span>
+ 
+ <span class="token keyword">unsigned</span> <span class="token keyword">long</span><span class="token operator">*</span> <span class="token function">array_fibo</span><span class="token punctuation">(</span><span class="token keyword">size_t</span> n<span class="token punctuation">)</span>
+ <span class="token punctuation">{</span>
+     <span class="token comment">// TODO</span>
+ <span class="token punctuation">}</span>
+ 
+ <span class="token keyword">char</span><span class="token operator">*</span> <span class="token function">str_toupper</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> s<span class="token punctuation">)</span>
+ <span class="token punctuation">{</span>
+     <span class="token comment">// TODO</span>
+ <span class="token punctuation">}</span>
+ 
+ <span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span> <span class="token function">array_pal_1</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span> a<span class="token punctuation">,</span> <span class="token keyword">size_t</span> len<span class="token punctuation">)</span>
+ <span class="token punctuation">{</span>
+     <span class="token comment">// TODO</span>
+ <span class="token punctuation">}</span>
+ 
+ <span class="token keyword">void</span> <span class="token function">array_pal_2</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> a<span class="token punctuation">,</span> <span class="token keyword">size_t</span> len<span class="token punctuation">)</span>
+ <span class="token punctuation">{</span>
+     <span class="token comment">// TODO</span>
+ <span class="token punctuation">}</span>
+ 
+ <span class="token keyword">size_t</span> <span class="token function">array_min</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span> a<span class="token punctuation">,</span> <span class="token keyword">size_t</span> len<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> <span class="token keyword">char</span> threshold<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> result<span class="token punctuation">)</span>
+ <span class="token punctuation">{</span>
+     <span class="token comment">// TODO</span>
+ <span class="token punctuation">}</span>
+ 
+ <span class="token keyword">void</span> <span class="token function">str_checksum</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> s<span class="token punctuation">)</span>
+ <span class="token punctuation">{</span>
+     <span class="token comment">// TODO</span>
+ <span class="token punctuation">}</span></code></pre>
+  <h4 id="head_1008">The basics.h File</h4>
+  <div class="filename">basics.h</div>
+  <pre class="language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">pragma</span> once</span>
+ 
+ <span class="token keyword">unsigned</span> <span class="token keyword">long</span><span class="token operator">*</span> <span class="token function">array_fibo</span><span class="token punctuation">(</span><span class="token keyword">size_t</span> n<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token keyword">char</span><span class="token operator">*</span> <span class="token function">str_toupper</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span> <span class="token function">array_pal_1</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span> a<span class="token punctuation">,</span> <span class="token keyword">size_t</span> len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token keyword">void</span> <span class="token function">array_pal_2</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> a<span class="token punctuation">,</span> <span class="token keyword">size_t</span> len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token keyword">size_t</span> <span class="token function">array_min</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span> a<span class="token punctuation">,</span> <span class="token keyword">size_t</span> len<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> <span class="token keyword">char</span> threshold<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token keyword">void</span> <span class="token function">str_checksum</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> s<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+  <h4 id="head_1009">The test.c File</h4>
+  <div class="filename">test.c</div>
+  <pre class="language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+ <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h&gt;</span></span>
+ <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;string.h&gt;</span></span>
+ <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;err.h&gt;</span></span>
+ <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"basics.h"</span></span>
+ 
+ <span class="token keyword">void</span> <span class="token function">exit_help</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+ <span class="token punctuation">{</span>
+     <span class="token keyword">char</span> help<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span>
+         <span class="token string">"Usage:\n"</span>
+         <span class="token string">"--fibo &lt;n (1-94)&gt;\n"</span>
+         <span class="token string">"--toupper &lt;string&gt;\n"</span>
+         <span class="token string">"--pal1 &lt;seed (1-99)&gt; &lt;len (1-20)&gt;\n"</span>
+         <span class="token string">"--pal2 &lt;seed (1-99)&gt; &lt;len (1-20)&gt;\n"</span>
+         <span class="token string">"--min\n"</span>
+         <span class="token string">"--checksum &lt;string&gt;"</span><span class="token punctuation">;</span>
+ 
+     <span class="token function">errx</span><span class="token punctuation">(</span>EXIT_FAILURE<span class="token punctuation">,</span> <span class="token string">"%s"</span><span class="token punctuation">,</span> help<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token punctuation">}</span>
+ 
+ <span class="token keyword">void</span> <span class="token function">test_fibo</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
+ <span class="token punctuation">{</span>
+     <span class="token keyword">if</span> <span class="token punctuation">(</span>argc <span class="token operator">!=</span> <span class="token number">3</span><span class="token punctuation">)</span>
+         <span class="token function">exit_help</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+     <span class="token keyword">size_t</span> n <span class="token operator">=</span> <span class="token function">strtoul</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+     <span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">&lt;</span> <span class="token number">1</span> <span class="token operator">||</span> n <span class="token operator">&gt;</span> <span class="token number">94</span><span class="token punctuation">)</span>
+         <span class="token function">exit_help</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+     <span class="token keyword">unsigned</span> <span class="token keyword">long</span><span class="token operator">*</span> fibo <span class="token operator">=</span> <span class="token function">array_fibo</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+     <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">size_t</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+         <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"fibo[%zu] = %lu\n"</span><span class="token punctuation">,</span> i<span class="token punctuation">,</span> fibo<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+     <span class="token function">free</span><span class="token punctuation">(</span>fibo<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token punctuation">}</span>
+ 
+ <span class="token keyword">void</span> <span class="token function">test_toupper</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
+ <span class="token punctuation">{</span>
+     <span class="token keyword">if</span> <span class="token punctuation">(</span>argc <span class="token operator">!=</span> <span class="token number">3</span><span class="token punctuation">)</span>
+         <span class="token function">exit_help</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+     <span class="token keyword">char</span><span class="token operator">*</span> result <span class="token operator">=</span> <span class="token function">str_toupper</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+     <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%s\n"</span><span class="token punctuation">,</span> argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%s\n"</span><span class="token punctuation">,</span> result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+     <span class="token function">free</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token punctuation">}</span>
+ 
+ <span class="token keyword">void</span> <span class="token function">array_print</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span> a<span class="token punctuation">,</span> <span class="token keyword">size_t</span> len<span class="token punctuation">)</span>
+ <span class="token punctuation">{</span>
+     <span class="token keyword">if</span> <span class="token punctuation">(</span>a <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span>
+     <span class="token punctuation">{</span>
+         <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"NULL (len = %zu)\n"</span><span class="token punctuation">,</span> len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+         <span class="token keyword">return</span><span class="token punctuation">;</span>
+     <span class="token punctuation">}</span>
+ 
+     <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"{"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">size_t</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> len<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+         <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">" %hhu"</span><span class="token punctuation">,</span> a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">" }\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token punctuation">}</span>
+ 
+ <span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span> <span class="token function">array_rand</span><span class="token punctuation">(</span><span class="token keyword">size_t</span> n<span class="token punctuation">)</span>
+ <span class="token punctuation">{</span>
+     <span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span> a <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span>n <span class="token operator">*</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+     <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">size_t</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+         a<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">rand</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">100</span><span class="token punctuation">;</span>
+ 
+     <span class="token keyword">return</span> a<span class="token punctuation">;</span>
+ <span class="token punctuation">}</span>
+ 
+ <span class="token keyword">void</span> <span class="token function">nl</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+ <span class="token punctuation">{</span>
+     <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token punctuation">}</span>
+ 
+ <span class="token keyword">void</span> <span class="token function">_test_min</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span> a<span class="token punctuation">,</span> <span class="token keyword">size_t</span> len<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> <span class="token keyword">char</span> threshold<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> r<span class="token punctuation">)</span>
+ <span class="token punctuation">{</span>
+     <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"a = "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token function">array_print</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token keyword">size_t</span> min_len <span class="token operator">=</span> <span class="token function">array_min</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> len<span class="token punctuation">,</span> threshold<span class="token punctuation">,</span> r<span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"array_min(a, %zu, %hhu, &amp;r)\n"</span><span class="token punctuation">,</span> len<span class="token punctuation">,</span> threshold<span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"r = "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token function">array_print</span><span class="token punctuation">(</span><span class="token operator">*</span>r<span class="token punctuation">,</span> min_len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token function">free</span><span class="token punctuation">(</span><span class="token operator">*</span>r<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token punctuation">}</span>
+ 
+ <span class="token keyword">void</span> <span class="token function">test_min</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+ <span class="token punctuation">{</span>
+     <span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span> r<span class="token punctuation">;</span>
+ 
+     <span class="token keyword">unsigned</span> <span class="token keyword">char</span> a0<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+     <span class="token keyword">unsigned</span> <span class="token keyword">char</span> a1<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token number">9</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+     <span class="token keyword">unsigned</span> <span class="token keyword">char</span> a2<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+     <span class="token keyword">unsigned</span> <span class="token keyword">char</span> a3<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+     <span class="token function">_test_min</span><span class="token punctuation">(</span>a0<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>r<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token function">nl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token function">_test_min</span><span class="token punctuation">(</span>a0<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>r<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token function">nl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token function">_test_min</span><span class="token punctuation">(</span>a0<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>r<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token function">nl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token function">_test_min</span><span class="token punctuation">(</span>a1<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>r<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token function">nl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token function">_test_min</span><span class="token punctuation">(</span>a2<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>a2<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>r<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token function">nl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token function">_test_min</span><span class="token punctuation">(</span>a3<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>a3<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>r<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token function">nl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token punctuation">}</span>
+ 
+ <span class="token keyword">void</span> <span class="token function">test_pal</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">,</span> <span class="token keyword">int</span> mode<span class="token punctuation">)</span>
+ <span class="token punctuation">{</span>
+     <span class="token keyword">if</span> <span class="token punctuation">(</span>argc <span class="token operator">!=</span> <span class="token number">4</span><span class="token punctuation">)</span>
+         <span class="token function">exit_help</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+     <span class="token keyword">size_t</span> seed <span class="token operator">=</span> <span class="token function">strtoul</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token keyword">size_t</span> len <span class="token operator">=</span> <span class="token function">strtoul</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+     <span class="token keyword">if</span> <span class="token punctuation">(</span>seed <span class="token operator">&lt;</span> <span class="token number">1</span> <span class="token operator">||</span> seed <span class="token operator">&gt;</span> <span class="token number">99</span> <span class="token operator">||</span> len <span class="token operator">&lt;</span> <span class="token number">1</span> <span class="token operator">||</span> len <span class="token operator">&gt;</span> <span class="token number">20</span><span class="token punctuation">)</span>
+         <span class="token function">exit_help</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+     <span class="token function">srand</span><span class="token punctuation">(</span>seed<span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span> a <span class="token operator">=</span> <span class="token function">array_rand</span><span class="token punctuation">(</span>len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+     <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"a = "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token function">array_print</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+     <span class="token keyword">if</span> <span class="token punctuation">(</span>mode <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span>
+     <span class="token punctuation">{</span>
+         a <span class="token operator">=</span> <span class="token function">array_pal_1</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+         <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"a = array_pal(a, %zu)\n"</span><span class="token punctuation">,</span> len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token punctuation">}</span>
+ 
+     <span class="token keyword">else</span>
+     <span class="token punctuation">{</span>
+         <span class="token function">array_pal_2</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>a<span class="token punctuation">,</span> len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+         <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"array_pal(&amp;a, %zu)\n"</span><span class="token punctuation">,</span> len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token punctuation">}</span>
+ 
+     <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"a = "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token function">array_print</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> <span class="token number">2</span> <span class="token operator">*</span> len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+     <span class="token function">free</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token punctuation">}</span>
+ 
+ <span class="token keyword">void</span> <span class="token function">test_checksum</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
+ <span class="token punctuation">{</span>
+     <span class="token keyword">if</span> <span class="token punctuation">(</span>argc <span class="token operator">!=</span> <span class="token number">3</span><span class="token punctuation">)</span>
+         <span class="token function">exit_help</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+     <span class="token keyword">size_t</span> len <span class="token operator">=</span> <span class="token function">strlen</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+     <span class="token keyword">char</span><span class="token operator">*</span> str <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span>len <span class="token operator">*</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+     <span class="token function">strcpy</span><span class="token punctuation">(</span>str<span class="token punctuation">,</span> argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+     <span class="token function">str_checksum</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>str<span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%s\n"</span><span class="token punctuation">,</span> str<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+     <span class="token function">free</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token punctuation">}</span>
+ 
+ <span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
+ <span class="token punctuation">{</span>
+     <span class="token keyword">if</span> <span class="token punctuation">(</span>argc <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span>
+         <span class="token function">exit_help</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+     <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">strcmp</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">"--fibo"</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+         <span class="token function">test_fibo</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">strcmp</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">"--toupper"</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+         <span class="token function">test_toupper</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">strcmp</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">"--pal1"</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+         <span class="token function">test_pal</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">strcmp</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">"--pal2"</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+         <span class="token function">test_pal</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">strcmp</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">"--min"</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+         <span class="token function">test_min</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">strcmp</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">"--checksum"</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+         <span class="token function">test_checksum</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token keyword">else</span>
+         <span class="token function">exit_help</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+     <span class="token keyword">return</span> EXIT_SUCCESS<span class="token punctuation">;</span>
+ <span class="token punctuation">}</span></code></pre>
+  <h3 id="head_1010">Implementation</h3>
+  <p>
+  You have to complete the six functions in the <code class="s">basics.c</code> file.
+  You are not allowed to:
+  </p>
+  <ul>
+  <li>Modify any other files.</li>
+  <li>Include any other files.</li>
+  </ul>
+  <h4 id="head_1011">The array_fibo() Function</h4>
+  <pre class="language-c"><code class="language-c"><span class="token keyword">unsigned</span> <span class="token keyword">long</span><span class="token operator">*</span> <span class="token function">array_fibo</span><span class="token punctuation">(</span><span class="token keyword">size_t</span> n<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+  <p>
+  This function returns a new heap-allocated array
+  that contains the nth first <a href="https://en.wikipedia.org/wiki/Fibonacci_number">Fibonacci</a> numbers
+  (from <var>F<sub>0</sub></var> to <var>F<sub>n&nbsp;-&nbsp;1</sub></var>).
+  This array will be freed by the testing program.
+  </p>
+  <p>
+  To test your function, you can execute the following commands.
+  </p>
+  <pre class="language-none"><code class="language-none">$ ./test --fibo 1
+ fibo[0] = 0
+ $ ./test --fibo 10
+ fibo[0] = 0
+ fibo[1] = 1
+ fibo[2] = 1
+ fibo[3] = 2
+ fibo[4] = 3
+ fibo[5] = 5
+ fibo[6] = 8
+ fibo[7] = 13
+ fibo[8] = 21
+ fibo[9] = 34
+ $ ./test --fibo 94
+ fibo[0] = 0
+ fibo[1] = 1
+ fibo[2] = 1
+ fibo[3] = 2
+ fibo[4] = 3
+ fibo[5] = 5
+ fibo[6] = 8
+ fibo[7] = 13
+ fibo[8] = 21
+ fibo[9] = 34
+ fibo[10] = 55
+ fibo[11] = 89
+ fibo[12] = 144
+ fibo[13] = 233
+ fibo[14] = 377
+ fibo[15] = 610
+ fibo[16] = 987
+ fibo[17] = 1597
+ fibo[18] = 2584
+ fibo[19] = 4181
+ fibo[20] = 6765
+ fibo[21] = 10946
+ fibo[22] = 17711
+ fibo[23] = 28657
+ fibo[24] = 46368
+ fibo[25] = 75025
+ fibo[26] = 121393
+ fibo[27] = 196418
+ fibo[28] = 317811
+ fibo[29] = 514229
+ fibo[30] = 832040
+ fibo[31] = 1346269
+ fibo[32] = 2178309
+ fibo[33] = 3524578
+ fibo[34] = 5702887
+ fibo[35] = 9227465
+ fibo[36] = 14930352
+ fibo[37] = 24157817
+ fibo[38] = 39088169
+ fibo[39] = 63245986
+ fibo[40] = 102334155
+ fibo[41] = 165580141
+ fibo[42] = 267914296
+ fibo[43] = 433494437
+ fibo[44] = 701408733
+ fibo[45] = 1134903170
+ fibo[46] = 1836311903
+ fibo[47] = 2971215073
+ fibo[48] = 4807526976
+ fibo[49] = 7778742049
+ fibo[50] = 12586269025
+ fibo[51] = 20365011074
+ fibo[52] = 32951280099
+ fibo[53] = 53316291173
+ fibo[54] = 86267571272
+ fibo[55] = 139583862445
+ fibo[56] = 225851433717
+ fibo[57] = 365435296162
+ fibo[58] = 591286729879
+ fibo[59] = 956722026041
+ fibo[60] = 1548008755920
+ fibo[61] = 2504730781961
+ fibo[62] = 4052739537881
+ fibo[63] = 6557470319842
+ fibo[64] = 10610209857723
+ fibo[65] = 17167680177565
+ fibo[66] = 27777890035288
+ fibo[67] = 44945570212853
+ fibo[68] = 72723460248141
+ fibo[69] = 117669030460994
+ fibo[70] = 190392490709135
+ fibo[71] = 308061521170129
+ fibo[72] = 498454011879264
+ fibo[73] = 806515533049393
+ fibo[74] = 1304969544928657
+ fibo[75] = 2111485077978050
+ fibo[76] = 3416454622906707
+ fibo[77] = 5527939700884757
+ fibo[78] = 8944394323791464
+ fibo[79] = 14472334024676221
+ fibo[80] = 23416728348467685
+ fibo[81] = 37889062373143906
+ fibo[82] = 61305790721611591
+ fibo[83] = 99194853094755497
+ fibo[84] = 160500643816367088
+ fibo[85] = 259695496911122585
+ fibo[86] = 420196140727489673
+ fibo[87] = 679891637638612258
+ fibo[88] = 1100087778366101931
+ fibo[89] = 1779979416004714189
+ fibo[90] = 2880067194370816120
+ fibo[91] = 4660046610375530309
+ fibo[92] = 7540113804746346429
+ fibo[93] = 12200160415121876738</code></pre>
+  <h4 id="head_1012">The str_toupper() Function</h4>
+  <pre class="language-c"><code class="language-c"><span class="token keyword">char</span><span class="token operator">*</span> <span class="token function">str_toupper</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> s<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+  <p>
+  This function converts the small letters in <var>s</var> into capital letters
+  and returns the result in a new heap-allocated array.
+  This array will be freed by the testing program.
+  You are allowed to use the
+  <a href="https://manpages.debian.org/bullseye/manpages-dev/toupper.3.en.html">toupper()</a>
+  function from the standard library.
+  </p>
+  <p>
+  To test your function, you can execute the following commands.
+  </p>
+  <pre class="language-none"><code class="language-none">$ ./test --toupper "Hello World!"
+ Hello World!
+ HELLO WORLD!
+ $ ./test --toupper "NO CHANGE"
+ NO CHANGE
+ NO CHANGE
+ $ ./test --toupper "abcdef:ABCDEF:12345"
+ abcdef:ABCDEF:12345
+ ABCDEF:ABCDEF:12345</code></pre>
+  <h4 id="head_1013">The array_pal_1() Function</h4>
+  <pre class="language-c"><code class="language-c"><span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span> <span class="token function">array_pal_1</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span> a<span class="token punctuation">,</span> <span class="token keyword">size_t</span> len<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+  <p>
+  This function generates a palindromic array from the <var>a</var> array.
+  The length of the <var>a</var> array is <var>len</var>.
+  The generated array must be allocated on the heap.
+  The first part of the generated array contains <var>a</var>
+  and the second part contains the reverse of <var>a</var>.
+  The function returns the address of the generated array and frees the <var>a</var> array.
+  You should use the
+  <a href="https://manpages.debian.org/bullseye/manpages-dev/realloc.3.en.html">realloc()</a> function.
+  The generated array will be freed by the testing program.
+  </p>
+  <p>
+  To test your function, you can execute the following commands.
+  </p>
+  <pre class="language-none"><code class="language-none">$ ./test --pal1 1 2
+ a = { 83 86 }
+ a = array_pal(a, 2)
+ a = { 83 86 86 83 }
+ $ ./test --pal1 2 5
+ a = { 90 19 88 75 61 }
+ a = array_pal(a, 5)
+ a = { 90 19 88 75 61 61 75 88 19 90 }
+ $ ./test --pal1 3 10
+ a = { 46 85 68 40 25 40 72 76 1 64 }
+ a = array_pal(a, 10)
+ a = { 46 85 68 40 25 40 72 76 1 64 64 1 76 72 40 25 40 68 85 46 }
+ $ ./test --pal1 4 20
+ a = { 1 83 74 26 63 37 25 63 28 85 44 54 14 64 3 14 2 41 1 49 }
+ a = array_pal(a, 20)
+ a = { 1 83 74 26 63 37 25 63 28 85 44 54 14 64 3 14 2 41 1 49 49 1 41 2 14 3 64 14 54 44 85 28 63 25 37 63 26 74 83 1 }</code></pre>
+  <h4 id="head_1014">The array_pal_2() Function</h4>
+  <pre class="language-c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">array_pal_2</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> a<span class="token punctuation">,</span> <span class="token keyword">size_t</span> len<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+  <p>
+  This function is similar to <code class="s">array_pal_1()</code>.
+  The difference is that <var>a</var> points to the pointer to the string that must be modified.
+  That way, such pointer can be updated directly in the function.
+  You are not allowed to call <code class="s">array_pal_1()</code>.
+  </p>
+  <p>
+  To test your function, you can execute the following commands.
+  </p>
+  <pre class="language-none"><code class="language-none">$ ./test --pal2 1 2
+ a = { 83 86 }
+ array_pal(&amp;a, 2)
+ a = { 83 86 86 83 }
+ $ ./test --pal2 2 5
+ a = { 90 19 88 75 61 }
+ array_pal(&amp;a, 5)
+ a = { 90 19 88 75 61 61 75 88 19 90 }
+ $ ./test --pal2 3 10
+ a = { 46 85 68 40 25 40 72 76 1 64 }
+ array_pal(&amp;a, 10)
+ a = { 46 85 68 40 25 40 72 76 1 64 64 1 76 72 40 25 40 68 85 46 }
+ $ ./test --pal2 4 20
+ a = { 1 83 74 26 63 37 25 63 28 85 44 54 14 64 3 14 2 41 1 49 }
+ array_pal(&amp;a, 20)
+ a = { 1 83 74 26 63 37 25 63 28 85 44 54 14 64 3 14 2 41 1 49 49 1 41 2 14 3 64 14 54 44 85 28 63 25 37 63 26 74 83 1 }</code></pre>
+  <h4 id="head_1015">The array_min() Function</h4>
+  <pre class="language-c"><code class="language-c"><span class="token keyword">size_t</span> <span class="token function">array_min</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span> a<span class="token punctuation">,</span> <span class="token keyword">size_t</span> len<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> <span class="token keyword">char</span> threshold<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> result<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+  <p>
+  This function generates a heap-allocated array that contains all the values
+  lower than <var>threshold</var> in the <var>a</var> array.
+  The length of the <var>a</var> array is <var>len</var>.
+  The return value is the length of the generated array.
+  The address of the generated array is returned via the <var>result</var> double pointer.
+  If no value can be found (i.e. no value is lower than <var>threshold</var>),
+  the value 0 must be returned and <var>*result</var> must be set to <code class="s">NULL</code>.
+  </p>
+  <p>
+  To test your function, you can execute the following command.
+  </p>
+  <pre class="language-none"><code class="language-none">$ ./test --min
+ a = { 0 1 2 3 4 5 6 7 8 9 }
+ array_min(a, 10, 5, &amp;r)
+ r = { 0 1 2 3 4 }
+ 
+ a = { 0 1 2 3 4 5 6 7 8 9 }
+ array_min(a, 10, 0, &amp;r)
+ r = NULL (len = 0)
+ 
+ a = { 0 1 2 3 4 5 6 7 8 9 }
+ array_min(a, 10, 9, &amp;r)
+ r = { 0 1 2 3 4 5 6 7 8 }
+ 
+ a = { 9 8 7 6 5 4 3 2 1 0 }
+ array_min(a, 10, 3, &amp;r)
+ r = { 2 1 0 }
+ 
+ a = { 0 1 2 4 5 4 3 2 1 0 }
+ array_min(a, 10, 3, &amp;r)
+ r = { 0 1 2 2 1 0 }
+ 
+ a = { 5 6 5 6 5 6 5 6 5 6 }
+ array_min(a, 10, 6, &amp;r)
+ r = { 5 5 5 5 5 }</code></pre>
+  <h4 id="head_1016">The str_checksum() Function</h4>
+  <pre class="language-c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">str_checksum</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> s<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+  <p>
+  This function appends a checksum to a string.
+  The checksum is the sum of all the ASCII codes that made up the string.
+  The <var>s</var> variable points to the pointer to the string.
+  The original string must be freed and a new string,
+  which contains the result,
+  must be allocated on the heap.
+  The pointer to the string must be updated via the <var>s</var> double pointer.
+  The checksum must be in parentheses, in hexadecimal and preceded by a single space character
+  (see the examples below).
+  You are allowed to use the
+  <a href="https://manpages.debian.org/bullseye/manpages-dev/asprintf.3.en.html">asprintf()</a>
+  function from the standard library.
+  </p>
+  <p>
+  To test your function, you can execute the following commands.
+  </p>
+  <pre class="language-none"><code class="language-none">$ ./test --checksum A
+ A (41)
+ $ ./test --checksum 1
+ 1 (31)
+ $ ./test --checksum A1
+ A1 (72)
+ $ ./test --checksum "Hello World"
+ Hello World (41C)
+ $ ./test --checksum ABCD
+ ABCD (10A)
+ $ ./test --checksum DCBA
+ DCBA (10A)
+ $ ./test --checksum "Damned if you do, damned it you don't"
+ Damned if you do, damned it you don't (CD3)</code></pre>
+  <h2 id="head_1017">Splitting Strings</h2>
+  <h3 id="head_1018">Provided Code</h3>
+  <h4 id="head_1019">The Makefile</h4>
+  <div class="filename">Makefile</div>
+  <pre class="language-makefile"><code class="language-makefile"><span class="token comment"># Makefile</span>
+ 
+ CC <span class="token operator">=</span> gcc
+ CPPFLAGS <span class="token operator">=</span>
+ CFLAGS <span class="token operator">=</span> -Wall -Wextra -fsanitize<span class="token operator">=</span>address
+ LDFLAGS <span class="token operator">=</span> -fsanitize<span class="token operator">=</span>address
+ LDLIBS <span class="token operator">=</span>
+ 
+ SRC <span class="token operator">=</span> test.c split.c
+ OBJ <span class="token operator">=</span> <span class="token variable">$</span><span class="token punctuation">{</span>SRC<span class="token punctuation">:</span>.c<span class="token operator">=</span>.o<span class="token punctuation">}</span>
+ 
+ <span class="token symbol">test</span><span class="token punctuation">:</span> <span class="token variable">$</span><span class="token punctuation">{</span>OBJ<span class="token punctuation">}</span>
+ 
+ <span class="token builtin">.PHONY</span><span class="token punctuation">:</span> clean
+ 
+ <span class="token symbol">clean</span><span class="token punctuation">:</span>
+   <span class="token variable">$</span><span class="token punctuation">{</span>RM<span class="token punctuation">}</span> <span class="token variable">$</span><span class="token punctuation">{</span>OBJ<span class="token punctuation">}</span>
+   <span class="token variable">$</span><span class="token punctuation">{</span>RM<span class="token punctuation">}</span> test
+ 
+ <span class="token comment"># END</span></code></pre>
+  <h4 id="head_1020">The split.c File</h4>
+  <div class="filename">split.c</div>
+  <pre class="language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">define</span> _GNU_SOURCE</span>
+ <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h&gt;</span></span>
+ <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;string.h&gt;</span></span>
+ 
+ <span class="token keyword">void</span> <span class="token function">words_free</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> words<span class="token punctuation">)</span>
+ <span class="token punctuation">{</span>
+     <span class="token comment">// Frees the strings.</span>
+     <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">size_t</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> words<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+         <span class="token function">free</span><span class="token punctuation">(</span>words<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+     <span class="token comment">// Frees the string pointers.</span>
+     <span class="token function">free</span><span class="token punctuation">(</span>words<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token punctuation">}</span>
+ 
+ <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> <span class="token function">split</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span> s<span class="token punctuation">)</span>
+ <span class="token punctuation">{</span>
+     <span class="token comment">// TODO</span>
+ <span class="token punctuation">}</span></code></pre>
+  <h4 id="head_1021">The test.c File</h4>
+  <div class="filename">test.c</div>
+  <pre class="language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+ <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h&gt;</span></span>
+ <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;string.h&gt;</span></span>
+ <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;err.h&gt;</span></span>
+ 
+ <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> <span class="token function">split</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span> s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token keyword">void</span> <span class="token function">words_free</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> words<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+ <span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
+ <span class="token punctuation">{</span>
+     <span class="token keyword">if</span> <span class="token punctuation">(</span>argc <span class="token operator">!=</span> <span class="token number">2</span><span class="token punctuation">)</span>
+         <span class="token function">errx</span><span class="token punctuation">(</span>EXIT_FAILURE<span class="token punctuation">,</span> <span class="token string">"%s"</span><span class="token punctuation">,</span>  <span class="token string">"Usage: ./test &lt;string&gt;"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+     <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> words <span class="token operator">=</span> <span class="token function">split</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+     <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">size_t</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> words<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+         <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"word %02zu: %s\n"</span><span class="token punctuation">,</span> i<span class="token punctuation">,</span> words<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+     <span class="token function">words_free</span><span class="token punctuation">(</span>words<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+     <span class="token keyword">return</span> EXIT_SUCCESS<span class="token punctuation">;</span>
+ <span class="token punctuation">}</span></code></pre>
+  <h3 id="head_1022">Implementation</h3>
+  <p>
+  You have to complete the <code class="s">split()</code> function in the <code class="s">split.c</code> file.
+  </p>
+  <pre class="language-c"><code class="language-c"><span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> <span class="token function">split</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span> s<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+  <p>
+  You are not allowed to:
+  </p>
+  <ul>
+  <li>Modify any other files.</li>
+  <li>Include any other files.</li>
+  </ul>
+  <p>
+  This function splits the <var>s</var> string by the space character.
+  We assume that <var>s</var> is not empty.
+  You have already written a similar function in a
+  <a href="http://www.debug-pro.com/epita/asm/s3/b5/pw/pw_05_strings/index.html#splitting">previous practical work</a>.
+  But previously, the number and the length of the substrings
+  were limited and such a limitation had to be known at compile time.
+  Now, you are going to use the heap in order to remove all limitations.
+  </p>
+  <p>
+  We assume that the <var>s</var> string is made up of simple words
+  separated by a single space character.
+  </p>
+  <p>
+  There are different ways to store an array of strings.
+  In this section, you must use the following method.
+  </p>
+  <p>
+  First, you need to allocate a memory space in order to store an array of pointers to strings.
+  Each cell of this array will contain a pointer to a heap-allocated string.
+  Such a string is supposed to be a word of <var>s</var>.
+  So let us call this array <var>words</var>.
+  The last cell must contain the <code class="s">NULL</code> pointer.
+  </p>
+  <p>
+  For example, for the following string: <code class="s">"How are you my friends"</code>,
+  <var>words</var> is as follows.
+  </p>
+  <ul>
+  <li>
+  <var>words[0]</var> points to the string <code class="s">"How"</code>
+  </li>
+  <li>
+  <var>words[1]</var> points to the string <code class="s">"are"</code>
+  </li>
+  <li>
+  <var>words[2]</var> points to the string <code class="s">"you"</code>
+  </li>
+  <li>
+  <var>words[3]</var> points to the string <code class="s">"my"</code>
+  </li>
+  <li>
+  <var>words[4]</var> points to the string <code class="s">"friends"</code>
+  </li>
+  <li>
+  <var>words[5]</var> = <code class="s">NULL</code>
+  </li>
+  </ul>
+  <p>
+  Each substring (i.e. each word) must be allocated on the heap.
+  In the above example, six memory spaces are allocated:
+  one for the <var>words</var> array and five for the substrings.
+  </p>
+  <p>
+  Therefore, to free the memory space, we have to free the five strings first
+  and finally the <var>words</var> array.
+  That is the purpose of the <code class="s">words_free()</code> function
+  in the <code class="s">split.c</code> file.
+  This function is given.
+  Read it through to make sense of it.
+  This function will be called by the testing program.
+  </p>
+  <p>
+  Write the <code class="s">split()</code> function
+  that generates the array of substrings,
+  that is the <var>words</var> array and all the substrings.
+  Note that the first steps should be to determine
+  the total number of words and to allocate the memory space for the <var>words</var> array.
+  </p>
+  <p>
+  You are allowed to call any functions defined in the header files
+  that are included in <code class="s">split.c</code>.
+  (As a reminder: <mark>do not include any other files</mark>.)
+  </p>
+  <p>
+  You are free to write as many functions as you want and to use your own method.
+  </p>
+  <p>
+  To test your function, you can execute the following commands.
+  </p>
+  <pre class="language-none"><code class="language-none">$ ./test "Hello World"
+ word 00: Hello
+ word 01: World
+ $ ./test "How are you my friends"
+ word 00: How
+ word 01: are
+ word 02: you
+ word 03: my
+ word 04: friends
+ $ ./test "An apple a day keeps the doctor away"
+ word 00: An
+ word 01: apple
+ word 02: a
+ word 03: day
+ word 04: keeps
+ word 05: the
+ word 06: doctor
+ word 07: away
+ $ ./test "NoSpace"
+ word 00: NoSpace</code></pre>
+  <h2 id="head_1023">Replacing Substrings</h2>
+  <h3 id="head_1024">Provided Code</h3>
+  <h4 id="head_1025">The Makefile</h4>
+  <div class="filename">Makefile</div>
+  <pre class="language-makefile"><code class="language-makefile"><span class="token comment"># Makefile</span>
+ 
+ CC <span class="token operator">=</span> gcc
+ CPPFLAGS <span class="token operator">=</span>
+ CFLAGS <span class="token operator">=</span> -Wall -Wextra -fsanitize<span class="token operator">=</span>address
+ LDFLAGS <span class="token operator">=</span> -fsanitize<span class="token operator">=</span>address
+ LDLIBS <span class="token operator">=</span>
+ 
+ SRC <span class="token operator">=</span> test.c replace.c
+ OBJ <span class="token operator">=</span> <span class="token variable">$</span><span class="token punctuation">{</span>SRC<span class="token punctuation">:</span>.c<span class="token operator">=</span>.o<span class="token punctuation">}</span>
+ 
+ <span class="token symbol">test</span><span class="token punctuation">:</span> <span class="token variable">$</span><span class="token punctuation">{</span>OBJ<span class="token punctuation">}</span>
+ 
+ <span class="token builtin">.PHONY</span><span class="token punctuation">:</span> clean
+ 
+ <span class="token symbol">clean</span><span class="token punctuation">:</span>
+   <span class="token variable">$</span><span class="token punctuation">{</span>RM<span class="token punctuation">}</span> <span class="token variable">$</span><span class="token punctuation">{</span>OBJ<span class="token punctuation">}</span>
+   <span class="token variable">$</span><span class="token punctuation">{</span>RM<span class="token punctuation">}</span> test
+ 
+ <span class="token comment"># END</span></code></pre>
+  <h4 id="head_1026">The replace.c File</h4>
+  <div class="filename">replace.c</div>
+  <pre class="language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h&gt;</span></span>
+ <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;string.h&gt;</span></span>
+ 
+ <span class="token keyword">char</span><span class="token operator">*</span> <span class="token function">replace</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> s<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> from<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> to<span class="token punctuation">)</span>
+ <span class="token punctuation">{</span>
+     <span class="token comment">// TODO</span>
+ <span class="token punctuation">}</span></code></pre>
+  <h4 id="head_1027">The test.c File</h4>
+  <div class="filename">test.c</div>
+  <pre class="language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+ <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h&gt;</span></span>
+ <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;err.h&gt;</span></span>
+ 
+ <span class="token keyword">char</span><span class="token operator">*</span> <span class="token function">replace</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> s<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> from<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> to<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+ <span class="token keyword">void</span> <span class="token function">freplace</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> s<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> from<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> to<span class="token punctuation">)</span>
+ <span class="token punctuation">{</span>
+     <span class="token keyword">char</span><span class="token operator">*</span> result <span class="token operator">=</span> <span class="token function">replace</span><span class="token punctuation">(</span><span class="token operator">*</span>s<span class="token punctuation">,</span> from<span class="token punctuation">,</span> to<span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token function">free</span><span class="token punctuation">(</span><span class="token operator">*</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token operator">*</span>s <span class="token operator">=</span> result<span class="token punctuation">;</span>
+ <span class="token punctuation">}</span>
+ 
+ <span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
+ <span class="token punctuation">{</span>
+     <span class="token keyword">if</span> <span class="token punctuation">(</span>argc <span class="token operator">!=</span> <span class="token number">4</span><span class="token punctuation">)</span>
+         <span class="token function">errx</span><span class="token punctuation">(</span>EXIT_FAILURE<span class="token punctuation">,</span> <span class="token string">"%s"</span><span class="token punctuation">,</span>  <span class="token string">"Usage: ./test &lt;first_name&gt; &lt;last_name&gt; &lt;nick_name&gt;"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+     <span class="token keyword">char</span> str<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span>
+         <span class="token string">"Hello (FIRST_NAME) (LAST_NAME)\n"</span>
+         <span class="token string">"  * Your first name is: (FIRST_NAME)\n"</span>
+         <span class="token string">"  * Your last name is: (LAST_NAME)\n"</span>
+         <span class="token string">"  * Your nickname is: (NICKNAME)\n"</span>
+         <span class="token string">"Good bye (FIRST_NAME) (LAST_NAME) (I mean (NICKNAME))\n"</span><span class="token punctuation">;</span>
+ 
+     <span class="token keyword">char</span><span class="token operator">*</span> s <span class="token operator">=</span> <span class="token function">replace</span><span class="token punctuation">(</span>str<span class="token punctuation">,</span> <span class="token string">"(FIRST_NAME)"</span><span class="token punctuation">,</span> argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token function">freplace</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>s<span class="token punctuation">,</span> <span class="token string">"(LAST_NAME)"</span><span class="token punctuation">,</span> argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token function">freplace</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>s<span class="token punctuation">,</span> <span class="token string">"(NICKNAME)"</span><span class="token punctuation">,</span> argv<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+     <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%s"</span><span class="token punctuation">,</span> s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+     <span class="token function">free</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token keyword">return</span> EXIT_SUCCESS<span class="token punctuation">;</span>
+ <span class="token punctuation">}</span></code></pre>
+  <h3 id="head_1028">Implementation</h3>
+  <p>
+  You have to complete the <code class="s">replace()</code> function in the <code class="s">replace.c</code> file.
+  </p>
+  <pre class="language-c"><code class="language-c"><span class="token keyword">char</span><span class="token operator">*</span> <span class="token function">replace</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> s<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> from<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> to<span class="token punctuation">)</span></code></pre>
+  <p>
+  You are not allowed to:
+  </p>
+  <ul>
+  <li>Modify any other files.</li>
+  <li>Include any other files.</li>
+  </ul>
+  <p>
+  This function generates a new heap-allocated string
+  and copies the characters from <var>s</var> into it.
+  While doing so, it attempts to find the <var>from</var> occurrences.
+  If any, it replaces them with the <var>to</var> string.
+  </p>
+  <p>
+  You are allowed to call any functions defined in the header files
+  that are included in <code class="s">replace.c</code>.
+  (As a reminder: <mark>do not include any other files</mark>.)
+  </p>
+  <p>
+  You are free to write as many functions as you want and to use your own method.
+  However, here are some tips you should follow.
+  </p>
+  <ul>
+  <li>Get the number of occurrences to replace.</li>
+  <li>Deduce the length of the destination string.</li>
+  <li>Allocate the memory space for the destination string.</li>
+  <li>
+  For all the occurrences to replace:
+  <ul>
+  <li>Get the next occurrence of <var>from</var>.</li>
+  <li>Copy the string up to that occurrence.</li>
+  <li>Append the <var>to</var> occurrence to the destination string.</li>
+  </ul>
+  </li>
+  <li>Copy the last part of the string (after the last <var>from</var> occurrence).</li>
+  <li>Return the address of the destination string.</li>
+  </ul>
+  <p>
+  To test your function, you can execute the following commands.
+  </p>
+  <pre class="language-none"><code class="language-none">$ ./test Peter Parker Spiderman
+ Hello Peter Parker
+   * Your first name is: Peter
+   * Your last name is: Parker
+   * Your nickname is: Spiderman
+ Good bye Peter Parker (I mean Spiderman)
+ $ ./test David Bouchet "Best Super Hero Teacher"
+ Hello David Bouchet
+   * Your first name is: David
+   * Your last name is: Bouchet
+   * Your nickname is: Best Super Hero Teacher
+ Good bye David Bouchet (I mean Best Super Hero Teacher)</code></pre>
+  </main>
+  <footer>
+  <span>
+  <a href="mailto:david.bouchet.epita@gmail.com">David Bouchet</a>
+  </span>
+  </footer> 
+</body></html>

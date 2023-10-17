@@ -1,0 +1,2833 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <meta name="author" content="David Bouchet">
+        <title>Basic Language Features</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="robots" content="noindex, nofollow">
+        <style>
+          body
+{
+	font-family: sans-serif;
+    background-color: #FFFFFF;
+	display: flex;
+	flex-direction: column;
+
+	margin: 0px;
+	
+
+}
+
+h2.exercise
+{
+	counter-reset: q;
+}
+
+p.question:before
+{
+	counter-increment: q;
+	content: counter(q) ". ";
+	font-weight: bold;
+}
+
+h3.question:before
+{
+	counter-increment: q;
+	content: counter(q) ". ";
+}
+
+span.date
+{
+	color: #006786;
+}
+
+details
+{
+    transition: height 250ms ease;
+    overflow: hidden;
+}
+
+details:not([open])
+{
+    height: 1.5em;
+}
+
+details[open]
+{
+    height: 5em;
+}
+
+summary
+{
+	color: green;
+}
+
+summary:hover
+{
+  text-decoration: underline;
+	cursor: help;
+}
+
+header
+{
+	position: fixed;
+	width: 100%;
+	margin: auto;
+	background: rgba(0, 0, 0, 0.6);
+	color: white;
+	top: Oem;
+	transition: top 250ms;
+}
+
+header div
+{
+	display: flex;
+	justify-content: space-between;
+	padding: 0.2rem 2rem;
+	font-weight: bold;
+}
+
+header a:link,
+header a:visited
+{
+	color: white;
+	text-decoration: none;
+}
+
+nav
+{
+	margin: 0rem auto 0rem auto;
+	width: 900px;
+	box-sizing: border-box;
+	border-right: dashed 1px black;
+	padding-right: 1rem;
+	border-left: dashed 1px black;
+	padding-left: 1rem;
+	padding-top: 1rem;
+}
+
+
+nav h2,
+nav h3,
+nav h4
+{
+	background: none;
+	border: none;
+	margin: 0px;
+	padding: 0px;
+	font-size: 1.1rem;
+	text-shadow: none;
+	font-weight: normal;
+	line-height: 1.6;
+}
+
+nav h2
+{
+	font-weight: bold;
+	font-size: 1.3rem;
+	margin-top: 0.5rem;
+}
+
+nav h3
+{
+	margin-left: 2rem;
+	font-size: 1.1rem;
+}
+
+nav h4
+{
+	margin-left: 4rem;
+}
+
+nav h2 a:link,
+nav h3 a:link,
+nav h4 a:link,
+nav h2 a:visited,
+nav h3 a:visited,
+nav h4 a:visited
+{
+	color: #006786;
+	text-decoration: none;
+}
+
+nav h2 a:hover,
+nav h3 a:hover,
+nav h4 a:hover
+{
+	color: white;
+	background-color: #006786;
+}
+
+
+.title
+{
+	display: flex;
+	flex-direction: column;
+	background-color: white;
+	justify-content: space-between;
+}
+
+.practical_number
+{
+	margin: 0px;
+	text-align: left;
+	padding-left: 2em;
+	background-color: black;
+	color: white;
+	font-size: 3em;
+	width: 30rem;
+	border-top: solid 0.1rem black;
+	position: relative;
+	top: 2rem;
+	border-radius: 0px 8px 0px 0px;
+}
+
+h1
+{
+	background-color: #2F97B6;
+	margin-top: 0px;
+	color: white;
+	text-shadow: 2px 2px 2px black;
+	/*border-bottom: solid 1px black;*/
+	border-top: solid 0.5rem black;
+	text-align: center;
+	font-size: 3rem;
+	margin: 0px;
+	width: 100%;
+	line-height: 1.2;
+	padding-top: 3rem;
+	padding-bottom: 1rem;
+}
+
+.bonus
+{
+	color: #d00000;
+	font-weight: bold;
+}
+
+mark
+{
+	color: #d00000;
+	background: none;
+	/*font-weight: bold;*/
+}
+
+code.s
+{
+	font-family: monospace;
+	color: darkgoldenrod;
+	font-weight: bold;
+}
+
+mark code.s
+{
+	color: inherit;
+}
+
+
+strong
+{
+	font-style: italic;
+}
+
+p + ul
+{
+	margin-top: -1em;
+}
+
+h2
+{
+	color: #0087B6;
+	/*color: #e03043;*/
+	text-shadow: 1px 1px 1px black;
+	font-size: 2.2rem;
+	border-bottom: solid 0.2rem #0087B6;
+	padding-bottom: 1.5rem;
+	margin-top: 4rem;
+	line-height: 1.2;
+	font-weight: normal;
+}
+
+h3
+{
+	background-color: #2F97B6;
+	color: white;
+	padding: 0.3rem 1rem;
+	font-weight: normal;
+	border-left: solid 0.5rem black;
+	font-size: 1.3rem;
+}
+
+h4
+{
+	color: #0087B6;
+	font-size: 1.3rem;
+}
+
+main
+{
+	box-sizing: border-box;
+	width: 900px;
+	margin: auto;
+	font-size: 1.1rem;
+	line-height: 1.6;
+	text-align: justify;
+	border-right: dashed 1px black;
+	padding-right: 1rem;
+	border-left: dashed 1px black;
+	padding-left: 1rem;
+}
+
+a:link, a:visited
+{
+	color: #ff7000;
+	/*color: darkorange;*/
+	text-decoration: underline;
+}
+
+a:hover
+{
+	text-decoration: underline;
+	background-color: #ff7000;
+	color: white;
+}
+
+div.filename
+{
+	border: solid 1px gray;
+	margin-left: 3.3rem;
+	color: white;
+	background-color: #272822;
+	padding: 0.2rem 1.2rem;
+	border-radius: 0.7rem 0.7rem 0px 0px;
+	font-family: monospace;
+	font-size: 1rem;
+	font-weight: bold;
+	text-align: center;
+	width: 12rem;
+}
+
+pre + div.filename
+{
+	margin-top: 2rem;
+}
+
+table.ls_f,
+table.ls_owner_group_other
+{
+	border-collapse: collapse;
+	margin: 2em auto;
+	border: solid 2px #004076;
+}
+
+table.ls_f th,
+table.ls_owner_group_other th
+{
+	padding: 0.2em 1em;
+	background-color: #2F97B6;
+	color: white;
+	border: solid 1px #004076;
+}
+
+table.ls_f td,
+table.ls_owner_group_other td
+{
+	border: solid 1px #004076;
+	padding: 0.2em 1em;
+}
+
+table.ls_f tr th:first-child,
+table.ls_f tr td:first-child,
+table.ls_owner_group_other tr th,
+table.ls_owner_group_other tr td
+{
+	text-align: center;
+}
+
+table tr th.description,
+table tr td.description
+{
+	text-align: left;
+}
+
+
+kbd
+{
+	font-size: 1.1rem;
+	border-style: solid;
+	border-width: 2px;
+	padding: 2px 7px 3px 7px;
+	margin-left: 1px;
+	margin-right: 4px;
+	border-radius: 5px;
+	background-color: #f0f0f0;
+	box-shadow: 1px 1px 3px black;
+}
+
+img
+{
+	width: 60%;
+	margin-left: 20%;
+	margin-right: 20%;
+}
+
+img.screenshot
+{
+	width: 90%;
+	margin-left: 5%;
+	margin-right: 5%;
+    box-shadow: 3px 3px 8px black;
+}
+
+body > footer
+{
+	display: flex;
+	justify-content: center;
+	background: #2F97B6;
+	color: white;
+	border-top: solid black 1px;
+}
+
+body > footer span
+{
+	margin: 0rem 2rem 0rem 2rem;
+}
+
+body > footer a:visited,
+body > footer a:link
+{
+	color: white;
+	text-decoration: none;
+}
+
+body > footer a:hover
+{
+	background: none;
+	text-decoration: underline;
+}
+
+dt
+{
+	font-weight: bold;
+}
+
+dd
+{
+	margin-bottom: 1rem;
+}
+
+
+@media (max-width: 900px)
+{
+    body
+    {
+        width: auto;
+        margin: 0px;
+        padding: 0px;
+        box-sizing: border-box;
+    }
+	header div
+	{
+		padding: 0rem 1rem;
+	  font-weight: normal;
+	}
+	
+	nav
+	{
+		width: 100%;
+	}
+
+
+    main
+    {
+        width: auto;
+        margin-left: 0px;
+        margin-right: 0px;
+		    text-align: left;
+    }
+	
+    .practical_number
+    {
+        margin: 0px;
+        text-align: center;
+        padding-left: 0em;
+        background-color: black;
+        color: white;
+        font-size: 2.5em;
+        width: 100%;
+        border-top: solid 0.1rem black;
+        position: relative;
+        top: 2rem;
+        border-radius: 0px;
+    }
+	
+	h1
+	{
+		font-size: 2.5em;
+	}
+
+	img
+	{
+		width: 90%;
+		margin-left: 5%;
+		margin-right: 5%;
+	}
+
+}
+
+blockquote
+{
+	border: 1px dotted black;
+	padding: 0.7rem 1.2rem;
+	background-color: #eee;
+	box-shadow: 1px 1px 1px black;
+	font-style: italic;
+}
+
+/* PrismJS 1.14.0
+http://prismjs.com/download.html#themes=prism-okaidia&languages=clike+c+bash+makefile&plugins=line-numbers+normalize-whitespace */
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+ code[class*="language-"],
+pre[class*="language-"] {
+	color: #ffffff;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 0.5em;
+	margin: 0em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: slategray;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+
+pre.line-numbers {
+	position: relative;
+	padding-left: 3.8em;
+	counter-reset: linenumber;
+}
+
+pre.line-numbers > code {
+	position: relative;
+    white-space: inherit;
+}
+
+.line-numbers .line-numbers-rows {
+	position: absolute;
+	pointer-events: none;
+	top: 0;
+	font-size: 100%;
+	left: -3.8em;
+	width: 3em; /* works for line-numbers below 1000 lines */
+	letter-spacing: -1px;
+	border-right: 1px solid #999;
+
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+
+}
+
+	.line-numbers-rows > span {
+		pointer-events: none;
+		display: block;
+		counter-increment: linenumber;
+	}
+
+		.line-numbers-rows > span:before {
+			content: counter(linenumber);
+			color: #999;
+			display: block;
+			padding-right: 0.8em;
+			text-align: right;
+		}
+        </style>
+        <script>
+          /* PrismJS 1.14.0
+http://prismjs.com/download.html#themes=prism-okaidia&languages=clike+c+bash+makefile&plugins=line-numbers+normalize-whitespace */
+var _self = (typeof window !== 'undefined')
+	? window   // if in browser
+	: (
+		(typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope)
+		? self // if in worker
+		: {}   // if in node js
+	);
+
+/**
+ * Prism: Lightweight, robust, elegant syntax highlighting
+ * MIT license http://www.opensource.org/licenses/mit-license.php/
+ * @author Lea Verou http://lea.verou.me
+ */
+
+var Prism = (function(){
+
+// Private helper vars
+var lang = /\blang(?:uage)?-([\w-]+)\b/i;
+var uniqueId = 0;
+
+var _ = _self.Prism = {
+	manual: _self.Prism && _self.Prism.manual,
+	disableWorkerMessageHandler: _self.Prism && _self.Prism.disableWorkerMessageHandler,
+	util: {
+		encode: function (tokens) {
+			if (tokens instanceof Token) {
+				return new Token(tokens.type, _.util.encode(tokens.content), tokens.alias);
+			} else if (_.util.type(tokens) === 'Array') {
+				return tokens.map(_.util.encode);
+			} else {
+				return tokens.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/\u00a0/g, ' ');
+			}
+		},
+
+		type: function (o) {
+			return Object.prototype.toString.call(o).match(/\[object (\w+)\]/)[1];
+		},
+
+		objId: function (obj) {
+			if (!obj['__id']) {
+				Object.defineProperty(obj, '__id', { value: ++uniqueId });
+			}
+			return obj['__id'];
+		},
+
+		// Deep clone a language definition (e.g. to extend it)
+		clone: function (o, visited) {
+			var type = _.util.type(o);
+			visited = visited || {};
+
+			switch (type) {
+				case 'Object':
+					if (visited[_.util.objId(o)]) {
+						return visited[_.util.objId(o)];
+					}
+					var clone = {};
+					visited[_.util.objId(o)] = clone;
+
+					for (var key in o) {
+						if (o.hasOwnProperty(key)) {
+							clone[key] = _.util.clone(o[key], visited);
+						}
+					}
+
+					return clone;
+
+				case 'Array':
+					if (visited[_.util.objId(o)]) {
+						return visited[_.util.objId(o)];
+					}
+					var clone = [];
+					visited[_.util.objId(o)] = clone;
+
+					o.forEach(function (v, i) {
+						clone[i] = _.util.clone(v, visited);
+					});
+
+					return clone;
+			}
+
+			return o;
+		}
+	},
+
+	languages: {
+		extend: function (id, redef) {
+			var lang = _.util.clone(_.languages[id]);
+
+			for (var key in redef) {
+				lang[key] = redef[key];
+			}
+
+			return lang;
+		},
+
+		/**
+		 * Insert a token before another token in a language literal
+		 * As this needs to recreate the object (we cannot actually insert before keys in object literals),
+		 * we cannot just provide an object, we need anobject and a key.
+		 * @param inside The key (or language id) of the parent
+		 * @param before The key to insert before. If not provided, the function appends instead.
+		 * @param insert Object with the key/value pairs to insert
+		 * @param root The object that contains `inside`. If equal to Prism.languages, it can be omitted.
+		 */
+		insertBefore: function (inside, before, insert, root) {
+			root = root || _.languages;
+			var grammar = root[inside];
+
+			if (arguments.length == 2) {
+				insert = arguments[1];
+
+				for (var newToken in insert) {
+					if (insert.hasOwnProperty(newToken)) {
+						grammar[newToken] = insert[newToken];
+					}
+				}
+
+				return grammar;
+			}
+
+			var ret = {};
+
+			for (var token in grammar) {
+
+				if (grammar.hasOwnProperty(token)) {
+
+					if (token == before) {
+
+						for (var newToken in insert) {
+
+							if (insert.hasOwnProperty(newToken)) {
+								ret[newToken] = insert[newToken];
+							}
+						}
+					}
+
+					ret[token] = grammar[token];
+				}
+			}
+
+			// Update references in other language definitions
+			_.languages.DFS(_.languages, function(key, value) {
+				if (value === root[inside] && key != inside) {
+					this[key] = ret;
+				}
+			});
+
+			return root[inside] = ret;
+		},
+
+		// Traverse a language definition with Depth First Search
+		DFS: function(o, callback, type, visited) {
+			visited = visited || {};
+			for (var i in o) {
+				if (o.hasOwnProperty(i)) {
+					callback.call(o, i, o[i], type || i);
+
+					if (_.util.type(o[i]) === 'Object' && !visited[_.util.objId(o[i])]) {
+						visited[_.util.objId(o[i])] = true;
+						_.languages.DFS(o[i], callback, null, visited);
+					}
+					else if (_.util.type(o[i]) === 'Array' && !visited[_.util.objId(o[i])]) {
+						visited[_.util.objId(o[i])] = true;
+						_.languages.DFS(o[i], callback, i, visited);
+					}
+				}
+			}
+		}
+	},
+	plugins: {},
+
+	highlightAll: function(async, callback) {
+		_.highlightAllUnder(document, async, callback);
+	},
+
+	highlightAllUnder: function(container, async, callback) {
+		var env = {
+			callback: callback,
+			selector: 'code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code'
+		};
+
+		_.hooks.run("before-highlightall", env);
+
+		var elements = env.elements || container.querySelectorAll(env.selector);
+
+		for (var i=0, element; element = elements[i++];) {
+			_.highlightElement(element, async === true, env.callback);
+		}
+	},
+
+	highlightElement: function(element, async, callback) {
+		// Find language
+		var language, grammar, parent = element;
+
+		while (parent && !lang.test(parent.className)) {
+			parent = parent.parentNode;
+		}
+
+		if (parent) {
+			language = (parent.className.match(lang) || [,''])[1].toLowerCase();
+			grammar = _.languages[language];
+		}
+
+		// Set language on the element, if not present
+		element.className = element.className.replace(lang, '').replace(/\s+/g, ' ') + ' language-' + language;
+
+		if (element.parentNode) {
+			// Set language on the parent, for styling
+			parent = element.parentNode;
+
+			if (/pre/i.test(parent.nodeName)) {
+				parent.className = parent.className.replace(lang, '').replace(/\s+/g, ' ') + ' language-' + language;
+			}
+		}
+
+		var code = element.textContent;
+
+		var env = {
+			element: element,
+			language: language,
+			grammar: grammar,
+			code: code
+		};
+
+		_.hooks.run('before-sanity-check', env);
+
+		if (!env.code || !env.grammar) {
+			if (env.code) {
+				_.hooks.run('before-highlight', env);
+				env.element.textContent = env.code;
+				_.hooks.run('after-highlight', env);
+			}
+			_.hooks.run('complete', env);
+			return;
+		}
+
+		_.hooks.run('before-highlight', env);
+
+		if (async && _self.Worker) {
+			var worker = new Worker(_.filename);
+
+			worker.onmessage = function(evt) {
+				env.highlightedCode = evt.data;
+
+				_.hooks.run('before-insert', env);
+
+				env.element.innerHTML = env.highlightedCode;
+
+				callback && callback.call(env.element);
+				_.hooks.run('after-highlight', env);
+				_.hooks.run('complete', env);
+			};
+
+			worker.postMessage(JSON.stringify({
+				language: env.language,
+				code: env.code,
+				immediateClose: true
+			}));
+		}
+		else {
+			env.highlightedCode = _.highlight(env.code, env.grammar, env.language);
+
+			_.hooks.run('before-insert', env);
+
+			env.element.innerHTML = env.highlightedCode;
+
+			callback && callback.call(element);
+
+			_.hooks.run('after-highlight', env);
+			_.hooks.run('complete', env);
+		}
+	},
+
+	highlight: function (text, grammar, language) {
+		var env = {
+			code: text,
+			grammar: grammar,
+			language: language
+		};
+		_.hooks.run('before-tokenize', env);
+		env.tokens = _.tokenize(env.code, env.grammar);
+		_.hooks.run('after-tokenize', env);
+		return Token.stringify(_.util.encode(env.tokens), env.language);
+	},
+
+	matchGrammar: function (text, strarr, grammar, index, startPos, oneshot, target) {
+		var Token = _.Token;
+
+		for (var token in grammar) {
+			if(!grammar.hasOwnProperty(token) || !grammar[token]) {
+				continue;
+			}
+
+			if (token == target) {
+				return;
+			}
+
+			var patterns = grammar[token];
+			patterns = (_.util.type(patterns) === "Array") ? patterns : [patterns];
+
+			for (var j = 0; j < patterns.length; ++j) {
+				var pattern = patterns[j],
+					inside = pattern.inside,
+					lookbehind = !!pattern.lookbehind,
+					greedy = !!pattern.greedy,
+					lookbehindLength = 0,
+					alias = pattern.alias;
+
+				if (greedy && !pattern.pattern.global) {
+					// Without the global flag, lastIndex won't work
+					var flags = pattern.pattern.toString().match(/[imuy]*$/)[0];
+					pattern.pattern = RegExp(pattern.pattern.source, flags + "g");
+				}
+
+				pattern = pattern.pattern || pattern;
+
+				// Donâ€™t cache length as it changes during the loop
+				for (var i = index, pos = startPos; i < strarr.length; pos += strarr[i].length, ++i) {
+
+					var str = strarr[i];
+
+					if (strarr.length > text.length) {
+						// Something went terribly wrong, ABORT, ABORT!
+						return;
+					}
+
+					if (str instanceof Token) {
+						continue;
+					}
+
+					if (greedy && i != strarr.length - 1) {
+						pattern.lastIndex = pos;
+						var match = pattern.exec(text);
+						if (!match) {
+							break;
+						}
+
+						var from = match.index + (lookbehind ? match[1].length : 0),
+						    to = match.index + match[0].length,
+						    k = i,
+						    p = pos;
+
+						for (var len = strarr.length; k < len && (p < to || (!strarr[k].type && !strarr[k - 1].greedy)); ++k) {
+							p += strarr[k].length;
+							// Move the index i to the element in strarr that is closest to from
+							if (from >= p) {
+								++i;
+								pos = p;
+							}
+						}
+
+						// If strarr[i] is a Token, then the match starts inside another Token, which is invalid
+						if (strarr[i] instanceof Token) {
+							continue;
+						}
+
+						// Number of tokens to delete and replace with the new match
+						delNum = k - i;
+						str = text.slice(pos, p);
+						match.index -= pos;
+					} else {
+						pattern.lastIndex = 0;
+
+						var match = pattern.exec(str),
+							delNum = 1;
+					}
+
+					if (!match) {
+						if (oneshot) {
+							break;
+						}
+
+						continue;
+					}
+
+					if(lookbehind) {
+						lookbehindLength = match[1] ? match[1].length : 0;
+					}
+
+					var from = match.index + lookbehindLength,
+					    match = match[0].slice(lookbehindLength),
+					    to = from + match.length,
+					    before = str.slice(0, from),
+					    after = str.slice(to);
+
+					var args = [i, delNum];
+
+					if (before) {
+						++i;
+						pos += before.length;
+						args.push(before);
+					}
+
+					var wrapped = new Token(token, inside? _.tokenize(match, inside) : match, alias, match, greedy);
+
+					args.push(wrapped);
+
+					if (after) {
+						args.push(after);
+					}
+
+					Array.prototype.splice.apply(strarr, args);
+
+					if (delNum != 1)
+						_.matchGrammar(text, strarr, grammar, i, pos, true, token);
+
+					if (oneshot)
+						break;
+				}
+			}
+		}
+	},
+
+	tokenize: function(text, grammar, language) {
+		var strarr = [text];
+
+		var rest = grammar.rest;
+
+		if (rest) {
+			for (var token in rest) {
+				grammar[token] = rest[token];
+			}
+
+			delete grammar.rest;
+		}
+
+		_.matchGrammar(text, strarr, grammar, 0, 0, false);
+
+		return strarr;
+	},
+
+	hooks: {
+		all: {},
+
+		add: function (name, callback) {
+			var hooks = _.hooks.all;
+
+			hooks[name] = hooks[name] || [];
+
+			hooks[name].push(callback);
+		},
+
+		run: function (name, env) {
+			var callbacks = _.hooks.all[name];
+
+			if (!callbacks || !callbacks.length) {
+				return;
+			}
+
+			for (var i=0, callback; callback = callbacks[i++];) {
+				callback(env);
+			}
+		}
+	}
+};
+
+var Token = _.Token = function(type, content, alias, matchedStr, greedy) {
+	this.type = type;
+	this.content = content;
+	this.alias = alias;
+	// Copy of the full string this token was created from
+	this.length = (matchedStr || "").length|0;
+	this.greedy = !!greedy;
+};
+
+Token.stringify = function(o, language, parent) {
+	if (typeof o == 'string') {
+		return o;
+	}
+
+	if (_.util.type(o) === 'Array') {
+		return o.map(function(element) {
+			return Token.stringify(element, language, o);
+		}).join('');
+	}
+
+	var env = {
+		type: o.type,
+		content: Token.stringify(o.content, language, parent),
+		tag: 'span',
+		classes: ['token', o.type],
+		attributes: {},
+		language: language,
+		parent: parent
+	};
+
+	if (o.alias) {
+		var aliases = _.util.type(o.alias) === 'Array' ? o.alias : [o.alias];
+		Array.prototype.push.apply(env.classes, aliases);
+	}
+
+	_.hooks.run('wrap', env);
+
+	var attributes = Object.keys(env.attributes).map(function(name) {
+		return name + '="' + (env.attributes[name] || '').replace(/"/g, '&quot;') + '"';
+	}).join(' ');
+
+	return '<' + env.tag + ' class="' + env.classes.join(' ') + '"' + (attributes ? ' ' + attributes : '') + '>' + env.content + '</' + env.tag + '>';
+
+};
+
+if (!_self.document) {
+	if (!_self.addEventListener) {
+		// in Node.js
+		return _self.Prism;
+	}
+
+	if (!_.disableWorkerMessageHandler) {
+		// In worker
+		_self.addEventListener('message', function (evt) {
+			var message = JSON.parse(evt.data),
+				lang = message.language,
+				code = message.code,
+				immediateClose = message.immediateClose;
+
+			_self.postMessage(_.highlight(code, _.languages[lang], lang));
+			if (immediateClose) {
+				_self.close();
+			}
+		}, false);
+	}
+
+	return _self.Prism;
+}
+
+//Get current script and highlight
+var script = document.currentScript || [].slice.call(document.getElementsByTagName("script")).pop();
+
+if (script) {
+	_.filename = script.src;
+
+	if (!_.manual && !script.hasAttribute('data-manual')) {
+		if(document.readyState !== "loading") {
+			if (window.requestAnimationFrame) {
+				window.requestAnimationFrame(_.highlightAll);
+			} else {
+				window.setTimeout(_.highlightAll, 16);
+			}
+		}
+		else {
+			document.addEventListener('DOMContentLoaded', _.highlightAll);
+		}
+	}
+}
+
+return _self.Prism;
+
+})();
+
+if (typeof module !== 'undefined' && module.exports) {
+	module.exports = Prism;
+}
+
+// hack for components to work correctly in node.js
+if (typeof global !== 'undefined') {
+	global.Prism = Prism;
+}
+;
+Prism.languages.clike = {
+	'comment': [
+		{
+			pattern: /(^|[^\\])\/\*[\s\S]*?(?:\*\/|$)/,
+			lookbehind: true
+		},
+		{
+			pattern: /(^|[^\\:])\/\/.*/,
+			lookbehind: true,
+			greedy: true
+		}
+	],
+	'string': {
+		pattern: /(["'])(?:\\(?:\r\n|[\s\S])|(?!\1)[^\\\r\n])*\1/,
+		greedy: true
+	},
+	'class-name': {
+		pattern: /((?:\b(?:class|interface|extends|implements|trait|instanceof|new)\s+)|(?:catch\s+\())[\w.\\]+/i,
+		lookbehind: true,
+		inside: {
+			punctuation: /[.\\]/
+		}
+	},
+	'keyword': /\b(?:if|else|while|do|for|return|in|instanceof|function|new|try|throw|catch|finally|null|break|continue)\b/,
+	'boolean': /\b(?:true|false)\b/,
+	'function': /[a-z0-9_]+(?=\()/i,
+	'number': /\b0x[\da-f]+\b|(?:\b\d+\.?\d*|\B\.\d+)(?:e[+-]?\d+)?/i,
+	'operator': /--?|\+\+?|!=?=?|<=?|>=?|==?=?|&&?|\|\|?|\?|\*|\/|~|\^|%/,
+	'punctuation': /[{}[\];(),.:]/
+};
+
+Prism.languages.c = Prism.languages.extend('clike', {
+	'keyword': /\b(?:_Alignas|_Alignof|_Atomic|_Bool|_Complex|_Generic|_Imaginary|_Noreturn|_Static_assert|_Thread_local|asm|typeof|inline|auto|break|case|char|const|continue|default|do|double|else|enum|extern|float|for|goto|if|int|long|register|return|short|signed|size_t|sizeof|static|struct|switch|typedef|union|unsigned|void|volatile|while)\b/,
+	'operator': /-[>-]?|\+\+?|!=?|<<?=?|>>?=?|==?|&&?|\|\|?|[~^%?*\/]/,
+	'number': /(?:\b0x[\da-f]+|(?:\b\d+\.?\d*|\B\.\d+)(?:e[+-]?\d+)?)[ful]*/i
+});
+
+Prism.languages.insertBefore('c', 'string', {
+	'macro': {
+		// allow for multiline macro definitions
+		// spaces after the # character compile fine with gcc
+		pattern: /(^\s*)#\s*[a-z]+(?:[^\r\n\\]|\\(?:\r\n|[\s\S]))*/im,
+		lookbehind: true,
+		alias: 'property',
+		inside: {
+			// highlight the path of the include statement as a string
+			'string': {
+				pattern: /(#\s*include\s*)(?:<.+?>|("|')(?:\\?.)+?\2)/,
+				lookbehind: true
+			},
+			// highlight macro directives as keywords
+			'directive': {
+				pattern: /(#\s*)\b(?:define|defined|elif|else|endif|error|ifdef|ifndef|if|import|include|line|pragma|undef|using)\b/,
+				lookbehind: true,
+				alias: 'keyword'
+			}
+		}
+	},
+	// highlight predefined macros as constants
+	'constant': /\b(?:__FILE__|__LINE__|__DATE__|__TIME__|__TIMESTAMP__|__func__|EOF|NULL|SEEK_CUR|SEEK_END|SEEK_SET|stdin|stdout|stderr)\b/
+});
+
+delete Prism.languages.c['class-name'];
+delete Prism.languages.c['boolean'];
+
+(function(Prism) {
+	var insideString = {
+		variable: [
+			// Arithmetic Environment
+			{
+				pattern: /\$?\(\([\s\S]+?\)\)/,
+				inside: {
+					// If there is a $ sign at the beginning highlight $(( and )) as variable
+					variable: [{
+							pattern: /(^\$\(\([\s\S]+)\)\)/,
+							lookbehind: true
+						},
+						/^\$\(\(/
+					],
+					number: /\b0x[\dA-Fa-f]+\b|(?:\b\d+\.?\d*|\B\.\d+)(?:[Ee]-?\d+)?/,
+					// Operators according to https://www.gnu.org/software/bash/manual/bashref.html#Shell-Arithmetic
+					operator: /--?|-=|\+\+?|\+=|!=?|~|\*\*?|\*=|\/=?|%=?|<<=?|>>=?|<=?|>=?|==?|&&?|&=|\^=?|\|\|?|\|=|\?|:/,
+					// If there is no $ sign at the beginning highlight (( and )) as punctuation
+					punctuation: /\(\(?|\)\)?|,|;/
+				}
+			},
+			// Command Substitution
+			{
+				pattern: /\$\([^)]+\)|`[^`]+`/,
+				greedy: true,
+				inside: {
+					variable: /^\$\(|^`|\)$|`$/
+				}
+			},
+			/\$(?:[\w#?*!@]+|\{[^}]+\})/i
+		]
+	};
+
+	Prism.languages.bash = {
+		'shebang': {
+			pattern: /^#!\s*\/bin\/bash|^#!\s*\/bin\/sh/,
+			alias: 'important'
+		},
+		'comment': {
+			pattern: /(^|[^"{\\])#.*/,
+			lookbehind: true
+		},
+		'string': [
+			//Support for Here-Documents https://en.wikipedia.org/wiki/Here_document
+			{
+				pattern: /((?:^|[^<])<<\s*)["']?(\w+?)["']?\s*\r?\n(?:[\s\S])*?\r?\n\2/,
+				lookbehind: true,
+				greedy: true,
+				inside: insideString
+			},
+			{
+				pattern: /(["'])(?:\\[\s\S]|\$\([^)]+\)|`[^`]+`|(?!\1)[^\\])*\1/,
+				greedy: true,
+				inside: insideString
+			}
+		],
+		'variable': insideString.variable,
+		// Originally based on http://ss64.com/bash/
+		'function': {
+			pattern: /(^|[\s;|&])(?:!!|!-2|!c|alias|apropos|apt-get|aptitude|aspell|awk|basename|bash|bc|bg|builtin|bzip2|cal|cat|cd|cfdisk|chgrp|chmod|chown|chroot|chkconfig|cksum|clear|cmp|comm|command|cp|cron|crontab|csplit|curl|cut|date|dc|dd|ddrescue|df|diff|diff3|dig|dir|dircolors|dirname|dirs|dmesg|du|egrep|eject|enable|env|ethtool|eval|exec|expand|expect|export|expr|fdformat|fdisk|fg|fgrep|file|find|fmt|fold|format|free|fsck|ftp|fuser|gawk|gcc|getopts|git|grep|groupadd|groupdel|groupmod|groups|gzip|hash|head|help|hg|history|hostname|htop|iconv|id|ifconfig|ifdown|ifup|import|install|info|jobs|join|kill|killall|less|link|ln|locate|logname|logout|look|lpc|lpr|lprint|lprintd|lprintq|lprm|ls|lsof|make|man|mkdir|mkfifo|mkisofs|mknod|more|most|mount|mtools|mtr|mv|mmv|nano|netstat|nice|nl|nohup|notify-send|npm|nslookup|open|op|passwd|paste|pathchk|ping|pkg-config|pkill|popd|pr|printcap|printenv|printf|ps|pushd|pv|pwd|quota|quotacheck|quotactl|ram|rar|rcp|read|readarray|readonly|reboot|rename|renice|remsync|rev|rm|rmdir|rsync|screen|scp|sdiff|sed|seq|service|sftp|shift|shopt|shutdown|sleep|slocate|sort|source|split|ssh|stat|strace|su|sudo|sum|suspend|sync|tail|tar|tee|test|time|timeout|times|touch|top|traceroute|trap|tr|tree|tsort|tty|type|ulimit|umask|umount|unalias|uname|unexpand|uniq|units|unrar|unshar|uptime|useradd|userdel|usermod|users|uuencode|uudecode|v|vdir|vi|vmstat|wait|watch|wc|wget|whereis|which|who|whoami|write|xargs|xdg-open|yes|zip)(?=$|[\s;|&])/,
+			lookbehind: true
+		},
+		'keyword': {
+			pattern: /(^|[\s;|&])(?:let|:|\.|if|then|else|elif|fi|for|break|continue|while|in|case|function|select|do|done|until|echo|exit|return|set|declare)(?=$|[\s;|&])/,
+			lookbehind: true
+		},
+		'boolean': {
+			pattern: /(^|[\s;|&])(?:true|false)(?=$|[\s;|&])/,
+			lookbehind: true
+		},
+		'operator': /&&?|\|\|?|==?|!=?|<<<?|>>|<=?|>=?|=~/,
+		'punctuation': /\$?\(\(?|\)\)?|\.\.|[{}[\];]/
+	};
+
+	var inside = insideString.variable[1].inside;
+	inside.string = Prism.languages.bash.string;
+	inside['function'] = Prism.languages.bash['function'];
+	inside.keyword = Prism.languages.bash.keyword;
+	inside['boolean'] = Prism.languages.bash['boolean'];
+	inside.operator = Prism.languages.bash.operator;
+	inside.punctuation = Prism.languages.bash.punctuation;
+	
+	Prism.languages.shell = Prism.languages.bash;
+})(Prism);
+
+Prism.languages.makefile = {
+	'comment': {
+		pattern: /(^|[^\\])#(?:\\(?:\r\n|[\s\S])|[^\\\r\n])*/,
+		lookbehind: true
+	},
+	'string': {
+		pattern: /(["'])(?:\\(?:\r\n|[\s\S])|(?!\1)[^\\\r\n])*\1/,
+		greedy: true
+	},
+
+	// Built-in target names
+	'builtin': /\.[A-Z][^:#=\s]+(?=\s*:(?!=))/,
+
+	// Targets
+	'symbol': {
+		pattern: /^[^:=\r\n]+(?=\s*:(?!=))/m,
+		inside: {
+			'variable': /\$+(?:[^(){}:#=\s]+|(?=[({]))/
+		}
+	},
+	'variable': /\$+(?:[^(){}:#=\s]+|\([@*%<^+?][DF]\)|(?=[({]))/,
+
+	'keyword': [
+		// Directives
+		/-include\b|\b(?:define|else|endef|endif|export|ifn?def|ifn?eq|include|override|private|sinclude|undefine|unexport|vpath)\b/,
+		// Functions
+		{
+			pattern: /(\()(?:addsuffix|abspath|and|basename|call|dir|error|eval|file|filter(?:-out)?|findstring|firstword|flavor|foreach|guile|if|info|join|lastword|load|notdir|or|origin|patsubst|realpath|shell|sort|strip|subst|suffix|value|warning|wildcard|word(?:s|list)?)(?=[ \t])/,
+			lookbehind: true
+		}
+	],
+	'operator': /(?:::|[?:+!])?=|[|@]/,
+	'punctuation': /[:;(){}]/
+};
+(function () {
+
+	if (typeof self === 'undefined' || !self.Prism || !self.document) {
+		return;
+	}
+
+	/**
+	 * Plugin name which is used as a class name for <pre> which is activating the plugin
+	 * @type {String}
+	 */
+	var PLUGIN_NAME = 'line-numbers';
+	
+	/**
+	 * Regular expression used for determining line breaks
+	 * @type {RegExp}
+	 */
+	var NEW_LINE_EXP = /\n(?!$)/g;
+
+	/**
+	 * Resizes line numbers spans according to height of line of code
+	 * @param {Element} element <pre> element
+	 */
+	var _resizeElement = function (element) {
+		var codeStyles = getStyles(element);
+		var whiteSpace = codeStyles['white-space'];
+
+		if (whiteSpace === 'pre-wrap' || whiteSpace === 'pre-line') {
+			var codeElement = element.querySelector('code');
+			var lineNumbersWrapper = element.querySelector('.line-numbers-rows');
+			var lineNumberSizer = element.querySelector('.line-numbers-sizer');
+			var codeLines = codeElement.textContent.split(NEW_LINE_EXP);
+
+			if (!lineNumberSizer) {
+				lineNumberSizer = document.createElement('span');
+				lineNumberSizer.className = 'line-numbers-sizer';
+
+				codeElement.appendChild(lineNumberSizer);
+			}
+
+			lineNumberSizer.style.display = 'block';
+
+			codeLines.forEach(function (line, lineNumber) {
+				lineNumberSizer.textContent = line || '\n';
+				var lineSize = lineNumberSizer.getBoundingClientRect().height;
+				lineNumbersWrapper.children[lineNumber].style.height = lineSize + 'px';
+			});
+
+			lineNumberSizer.textContent = '';
+			lineNumberSizer.style.display = 'none';
+		}
+	};
+
+	/**
+	 * Returns style declarations for the element
+	 * @param {Element} element
+	 */
+	var getStyles = function (element) {
+		if (!element) {
+			return null;
+		}
+
+		return window.getComputedStyle ? getComputedStyle(element) : (element.currentStyle || null);
+	};
+
+	window.addEventListener('resize', function () {
+		Array.prototype.forEach.call(document.querySelectorAll('pre.' + PLUGIN_NAME), _resizeElement);
+	});
+
+	Prism.hooks.add('complete', function (env) {
+		if (!env.code) {
+			return;
+		}
+
+		// works only for <code> wrapped inside <pre> (not inline)
+		var pre = env.element.parentNode;
+		var clsReg = /\s*\bline-numbers\b\s*/;
+		if (
+			!pre || !/pre/i.test(pre.nodeName) ||
+			// Abort only if nor the <pre> nor the <code> have the class
+			(!clsReg.test(pre.className) && !clsReg.test(env.element.className))
+		) {
+			return;
+		}
+
+		if (env.element.querySelector('.line-numbers-rows')) {
+			// Abort if line numbers already exists
+			return;
+		}
+
+		if (clsReg.test(env.element.className)) {
+			// Remove the class 'line-numbers' from the <code>
+			env.element.className = env.element.className.replace(clsReg, ' ');
+		}
+		if (!clsReg.test(pre.className)) {
+			// Add the class 'line-numbers' to the <pre>
+			pre.className += ' line-numbers';
+		}
+
+		var match = env.code.match(NEW_LINE_EXP);
+		var linesNum = match ? match.length + 1 : 1;
+		var lineNumbersWrapper;
+
+		var lines = new Array(linesNum + 1);
+		lines = lines.join('<span></span>');
+
+		lineNumbersWrapper = document.createElement('span');
+		lineNumbersWrapper.setAttribute('aria-hidden', 'true');
+		lineNumbersWrapper.className = 'line-numbers-rows';
+		lineNumbersWrapper.innerHTML = lines;
+
+		if (pre.hasAttribute('data-start')) {
+			pre.style.counterReset = 'linenumber ' + (parseInt(pre.getAttribute('data-start'), 10) - 1);
+		}
+
+		env.element.appendChild(lineNumbersWrapper);
+
+		_resizeElement(pre);
+
+		Prism.hooks.run('line-numbers', env);
+	});
+
+	Prism.hooks.add('line-numbers', function (env) {
+		env.plugins = env.plugins || {};
+		env.plugins.lineNumbers = true;
+	});
+	
+	/**
+	 * Global exports
+	 */
+	Prism.plugins.lineNumbers = {
+		/**
+		 * Get node for provided line number
+		 * @param {Element} element pre element
+		 * @param {Number} number line number
+		 * @return {Element|undefined}
+		 */
+		getLine: function (element, number) {
+			if (element.tagName !== 'PRE' || !element.classList.contains(PLUGIN_NAME)) {
+				return;
+			}
+
+			var lineNumberRows = element.querySelector('.line-numbers-rows');
+			var lineNumberStart = parseInt(element.getAttribute('data-start'), 10) || 1;
+			var lineNumberEnd = lineNumberStart + (lineNumberRows.children.length - 1);
+
+			if (number < lineNumberStart) {
+				number = lineNumberStart;
+			}
+			if (number > lineNumberEnd) {
+				number = lineNumberEnd;
+			}
+
+			var lineIndex = number - lineNumberStart;
+
+			return lineNumberRows.children[lineIndex];
+		}
+	};
+
+}());
+(function() {
+
+var assign = Object.assign || function (obj1, obj2) {
+	for (var name in obj2) {
+		if (obj2.hasOwnProperty(name))
+			obj1[name] = obj2[name];
+	}
+	return obj1;
+}
+
+function NormalizeWhitespace(defaults) {
+	this.defaults = assign({}, defaults);
+}
+
+function toCamelCase(value) {
+	return value.replace(/-(\w)/g, function(match, firstChar) {
+		return firstChar.toUpperCase();
+	});
+}
+
+function tabLen(str) {
+	var res = 0;
+	for (var i = 0; i < str.length; ++i) {
+		if (str.charCodeAt(i) == '\t'.charCodeAt(0))
+			res += 3;
+	}
+	return str.length + res;
+}
+
+NormalizeWhitespace.prototype = {
+	setDefaults: function (defaults) {
+		this.defaults = assign(this.defaults, defaults);
+	},
+	normalize: function (input, settings) {
+		settings = assign(this.defaults, settings);
+
+		for (var name in settings) {
+			var methodName = toCamelCase(name);
+			if (name !== "normalize" && methodName !== 'setDefaults' &&
+					settings[name] && this[methodName]) {
+				input = this[methodName].call(this, input, settings[name]);
+			}
+		}
+
+		return input;
+	},
+
+	/*
+	 * Normalization methods
+	 */
+	leftTrim: function (input) {
+		return input.replace(/^\s+/, '');
+	},
+	rightTrim: function (input) {
+		return input.replace(/\s+$/, '');
+	},
+	tabsToSpaces: function (input, spaces) {
+		spaces = spaces|0 || 4;
+		return input.replace(/\t/g, new Array(++spaces).join(' '));
+	},
+	spacesToTabs: function (input, spaces) {
+		spaces = spaces|0 || 4;
+		return input.replace(new RegExp(' {' + spaces + '}', 'g'), '\t');
+	},
+	removeTrailing: function (input) {
+		return input.replace(/\s*?$/gm, '');
+	},
+	// Support for deprecated plugin remove-initial-line-feed
+	removeInitialLineFeed: function (input) {
+		return input.replace(/^(?:\r?\n|\r)/, '');
+	},
+	removeIndent: function (input) {
+		var indents = input.match(/^[^\S\n\r]*(?=\S)/gm);
+
+		if (!indents || !indents[0].length)
+			return input;
+
+		indents.sort(function(a, b){return a.length - b.length; });
+
+		if (!indents[0].length)
+			return input;
+
+		return input.replace(new RegExp('^' + indents[0], 'gm'), '');
+	},
+	indent: function (input, tabs) {
+		return input.replace(/^[^\S\n\r]*(?=\S)/gm, new Array(++tabs).join('\t') + '$&');
+	},
+	breakLines: function (input, characters) {
+		characters = (characters === true) ? 80 : characters|0 || 80;
+
+		var lines = input.split('\n');
+		for (var i = 0; i < lines.length; ++i) {
+			if (tabLen(lines[i]) <= characters)
+				continue;
+
+			var line = lines[i].split(/(\s+)/g),
+			    len = 0;
+
+			for (var j = 0; j < line.length; ++j) {
+				var tl = tabLen(line[j]);
+				len += tl;
+				if (len > characters) {
+					line[j] = '\n' + line[j];
+					len = tl;
+				}
+			}
+			lines[i] = line.join('');
+		}
+		return lines.join('\n');
+	}
+};
+
+// Support node modules
+if (typeof module !== 'undefined' && module.exports) {
+	module.exports = NormalizeWhitespace;
+}
+
+// Exit if prism is not loaded
+if (typeof Prism === 'undefined') {
+	return;
+}
+
+Prism.plugins.NormalizeWhitespace = new NormalizeWhitespace({
+	'remove-trailing': true,
+	'remove-indent': true,
+	'left-trim': true,
+	'right-trim': true,
+	/*'break-lines': 80,
+	'indent': 2,
+	'remove-initial-line-feed': false,
+	'tabs-to-spaces': 4,
+	'spaces-to-tabs': 4*/
+});
+
+Prism.hooks.add('before-sanity-check', function (env) {
+	var Normalizer = Prism.plugins.NormalizeWhitespace;
+
+	// Check settings
+	if (env.settings && env.settings['whitespace-normalization'] === false) {
+		return;
+	}
+
+	// Simple mode if there is no env.element
+	if ((!env.element || !env.element.parentNode) && env.code) {
+		env.code = Normalizer.normalize(env.code, env.settings);
+		return;
+	}
+
+	// Normal mode
+	var pre = env.element.parentNode;
+	var clsReg = /\bno-whitespace-normalization\b/;
+	if (!env.code || !pre || pre.nodeName.toLowerCase() !== 'pre' ||
+			clsReg.test(pre.className) || clsReg.test(env.element.className))
+		return;
+
+	var children = pre.childNodes,
+	    before = '',
+	    after = '',
+	    codeFound = false;
+
+	// Move surrounding whitespace from the <pre> tag into the <code> tag
+	for (var i = 0; i < children.length; ++i) {
+		var node = children[i];
+
+		if (node == env.element) {
+			codeFound = true;
+		} else if (node.nodeName === "#text") {
+			if (codeFound) {
+				after += node.nodeValue;
+			} else {
+				before += node.nodeValue;
+			}
+
+			pre.removeChild(node);
+			--i;
+		}
+	}
+
+	if (!env.element.children.length || !Prism.plugins.KeepMarkup) {
+		env.code = before + env.code + after;
+		env.code = Normalizer.normalize(env.code, env.settings);
+	} else {
+		// Preserve markup for keep-markup plugin
+		var html = before + env.element.innerHTML + after;
+		env.element.innerHTML = Normalizer.normalize(html, env.settings);
+		env.code = env.element.textContent;
+	}
+});
+
+}());
+var previous = 0;
+var derniere_position_de_scroll_connue = 0;
+var ticking = false;
+var header = document.querySelector("header");
+
+function faitQuelquechose(old_pos, new_pos) {
+  if (new_pos - old_pos > 0)
+      header.style.top = "-2em";
+  else
+      header.style.top = "0em";
+
+}
+
+window.addEventListener('scroll', function(e) {
+    var old = derniere_position_de_scroll_connue;
+  derniere_position_de_scroll_connue = window.scrollY;
+  if (!ticking) {
+    window.requestAnimationFrame(function() {
+      faitQuelquechose(old, derniere_position_de_scroll_connue);
+      ticking = false;
+    });
+  }
+  ticking = true;
+});
+
+var global_id = 1000
+
+function open_tag(tagName, id)
+{
+    return "<" + tagName.toLowerCase() + "><a href=\"#" + id + "\">";
+}
+
+function close_tag(tagName)
+{
+    return "</a></" + tagName.toLowerCase() + ">";
+}
+
+var nav = document.querySelector("nav");
+
+if (nav !== null)
+{
+    var hs = document.querySelectorAll("h2, h3, h4");
+    var tc = "";
+    var n = 0;
+
+    for (var i = 0; i < hs.length; i++)
+    {
+        var tagName = hs[i].tagName;
+
+        if (hs[i].id == "")
+            hs[i].id = "head_" + global_id++;
+
+        var qn = "";
+        if (hs[i].className == "question")
+            qn = ++n + ". ";
+
+        tc += open_tag(tagName, hs[i].id) + qn + hs[i].innerText + close_tag(tagName);
+    }
+
+    nav.innerHTML = tc;
+}
+        </script>
+    </head>
+      <body>
+          <div class="title">
+              <div class="practical_number">Practical Work #2</div>
+              <h1>Basic Language Features</h1>
+          </div>
+          <nav id="table_of_contents"></nav>
+          <main>
+              <h2>Submission</h2>
+              <h3>Due Date</h3>
+              <p>By Tuesday 5 September 2023 23:42</p>
+              <h3>Directory Hierarchy</h3>
+              <p>
+                  When you are done, your git repository must contain the following files and directories:
+              </p>
+              <pre class=" language-none"><code class=" language-none">$ tree
+.
+├── AUTHORS
+├── digit_count
+│   ├── digit_count.c
+│   ├── digit_count.h
+│   └── main.c
+├── divisor_sum
+│   ├── divisor_sum.c
+│   ├── divisor_sum.h
+│   └── main.c
+├── facto
+│   ├── facto.c
+│   ├── facto.h
+│   └── main.c
+├── fibo
+│   ├── fibo.c
+│   ├── fibo.h
+│   └── main.c
+├── isqrt
+│   ├── isqrt.c
+│   ├── isqrt.h
+│   └── main.c
+├── perfect_numbers
+│   ├── divisor_sum.h
+│   ├── is_perfect_number.c
+│   ├── is_perfect_number.h
+│   └── main.c
+└── power_of_two
+    ├── main.c
+    ├── power_of_two.c
+    └── power_of_two.h</code></pre>
+              <p>
+                  Use only one directory per exercise and write all the files of an
+                  exercise in its associated directory.
+                  For instance, write all the files of the factorial exercise in the
+                  <code class="s">facto</code> directory.
+              </p>
+              <p>
+                  The <code class="s">AUTHORS</code> file
+                  must contain the following information.
+              </p>
+              <div class="filename">AUTHORS</div>
+              <pre class="line-numbers language-bash"><code class=" language-bash">First Name
+Family Name
+Login
+Email Address<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+              <p>
+                  The last character of your <code class="s">AUTHORS</code> file must be a newline character.
+              </p>
+              <p>For instance:</p>
+              <div class="filename">AUTHORS</div>
+              <pre class=" language-bash"><code class=" language-bash">$ <span class="token function">cat</span> AUTHORS
+John
+Smith
+john.smith
+john.smith@epita.fr
+$ <span class="token comment"># Command prompt ready for the next command...</span></code></pre>
+              <p>
+                  <mark>
+                      Be careful, if you do not follow all the given instructions,
+                      no point will be given to your answers.
+                  </mark>
+              </p>
+              <h2 class="exercise">Exercises</h2>
+              <p>
+                  Unless otherwise stipulated, you will use the <code class="s">gcc</code> compiler
+                  with the following options and parameters for all the exercises:
+              </p>
+              <pre class=" language-bash"><code class=" language-bash">$ <span class="token function">gcc</span> -Wall -Wextra -Werror -std<span class="token operator">=</span>c99 -O1 -o main *.c</code></pre>
+              <p>
+                  Check the documentation of <code class="s">gcc</code> for more details.
+              </p>
+              <p>
+                  Unless otherwise stipulated, the prototype of the <code class="s">main()</code>
+                  function will be:
+              </p>
+              <pre class=" language-c"><code class=" language-c"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+              <p>
+                  The <code class="s">main()</code> function will return zero if no error occurs.
+                  Otherwise, it will return one.
+              </p>
+              <p>
+                  You have to bear in mind that header files
+                  have to be included only once even
+                  if several <code class="s">#include</code>
+                  are encountered for the same header file.
+                  So never forget to start header files with
+                  the <code class="s">#ifndef</code>
+                  and <code class="s">#define</code> pair of pseudo-instructions
+                  and to end it with the <code class="s">#endif</code> pseudo-instruction.
+                  All header files should look like the following template:
+              </p>
+              <pre class=" language-c"><code class=" language-c"><span class="token macro property">#<span class="token directive keyword">ifndef</span> NAME_OF_THE_HEADER_FILE</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> NAME_OF_THE_HEADER_FILE</span>
+
+<span class="token comment">// FUNCTION PROTOTYPES</span>
+
+<span class="token macro property">#<span class="token directive keyword">endif</span></span></code></pre>
+              <h3 class="question">Factorial</h3>
+              <p>
+                  You are going to write a program that works out the factorial of a number.
+              </p>
+              <p>
+                  Your program will be made up of three files:
+              </p>
+              <ul>
+                  <li>
+                      <code class="s">main.c</code> that contains the
+                      <code class="s">main()</code> function.
+                  </li>
+                  <li>
+                      <code class="s">facto.c</code> that contains the
+                      <code class="s">facto()</code> function.
+                  </li>
+                  <li>
+                      <code class="s">facto.h</code> that is the header of the
+                      <code class="s">facto.c</code> file.
+                  </li>
+              </ul>
+              <p>
+                  Prototype of the <code class="s">facto()</code> function:
+              </p>
+              <pre class=" language-c"><code class=" language-c"><span class="token keyword">unsigned</span> <span class="token keyword">long</span> <span class="token function">facto</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span> n<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+              <ul>
+                  <li>
+                      <b>Arguments:</b>
+                      <ul>
+                          <li><var>n</var>: 64-bit unsigned integer.</li>
+                      </ul>
+                  </li>
+                  <li>
+                      <b>Return Value:</b> the factorial of <var>n</var>.
+                  </li>
+                  <li><b>Note:</b> this function should not print anything on the terminal.</li>
+              </ul>
+              <p>
+                  For this first exercise, the <code class="s">facto.h</code> file is given:
+              </p>
+              <pre class=" language-c"><code class=" language-c"><span class="token macro property">#<span class="token directive keyword">ifndef</span> FACTO_H</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> FACTO_H</span>
+
+<span class="token keyword">unsigned</span> <span class="token keyword">long</span> <span class="token function">facto</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span> n<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token macro property">#<span class="token directive keyword">endif</span></span></code></pre>
+              <p>
+                  Write the <code class="s">facto.c</code> file.
+              </p>
+              <p>
+                  Finally, write the <code class="s">main.c</code> file.
+                  Your <code class="s">main()</code> function should invoke
+                  your <code class="s">facto()</code> function
+                  and should print <b>exactly</b> the following output on the terminal:
+              </p>
+              <pre class=" language-none"><code class=" language-none">$ ./main
+facto(0) = 1
+facto(1) = 1
+facto(2) = 2
+facto(3) = 6
+facto(4) = 24
+facto(5) = 120
+facto(6) = 720
+facto(7) = 5040
+facto(8) = 40320
+facto(9) = 362880
+facto(10) = 3628800
+facto(11) = 39916800
+facto(12) = 479001600
+facto(13) = 6227020800
+facto(14) = 87178291200
+facto(15) = 1307674368000
+facto(16) = 20922789888000
+facto(17) = 355687428096000
+facto(18) = 6402373705728000
+facto(19) = 121645100408832000
+facto(20) = 2432902008176640000</code></pre>
+              <h3 class="question">Fibonacci Sequence</h3>
+              <p>
+                  The <var>F<sub>n</sub></var> <strong>Fibonacci sequence</strong>
+                  is defined by the following recurrence relation:
+              </p>
+              <ul>
+                  <li>
+                      <var>F<sub>0</sub> = 0</var>
+                  </li>
+                  <li>
+                      <var>F<sub>1</sub> = 1</var>
+                  </li>
+                  <li>
+                      <var>F<sub>n</sub> = F<sub>n-1</sub> + F<sub>n-2</sub></var>
+                  </li>
+              </ul>
+              <p>
+                  You are going to write a program that works out the Fibonacci numbers.
+              </p>
+              <p>
+                  Your program will be made up of three files:
+              </p>
+              <ul>
+                  <li>
+                      <code class="s">main.c</code> that contains the
+                      <code class="s">main()</code> function.
+                  </li>
+                  <li>
+                      <code class="s">fibo.c</code> that contains the
+                      <code class="s">fibo()</code> function.
+                  </li>
+                  <li>
+                      <code class="s">fibo.h</code> that is the header of the
+                      <code class="s">fibo.c</code> file.
+                  </li>
+              </ul>
+              <p>
+                  Prototype of the <code class="s">fibo()</code> function:
+              </p>
+              <pre class=" language-c"><code class=" language-c"><span class="token keyword">unsigned</span> <span class="token keyword">long</span> <span class="token function">fibo</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span> n<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+              <ul>
+                  <li>
+                      <b>Arguments:</b>
+                      <ul>
+                          <li><var>n</var>: 64-bit unsigned integer.</li>
+                      </ul>
+                  </li>
+                  <li>
+                      <b>Return Value:</b> the <var>nth</var> number of the Fibonacci sequence.
+                  </li>
+                  <li><b>Note:</b> this function should not print anything on the terminal.</li>
+              </ul>
+              <p>
+                  Write the <code class="s">fibo.h</code> and <code class="s">fibo.c</code> files.
+              </p>
+              <p>
+                  Finally, write the <code class="s">main.c</code> file.
+                  Your <code class="s">main()</code> function should print <b>exactly</b>
+                  the following output on the terminal (the three dots included):
+              </p>
+              <pre class=" language-none"><code class=" language-none">$ ./main
+fibo(0) = 0
+fibo(1) = 1
+fibo(2) = 1
+fibo(3) = 2
+fibo(4) = 3
+fibo(5) = 5
+fibo(6) = 8
+fibo(7) = 13
+fibo(8) = 21
+fibo(9) = 34
+fibo(10) = 55
+...
+fibo(81) = 37889062373143906
+fibo(82) = 61305790721611591
+fibo(83) = 99194853094755497
+fibo(84) = 160500643816367088
+fibo(85) = 259695496911122585
+fibo(86) = 420196140727489673
+fibo(87) = 679891637638612258
+fibo(88) = 1100087778366101931
+fibo(89) = 1779979416004714189
+fibo(90) = 2880067194370816120</code></pre>
+              <h3 class="question">Integer Square Root</h3>
+              <p>
+                  The <strong>integer square root</strong>
+                  of a non-negative integer <var>n</var>
+                  is the largest integer that is smaller than
+                  or equal to the square root of <var>n</var>.
+              </p>
+              <p>
+                  To determine the integer square root (<var>r</var>)
+                  of a non-negative integer (<var>n</var>)
+                  you can use the Babylonian method:
+              </p>
+              <ul>
+                  <li>
+                      <var>r = n</var>
+                  </li>
+                  <li>
+                      While <var>r<sup>2</sup> &gt; n</var>:
+                      <ul>
+                          <li>
+                              <var>r = r + n/r</var>
+                          </li>
+                          <li>
+                              <var>r = r / 2</var>
+                          </li>
+                      </ul>
+                  </li>
+              </ul>
+              <p>
+                  You are going to write a program that works out
+                  the integer square root of a non-negative integer.
+              </p>
+              <p>
+                  Your program will be made up of three files:
+              </p>
+              <ul>
+                  <li>
+                      <code class="s">main.c</code> that contains the
+                      <code class="s">main()</code> function.
+                  </li>
+                  <li>
+                      <code class="s">isqrt.c</code> that contains the
+                      <code class="s">isqrt()</code> function.
+                  </li>
+                  <li>
+                      <code class="s">isqrt.h</code> that is the header of the
+                      <code class="s">isqrt.c</code> file.
+                  </li>
+              </ul>
+              <p>
+                  Prototype of the <code class="s">isqrt()</code> function:
+              </p>
+              <pre class=" language-c"><code class=" language-c"><span class="token keyword">unsigned</span> <span class="token keyword">long</span> <span class="token function">isqrt</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span> n<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+              <ul>
+                  <li>
+                      <b>Arguments:</b>
+                      <ul>
+                          <li><var>n</var>: 64-bit unsigned integer.</li>
+                      </ul>
+                  </li>
+                  <li>
+                      <b>Return Value:</b> the integer square root of <var>n</var>.
+                  </li>
+                  <li>
+                      <b>Note:</b> this function should not print anything on the terminal.
+                  </li>
+              </ul>
+              <p>
+                  Write the <code class="s">isqrt.h</code>
+                  and <code class="s">isqrt.c</code> files.
+              </p>
+              <p>
+                  Finally, write the <code class="s">main.c</code> file.
+                  Your <code class="s">main()</code> function should print <b>exactly</b>
+                  the following output on the terminal:
+              </p>
+              <pre class=" language-none"><code class=" language-none">$ ./main
+isqrt(0) = 0
+isqrt(8) = 2
+isqrt(16) = 4
+isqrt(24) = 4
+isqrt(32) = 5
+isqrt(40) = 6
+isqrt(48) = 6
+isqrt(56) = 7
+isqrt(64) = 8
+isqrt(72) = 8
+isqrt(80) = 8
+isqrt(88) = 9
+isqrt(96) = 9
+isqrt(104) = 10
+isqrt(112) = 10
+isqrt(120) = 10
+isqrt(128) = 11
+isqrt(136) = 11
+isqrt(144) = 12
+isqrt(152) = 12
+isqrt(160) = 12
+isqrt(168) = 12
+isqrt(176) = 13
+isqrt(184) = 13
+isqrt(192) = 13
+isqrt(200) = 14</code></pre>
+              <h3 class="question">Powers of Two</h3>
+              <p>
+                  You are going to write a program that works out
+                  a power of two as fast as possible
+                  (no iteration, no recursion).
+              </p>
+              <p>
+                  Your program will be made up of three files:
+              </p>
+              <ul>
+                  <li>
+                      <code class="s">main.c</code> that contains the
+                      <code class="s">main()</code> function.
+                  </li>
+                  <li>
+                      <code class="s">power_of_two.c</code> that contains the
+                      <code class="s">power_of_two()</code> function.
+                  </li>
+                  <li>
+                      <code class="s">power_of_two.h</code> that is the header of the
+                      <code class="s">power_of_two.c</code> file.
+                  </li>
+              </ul>
+              <p>
+                  Prototype of the <code class="s">power_of_two()</code> function:
+              </p>
+              <pre class=" language-c"><code class=" language-c"><span class="token keyword">unsigned</span> <span class="token keyword">long</span> <span class="token function">power_of_two</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span> n<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+              <ul>
+                  <li>
+                      <b>Arguments:</b>
+                      <ul>
+                          <li><var>n</var>: 8-bit unsigned integer.</li>
+                      </ul>
+                  </li>
+                  <li>
+                      <b>Return Value:</b> two to the power of <var>n</var>.
+                  </li>
+                  <li><b>Note:</b> this function should not print anything on the terminal.</li>
+              </ul>
+              <p>
+                  Write the <code class="s">power_of_two.h</code>
+                  and <code class="s">power_of_two.c</code> files.
+              </p>
+              <p>
+                  Finally, write the <code class="s">main.c</code> file.
+                  Your <code class="s">main()</code> function should print <b>exactly</b>
+                  the following output on the terminal:
+              </p>
+              <pre class=" language-none"><code class=" language-none">$ ./main
+power_of_two(0) = 1
+power_of_two(1) = 2
+power_of_two(2) = 4
+power_of_two(3) = 8
+power_of_two(4) = 16
+power_of_two(5) = 32
+power_of_two(6) = 64
+power_of_two(7) = 128
+power_of_two(8) = 256
+power_of_two(9) = 512
+power_of_two(10) = 1024
+power_of_two(11) = 2048
+power_of_two(12) = 4096
+power_of_two(13) = 8192
+power_of_two(14) = 16384
+power_of_two(15) = 32768
+power_of_two(16) = 65536
+power_of_two(17) = 131072
+power_of_two(18) = 262144
+power_of_two(19) = 524288
+power_of_two(20) = 1048576
+power_of_two(21) = 2097152
+power_of_two(22) = 4194304
+power_of_two(23) = 8388608
+power_of_two(24) = 16777216
+power_of_two(25) = 33554432
+power_of_two(26) = 67108864
+power_of_two(27) = 134217728
+power_of_two(28) = 268435456
+power_of_two(29) = 536870912
+power_of_two(30) = 1073741824
+power_of_two(31) = 2147483648
+power_of_two(32) = 4294967296
+power_of_two(33) = 8589934592
+power_of_two(34) = 17179869184
+power_of_two(35) = 34359738368
+power_of_two(36) = 68719476736
+power_of_two(37) = 137438953472
+power_of_two(38) = 274877906944
+power_of_two(39) = 549755813888
+power_of_two(40) = 1099511627776
+power_of_two(41) = 2199023255552
+power_of_two(42) = 4398046511104
+power_of_two(43) = 8796093022208
+power_of_two(44) = 17592186044416
+power_of_two(45) = 35184372088832
+power_of_two(46) = 70368744177664
+power_of_two(47) = 140737488355328
+power_of_two(48) = 281474976710656
+power_of_two(49) = 562949953421312
+power_of_two(50) = 1125899906842624
+power_of_two(51) = 2251799813685248
+power_of_two(52) = 4503599627370496
+power_of_two(53) = 9007199254740992
+power_of_two(54) = 18014398509481984
+power_of_two(55) = 36028797018963968
+power_of_two(56) = 72057594037927936
+power_of_two(57) = 144115188075855872
+power_of_two(58) = 288230376151711744
+power_of_two(59) = 576460752303423488
+power_of_two(60) = 1152921504606846976
+power_of_two(61) = 2305843009213693952
+power_of_two(62) = 4611686018427387904
+power_of_two(63) = 9223372036854775808</code></pre>
+              <h3 class="question">Digit Count</h3>
+              <p>
+                  You are going to write a program that counts
+                  the number of digits in a base-10 non-negative integer.
+              </p>
+              <p>
+                  Your program will be made up of three files:
+              </p>
+              <ul>
+                  <li>
+                      <code class="s">main.c</code> that contains the
+                      <code class="s">main()</code> function.
+                  </li>
+                  <li>
+                      <code class="s">digit_count.c</code> that contains the
+                      <code class="s">digit_count()</code> function.
+                  </li>
+                  <li>
+                      <code class="s">digit_count.h</code> that is the header of the
+                      <code class="s">digit_count.c</code> file.
+                  </li>
+              </ul>
+              <p>
+                  Prototype of the <code class="s">digit_count()</code> function:
+              </p>
+              <pre class=" language-c"><code class=" language-c"><span class="token keyword">unsigned</span> <span class="token keyword">char</span> <span class="token function">digit_count</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span> n<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+              <ul>
+                  <li>
+                      <b>Arguments:</b>
+                      <ul>
+                          <li><var>n</var>: 64-bit unsigned integer.</li>
+                      </ul>
+                  </li>
+                  <li>
+                      <b>Return Value:</b> the number of digits of <var>n</var> in base 10.
+                  </li>
+                  <li><b>Note:</b> this function should not print anything on the terminal.</li>
+              </ul>
+              <p>
+                  Write the <code class="s">digit_count.h</code>
+                  and <code class="s">digit_count.c</code> files.
+              </p>
+              <p>
+                  Finally, write the <code class="s">main.c</code> file.
+                  Your <code class="s">main()</code> function should print <b>exactly</b>
+                  the following output on the terminal, that is,
+                  the number of digits for 0 and for all the powers of two
+                  from 2<sup>0</sup> to 2<sup>63</sup>:
+              </p>
+              <pre class=" language-none"><code class=" language-none">$ ./main
+digit_count(0) = 1
+digit_count(1) = 1
+digit_count(2) = 1
+digit_count(4) = 1
+digit_count(8) = 1
+digit_count(16) = 2
+digit_count(32) = 2
+digit_count(64) = 2
+digit_count(128) = 3
+digit_count(256) = 3
+digit_count(512) = 3
+digit_count(1024) = 4
+digit_count(2048) = 4
+digit_count(4096) = 4
+digit_count(8192) = 4
+digit_count(16384) = 5
+digit_count(32768) = 5
+digit_count(65536) = 5
+digit_count(131072) = 6
+digit_count(262144) = 6
+digit_count(524288) = 6
+digit_count(1048576) = 7
+digit_count(2097152) = 7
+digit_count(4194304) = 7
+digit_count(8388608) = 7
+digit_count(16777216) = 8
+digit_count(33554432) = 8
+digit_count(67108864) = 8
+digit_count(134217728) = 9
+digit_count(268435456) = 9
+digit_count(536870912) = 9
+digit_count(1073741824) = 10
+digit_count(2147483648) = 10
+digit_count(4294967296) = 10
+digit_count(8589934592) = 10
+digit_count(17179869184) = 11
+digit_count(34359738368) = 11
+digit_count(68719476736) = 11
+digit_count(137438953472) = 12
+digit_count(274877906944) = 12
+digit_count(549755813888) = 12
+digit_count(1099511627776) = 13
+digit_count(2199023255552) = 13
+digit_count(4398046511104) = 13
+digit_count(8796093022208) = 13
+digit_count(17592186044416) = 14
+digit_count(35184372088832) = 14
+digit_count(70368744177664) = 14
+digit_count(140737488355328) = 15
+digit_count(281474976710656) = 15
+digit_count(562949953421312) = 15
+digit_count(1125899906842624) = 16
+digit_count(2251799813685248) = 16
+digit_count(4503599627370496) = 16
+digit_count(9007199254740992) = 16
+digit_count(18014398509481984) = 17
+digit_count(36028797018963968) = 17
+digit_count(72057594037927936) = 17
+digit_count(144115188075855872) = 18
+digit_count(288230376151711744) = 18
+digit_count(576460752303423488) = 18
+digit_count(1152921504606846976) = 19
+digit_count(2305843009213693952) = 19
+digit_count(4611686018427387904) = 19
+digit_count(9223372036854775808) = 19</code></pre>
+              <h3 class="question">Sum of Divisors</h3>
+              <p>
+                  You are going to write a program that adds up
+                  all the divisors of a positive integer
+                  (excluding the integer itself).
+              </p>
+              <p>
+                  Your program will be made up of three files:
+              </p>
+              <ul>
+                  <li>
+                      <code class="s">main.c</code> that contains the
+                      <code class="s">main()</code> function.
+                  </li>
+                  <li>
+                      <code class="s">divisor_sum.c</code>
+                      that contains the <code class="s">divisor_sum()</code> function.
+                  </li>
+                  <li>
+                      <code class="s">divisor_sum.h</code>
+                      that is the header of the <code class="s">divisor_sum.c</code> file.
+                  </li>
+              </ul>
+              <p>
+                  Prototype of the <code class="s">divisor_sum()</code> function:
+              </p>
+              <pre class=" language-c"><code class=" language-c"><span class="token keyword">unsigned</span> <span class="token keyword">long</span> <span class="token function">divisor_sum</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span> n<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+              <ul>
+                  <li>
+                      <b>Arguments:</b>
+                      <ul>
+                          <li><var>n</var>: 64-bit unsigned integer (0 excluded).</li>
+                      </ul>
+                  </li>
+                  <li>
+                      <b>Return Value:</b> the sum of the divisors of <var>n</var>
+                      (excluding <var>n</var>).
+                  </li>
+                  <li>
+                      <b>Note:</b> this function should not print anything on the terminal.
+                  </li>
+              </ul>
+              <p>
+                  Write the <code class="s">divisor_sum.h</code> and
+                  <code class="s">divisor_sum.c</code> files.
+              </p>
+              <p>
+                  For this program, you are going to pass the positive integer to your program
+                  by using <strong>the command-line arguments</strong>.
+              </p>
+              <p>
+                  First, the prototype of your <code class="s">main()</code> function becomes:
+              </p>
+              <pre class=" language-c"><code class=" language-c"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+              <ul>
+                  <li>
+                      <b>Arguments:</b>
+                      <ul>
+                          <li>
+                              <var>argc</var>:
+                              number of the command-line arguments (program name included).
+                          </li>
+                          <li>
+                              <var>argv</var>:
+                              pointer to an array of strings that contains
+                              the command-line arguments.
+                          </li>
+                      </ul>
+                  </li>
+                  <li>
+                      <b>Return Value:</b> Status code: 0 if no error occurs, otherwise 1.
+                  </li>
+              </ul>
+              <p>
+                  Then, to get the first parameter that was passed to your program
+                  in a <code class="s">param</code> variable,
+                  you can use this instruction.
+              </p>
+              <pre class=" language-c"><code class=" language-c"><span class="token keyword">unsigned</span> <span class="token keyword">long</span> param <span class="token operator">=</span> <span class="token function">strtoul</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+              <p>
+                  Do not worry if you do not know what a pointer is
+                  and if you do not understand the above instruction.
+                  We will see the pointers and the command-line arguments in more detail later on.
+                  For the time being, just use this instruction to get the first parameter as
+                  an unsigned long variable.
+              </p>
+              <p>
+                  Now that we use a user input
+                  (i.e. the argument passed to the program by a user),
+                  we have to handle any potential errors.
+                  As it is your first time, let us do this in a simple way.
+              </p>
+              <p>
+                  You will have to exit the program:
+              </p>
+              <ul>
+                  <li>
+                      If <code class="s">argc</code>
+                      is different from two (the number of arguments is not valid).
+                  </li>
+                  <li>
+                      If <code class="s">param</code>
+                      is equal to zero (the parameter is not valid).
+                  </li>
+              </ul>
+              <p>
+                  In these two cases, you should exit the program
+                  with the status code 1 and print an error message.
+                  To do so, you can use the <code class="s">errx()</code> function.
+                  For instance:
+              </p>
+              <pre class=" language-c"><code class=" language-c"><span class="token function">errx</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">"Error"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+              <p>
+                  The above instruction exits your program with the status code 1
+                  and sends the <code>"Error"</code> message to the standard error.
+              </p>
+              <p>
+                  To sum up:
+              </p>
+              <ul>
+                  <li>You have to use a new prototype for the main function.</li>
+                  <li>
+                      You have to use two new functions of the standard library:
+                      <ul>
+                          <li>The <code class="s">strtoul()</code> function.</li>
+                          <li>The <code class="s">errx()</code> function.</li>
+                      </ul>
+                  </li>
+              </ul>
+              <p>
+                  To use these two new functions, you have to include the right headers
+                  at the beginning of your <code class="s">main.c</code> file.
+                  So, have a look at the man pages of the <code class="s">strtoul()</code>
+                  and <code class="s">errx()</code> functions in order to
+                  figure out which headers you need.
+              </p>
+              <p>
+                  Finally, write the <code class="s">main()</code> function so that it prints
+                  the sum of the divisors for the number you pass as parameter.
+                  Test it with different values.
+                  Here are some examples.
+              </p>
+              <pre class=" language-none"><code class=" language-none">$ ./main 0
+main: Error
+$ ./main abcd
+main: Error
+$ ./main 1 2
+main: Error
+$ ./main 1
+divisor_sum(1) = 0
+$ ./main 3
+divisor_sum(3) = 1
+$ ./main 6
+divisor_sum(6) = 6
+$ ./main 9
+divisor_sum(9) = 4
+$ ./main 11
+divisor_sum(11) = 1
+$ ./main 28
+divisor_sum(28) = 28
+$ ./main 30
+divisor_sum(30) = 42
+$ ./main 496
+divisor_sum(496) = 496
+$ ./main 8589869056
+divisor_sum(8589869056) = 8589869056
+$ ./main 137438691328
+divisor_sum(137438691328) = 137438691328</code></pre>
+              <p>
+                  Obviously, the result for a prime number is always one.
+                  We can also notice that for some numbers their sums are equal to themselves.
+                  Such numbers are called
+                  <a href="https://en.wikipedia.org/wiki/Perfect_number">perfect numbers</a>.
+              </p>
+              <p>
+                  If your algorithm is not efficient,
+                  the computation for the last two numbers can take
+                  a lot of time (from one to twenty minutes).
+              </p>
+              <p>
+                  Otherwise, if your algorithm is efficient, the computation can take only
+                  a few milliseconds; even for the last number (i.e. 137,438,691,328).
+              </p>
+              <p>
+                  You can use the <code class="s">time</code> command to obtain an approximation
+                  of the elapsed time between invocation and termination of your program
+                  (the real time).
+              </p>
+              <pre class=" language-bash"><code class=" language-bash">$ <span class="token function">time</span> ./main 8589869056
+divisor_sum<span class="token punctuation">(</span>8589869056<span class="token punctuation">)</span> <span class="token operator">=</span> 8589869056
+
+real    0m0.001s
+user    0m0.000s
+sys     0m0.000s
+$ <span class="token function">time</span> ./main 137438691328
+divisor_sum<span class="token punctuation">(</span>137438691328<span class="token punctuation">)</span> <span class="token operator">=</span> 137438691328
+
+real    0m0.005s
+user    0m0.004s
+sys     0m0.000s</code></pre>
+              <p>
+                  You are not required to write the fastest algorithm,
+                  but at least, try to make it in under five seconds for the last number.
+              </p>
+              <h3 class="question">Perfect Numbers</h3>
+              <p>
+                  For this last exercise, you are going to write a program that lists all the
+                  <a href="https://en.wikipedia.org/wiki/Perfect_number">perfect numbers</a>
+                  from 1 to 100,000.
+              </p>
+              <p>
+                  To do so, you need to use the <code class="s">divisor_sum()</code>
+                  function you wrote in the previous exercise.
+                  Several methods are possible.
+                  For this exercise, you will use this function
+                  as if you were using a library without any source files.
+              </p>
+              <p>
+                  So, let us assume that the developer and the user
+                  of the library are different people.
+                  The developer wants to deploy his or her library without its source code.
+                  The user wants to use the library but is not allowed to access the source code.
+                  How is that possible?
+                  Presumably, you are only one person sitting in front of this computer,
+                  so you are going to play the two parts:
+              </p>
+              <ul>
+                  <li>First, the developer.</li>
+                  <li>Then, the user.</li>
+              </ul>
+              <p>
+                  <b>
+                      First let us assume that you are the developer of the library.
+                  </b>
+              </p>
+              <p>
+                  Go back to the directory of the previous exercise
+                  (i.e. <code class="s">divisor_sum</code>).
+                  You want to deploy the <code class="s">divisor_sum()</code> function
+                  defined in the <code class="s">divisor_sum.c</code> file.
+              </p>
+              <p>
+                  You will not be able to generate an executable file
+                  by compiling this source file,
+                  because the <code class="s">main()</code> function is missing.
+                  For example: 
+              </p>
+              <pre class="  language-bash"><code class=" language-bash">$ <span class="token function">gcc</span> divisor_sum.c
+/usr/lib/gcc/x86_64-linux-gnu/5/<span class="token punctuation">..</span>/<span class="token punctuation">..</span>/<span class="token punctuation">..</span>/x86_64-linux-gnu/crt1.o:
+In func</code><code class=" language-bash">tion <span class="token variable"><span class="token variable">`</span>_start':
+<span class="token punctuation">(</span>.text+0x20<span class="token punctuation">)</span>: undefined reference to <span class="token variable">`</span></span>main'
+collect2: error: ld returned 1 e</code><code class=" language-bash">xit status</code></pre>
+              <p>
+                  Actually, you can compile this code,
+                  but you have to generate an object file and not an executable file.
+                  To do so, you can use the <code class="s">-c</code> option of the compiler.
+              </p>
+              <pre class=" language-bash"><code class=" language-bash">$ <span class="token function">ls</span>
+divisor_sum.c  divisor_sum.h  main  main.c
+$ <span class="token function">gcc</span> -c divisor_sum.c
+$ <span class="token function">ls</span>
+divisor_sum.c  divisor_sum.h  divisor_sum.o  main  main.c</code></pre>
+              <p>
+                  As you see, a new file has been created: <code class="s">divisor_sum.o</code>.
+                  It is an object file and contains the machine code of the
+                  <code class="s">divisor_sum()</code> function.
+              </p>
+              <p>
+                  You could stop here, but as you are concerned about doing things well,
+                  you should recompile this file by using the options you are supposed to use.
+              </p>
+              <pre class=" language-bash"><code class=" language-bash"><span class="token function">gcc</span> -Wall -Wextra -Werror -std<span class="token operator">=</span>c99 -O1 -c divisor_sum.c</code></pre>
+              <p>
+                  Ok, now you are done.
+                  To deploy the library, you can provide the two following files only:
+              </p>
+              <ul>
+                  <li>
+                      <code class="s">divisor_sum.h</code>:
+                      the header file of your library (the function prototype).
+                  </li>
+                  <li>
+                      <code class="s">divisor_sum.o</code>:
+                      the object file of your library (the machine code).
+                  </li>
+              </ul>
+              <p>
+                  You are not required to provide the definition of the function,
+                  that is, the <code class="s">divisor_sum.c</code> file.
+              </p>
+              <p>
+                  <b>
+                      Now, let us assume that you are the user of the library.
+                  </b>
+              </p>
+              <p>
+                  Exit the directory of the previous exercise,
+                  create the <code class="s">perfect_numbers</code> directory
+                  and set it as the current directory.
+              </p>
+              <pre class=" language-bash"><code class=" language-bash">$ <span class="token function">cd</span> <span class="token punctuation">..</span>
+$ <span class="token function">mkdir</span> perfect_numbers
+$ <span class="token function">cd</span> perfect_numbers</code></pre>
+              <p>
+                  As a user of the library, you have to get the files provided by the developer.
+                  You can simulate that by copying the files from the previous exercise
+                  into the current directory.
+              </p>
+              <pre class=" language-bash"><code class=" language-bash">$ <span class="token function">cp</span> <span class="token punctuation">..</span>/divisor_sum/divisor_sum.<span class="token punctuation">[</span>ho<span class="token punctuation">]</span> <span class="token keyword">.</span>
+$ <span class="token function">ls</span>
+divisor_sum.h  divisor_sum.o</code></pre>
+              <p>
+                  Now you are able to write the program
+                  that lists all the perfect numbers from 1 to 100,000.
+              </p>
+              <p>
+                  Your program will be made up of five files:
+              </p>
+              <ul>
+                  <li>
+                      <code class="s">main.c</code> that contains the
+                      <code class="s">main()</code> function.
+                  </li>
+                  <li>
+                      <code class="s">is_perfect_number.c</code> that contains
+                      the <code class="s">is_perfect_number()</code> function.
+                  </li>
+                  <li>
+                      <code class="s">is_perfect_number.h</code> that is
+                      the header of the <code class="s">is_perfect_number.c</code> file.
+                  </li>
+                  <li>
+                      <code class="s">divisor_sum.h</code> from the previous exercise.
+                  </li>
+                  <li>
+                      <code class="s">divisor_sum.o</code> from the previous exercise.
+                  </li>
+              </ul>
+              <p>
+                  You are supposed to invoke the <code class="s">divisor_sum()</code> function
+                  in your <code class="s">is_perfect_number()</code> function.
+                  So the <code class="s">is_perfect_number.c</code>
+                  file should include the header of the library.
+                  Actually, it should look like this:
+              </p>
+              <div class="filename">is_perfect_number.c</div>
+              <pre class=" language-c"><code class=" language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"is_perfect_number.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"divisor_sum.h"</span></span>
+
+<span class="token keyword">int</span> <span class="token function">is_perfect_number</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span> n<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// TODO</span>
+<span class="token punctuation">}</span></code></pre>
+              <p>
+                  You will replace the TODO comment by your own code.
+              </p>
+              <p>
+                  As you can see, the prototype of the
+                  <code class="s">is_perfect_number()</code> function is as follows:
+              </p>
+              <pre class=" language-c"><code class=" language-c"><span class="token keyword">int</span> <span class="token function">is_perfect_number</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span> n<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+              <ul>
+                  <li>
+                      <b>Arguments:</b>
+                      <ul>
+                          <li><var>n</var>: 64-bit unsigned integer (0 excluded).</li>
+                      </ul>
+                  </li>
+                  <li>
+                      <b>Return Value:</b>
+                      <ul>
+                          <li>
+                              If <var>n</var> is not a perfect number, return 0.
+                          </li>
+                          <li>
+                              If <var>n</var> is a perfect number,
+                              return an integer different from 0.
+                          </li>
+                      </ul>
+                  </li>
+                  <li><b>Note:</b> this function should not print anything on the terminal.</li>
+              </ul>
+              <p>
+                  Write the <code class="s">is_perfect_number.h</code>
+                  and <code class="s">is_perfect_number.c</code> files.
+              </p>
+              <p>
+                  Finally, write the <code class="s">main.c</code> file.
+                  To compile your program,
+                  you have to specify the object file to the linker
+                  (through the compiler command).
+              </p>
+              <pre class=" language-bash"><code class=" language-bash"><span class="token function">gcc</span> -Wall -Wextra -Werror -std<span class="token operator">=</span>c99 -O1 -o main *.c *.o</code></pre>
+              <p>The expected result is as follows:</p>
+              <pre class=" language-bash"><code class=" language-bash">$ ./main
+6
+28
+496
+8128</code></pre>
+              <p>
+                  About performance:
+              </p>
+              <pre class=" language-bash"><code class=" language-bash">$ <span class="token function">time</span> ./main
+6
+28
+496
+8128
+
+real    0m0.152s
+user    0m0.152s
+sys     0m0.000s</code></pre>
+          </main>
+          <footer>
+              <span>
+                  <a href="mailto:david.bouchet.epita@gmail.com">David Bouchet</a>
+              </span>
+          </footer>
+      
+  </body></html>
